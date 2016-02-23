@@ -1,0 +1,51 @@
+body a {
+	color: #BE66CC;
+}
+
+#header #logo {
+	max-width: 150px;
+}
+
+#header #logo h3 {
+	top: 55%;
+}
+
+h1{
+	text-align: left;
+}
+
+body h2{
+	text-align: center;
+}
+
+.fakebutton{
+	width:300px; 
+	padding-right:30px; 
+	padding-left:30px; 
+	padding-top: 15px; 
+	padding-bottom:15px; 
+	background-color: #3E0C46; 
+	margin-right: auto; 
+	margin-left:auto; 
+	text-align:center; 
+	border-radius:5px;
+	margin-bottom: 50px;
+}
+
+p.fakebutton:hover{
+	background-color: #BE66CC;
+}
+
+p.introtext{
+	padding-left:16%; 
+	padding-right:16%; 
+	margin-right:auto; 
+	margin-left: auto; 
+	padding-top:35px; 
+	margin-top:40px; 
+	font-size: 1.3rem; 
+	border-top: 1px solid #3E0C46; 
+	text-align:center; 
+	line-height:1.5;
+}
+	

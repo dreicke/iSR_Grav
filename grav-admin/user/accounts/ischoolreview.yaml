@@ -1,0 +1,12 @@
+email: deicke2@gmail.com
+fullname: 'David Eicke'
+title: Administrator
+state: enabled
+access:
+  admin:
+    login: true
+    super: true
+  site:
+    login: true
+hashed_password: $2y$10$8H2AVRtQ4wn82PeRrGCn8ePZeb9hsGpd5ALTMqxfVYcrDOFglegtC
+reset: '612afd99a42954e28bbcfbe12c088671::1456628681'

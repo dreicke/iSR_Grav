@@ -1,0 +1,20 @@
+title: 'iSchool Review'
+author:
+  name: 'iSchool Review'
+  email: ischoolreview@ischool.berkeley.edu
+taxonomies:
+  - category
+  - tag
+metadata:
+  description: 'Grav is an easy to use, yet powerful, open source flat-file CMS'
+summary:
+  enabled: true
+  format: short
+  size: 300
+  delimiter: '==='
+blog:
+  route: /blog
+visualization:
+  d3js: true
+  topojson: false
+logo: user/images/isrlogo-wide.png
