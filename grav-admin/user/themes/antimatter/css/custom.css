@@ -2,6 +2,12 @@ body a {
 	color: #BE66CC;
 }
 
+#body{
+	background-image: url('/iSR_Grav/grav-admin/user/images/bar-bg2.png');
+	background-size: cover;
+}
+
+
 #header #logo {
 	max-width: 150px;
 }
@@ -11,7 +17,17 @@ body a {
 }
 
 h1{
-	text-align: left;
+	font-family: 'Raleway';
+	text-transform: uppercase;
+	font-weight: 700;
+	color: #3E0C46;
+	margin-bottom: 0px;
+	margin-top: 30px;
+}
+
+h1#frontpage{
+/*	border-top: 1px solid #3E0C46;*/
+	margin-top: 35px;
 }
 
 body h2{
@@ -41,11 +57,29 @@ p.introtext{
 	padding-right:16%; 
 	margin-right:auto; 
 	margin-left: auto; 
-	padding-top:35px; 
-	margin-top:40px; 
+	padding-top:0px; 
 	font-size: 1.3rem; 
-	border-top: 1px solid #3E0C46; 
+	margin-top: 0px;
+/*	border-top: 1px solid #3E0C46; */
 	text-align:center; 
 	line-height:1.5;
+}
+
+form{
+	max-width: 600px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+form .buttons button{
+	background-color: #3E0C46;
+	color: #B2FFE8;
+	border:none;
+	border-radius: 5px;
+	font-weight: 700;
+}
+
+form .buttons button:hover{
+	background-color: #BE66CC;
 }
 	

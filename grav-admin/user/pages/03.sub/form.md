@@ -1,7 +1,7 @@
 ---
 title: Subscribe
 form:
-    name: my-nice-form
+    name: subscribers
     fields:
         -
             name: name
@@ -22,10 +22,10 @@ form:
     buttons:
         -
             type: submit
-            value: Submit
+            value: SUBMIT
         -
             type: reset
-            value: Reset
+            value: RESET
     process:
         -
             email:
@@ -45,4 +45,5 @@ form:
             display: thankyou
 ---
 
-# My Form
+# Stay in Touch!
+<p class="introtext"> We'll send you an email when the first issue is ready :)</p>
