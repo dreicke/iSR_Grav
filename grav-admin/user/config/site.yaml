@@ -5,8 +5,9 @@ author:
 taxonomies:
   - category
   - tag
+  - author
 metadata:
-  description: 'Grav is an easy to use, yet powerful, open source flat-file CMS'
+  description: 'An online publication showcasing the best information-centric work from professional graduate programs worldwide'
 summary:
   enabled: true
   format: short

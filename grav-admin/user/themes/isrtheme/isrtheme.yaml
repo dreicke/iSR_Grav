@@ -1,0 +1,8 @@
+streams:
+ schemes:
+   theme:
+     type: ReadOnlyStream
+     prefixes:
+       '':
+         - user/themes/isrtheme
+         - user/themes/antimatter

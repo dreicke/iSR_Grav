@@ -1,5 +1,6 @@
 ---
-title: Home
+title: Welcome
+body_classes: "welcome"
 ---
 
 <img src="user/images/isrlogo-sq.png" style="display: block; margin-right:auto; margin-left:auto; width:350px;">
