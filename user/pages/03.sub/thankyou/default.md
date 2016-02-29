@@ -2,4 +2,4 @@
 title: thankyou
 ---
 
-# Thanks for all yo' information, sucka! 
+<h1 id="frontpage">Thanks!</h1>
