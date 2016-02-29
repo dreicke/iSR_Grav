@@ -8,7 +8,7 @@ body h1 a {
 
 
 section#body.welcome{
-	background-image: url('images/bar-bg2.png');
+	background-image: url('../images/bar-bg2.png');
 	background-size: cover;
 }
 
