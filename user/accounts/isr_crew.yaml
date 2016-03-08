@@ -1,0 +1,11 @@
+email: ischoolreview@ischool.berkeley.edu
+access:
+  admin:
+    login: true
+    super: true
+  site:
+    login: true
+fullname: 'iSchool Review'
+title: 'Editor in Chief'
+state: enabled
+hashed_password: $2y$10$6r0jgvqz8CUkTWOKPOZIm.g5x7Xam4TM1q2nyTB5kf2uby1mwNR9y
