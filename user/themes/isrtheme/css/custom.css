@@ -114,4 +114,8 @@ form .buttons button:hover{
 .pure-g [class *="pure-u"]{
 	font-family: "Raleway", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
 }
+
+#author-info{
+	margin-bottom: 10px;
+}
 	
