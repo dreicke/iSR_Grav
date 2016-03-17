@@ -1,6 +1,6 @@
 ---
-title: D3 Slider
-visualization:
+title: 'D3 Slider'
+published: true
 topojson: true
 ---
 

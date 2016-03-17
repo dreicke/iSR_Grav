@@ -8,5 +8,5 @@ body_classes: "welcome"
 <h1 id="frontpage"> Welcome, Colleagues!</h1>
 <p class="introtext"> <strong>The iSchool Review</strong> is a new publication designed to showcase the best work from students in information-centric professional programs. As we begin to compile content for the inaugural issue, we are seeking submissions related to information management, design, and policy.</p>
 
-<p class="fakebutton" ><a href="sub" style="color: #B2FFE8; font-weight: 700;">STAY IN TOUCH!</a></p>
+<div class="buttonholder"><a href="sub" class="fakebutton" style="color: #B2FFE8; font-weight: 700;">STAY IN TOUCH!</a></div>
 
