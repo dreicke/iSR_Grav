@@ -7,12 +7,51 @@ summary:
 jscomments:
     provider: facebook
 taxonomy:
+    category: blog
     tag:
-        - tech policy
+        - 'tech policy'
 author:
     name: 'Eve Lacey'
     org: 'University College London'
+visualization:
+topojson: true
 ---
+
+<style>
+    .slider {
+      position: relative;
+      top: 40px;
+      left: 40px;
+    }
+
+    .slider-tray {
+      position: absolute;
+      width: 100%;
+      height: 6px;
+      border: solid 1px #ccc;
+      border-top-color: #aaa;
+      border-radius: 4px;
+      background-color: #f0f0f0;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+    }
+
+    .slider-handle {
+      position: absolute;
+      top: 3px;
+    }
+
+    .slider-handle-icon {
+      width: 14px;
+      height: 14px;
+      border: solid 1px #aaa;
+      position: absolute;
+      border-radius: 10px;
+      background-color: #fff;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+      top: -7px;
+      left: -7px;
+    }
+</style>
 
 ####Abstract:
 >>>>>>This article examines the feasibility and desirability of a paperless, global information environment. It assesses the social and technological advantages and constraints of an entirely digital library environment. It focuses on the problems of digital preservation and access, the relationship between the private commerce of technological advancements and the library's obligation towards public access and stewardship, concentrating on the problems posed by rapid advancements and online obsolescence.  It weighs the preservation strategies to be gained from digitization against the potential legal and bibliographic losses to be made from an unsupervised monopoly on the market. This assessment takes stock of the current landscape and looks to hybrid possibilities for the future of the sector. 
@@ -57,3 +96,42 @@ Technology operates as a social force, and can be harnessed for different means.
 Information environments are not static, and the push towards a paperless library could promote an epistemological revolution in which the importance of the archive diminishes in favour of the generation of new ideas. Such a change of priorities would radically alter the sectors of librarianship and academia. However, there remain fundamental weaknesses in the longevity of digital alternatives to paper and, at this stage, a carefully managed hybrid learning environment may be the most feasible and desirable alternative. There are aspects of hybridity that do not work well: when dynamic access is constrained by copyright issues, or when preservation requires digital media to be duplicated in hard copy. More effective hybrid solutions include the conversation of rare paper materials by making their digital counterparts more accessible, and online collective collection development expanding library stock whilst saving their limited storage space. 
 
 Technology's tendency towards access over ownership has the potential to fulfill a truly democratic pedagogy, to deliver social inclusion, lifelong learning, and local access to global collections. A paperless global information environment is desirable as far as it increases access, but infeasible while legal constraints, business dynamics, and political ideology conspire to limit its suitability for the library as an equal-access repository, and for the librarian as facilitator and steward of these ideals. 
+
+<div class="slider"></div>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+    var width = 500;
+
+    var x = d3.scale.linear()
+        .domain([1, 100])
+        .range([0, width])
+        .clamp(true);
+
+    var dispatch = d3.dispatch("sliderChange");
+
+    var slider = d3.select(".slider")
+        .style("width", width + "px");
+
+    var sliderTray = slider.append("div")
+        .attr("class", "slider-tray");
+
+    var sliderHandle = slider.append("div")
+        .attr("class", "slider-handle");
+
+    sliderHandle.append("div")
+        .attr("class", "slider-handle-icon")
+
+    slider.call(d3.behavior.drag()
+        .on("dragstart", function() {
+          dispatch.sliderChange(x.invert(d3.mouse(sliderTray.node())[0]));
+          d3.event.sourceEvent.preventDefault();
+        })
+        .on("drag", function() {
+          dispatch.sliderChange(x.invert(d3.mouse(sliderTray.node())[0]));
+        }));
+
+    dispatch.on("sliderChange.slider", function(value) {
+      sliderHandle.style("left", x(value) + "px")
+    });
+
+    </script>

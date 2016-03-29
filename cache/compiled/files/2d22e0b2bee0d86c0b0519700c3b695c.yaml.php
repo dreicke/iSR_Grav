@@ -2,7 +2,7 @@
 return [
     '@class' => 'Grav\\Common\\File\\CompiledYamlFile',
     'filename' => '/Applications/MAMP/htdocs/iSR_Grav/user/config/site.yaml',
-    'modified' => 1456604903,
+    'modified' => 1459190654,
     'data' => [
         'title' => 'iSchool Review',
         'author' => [
@@ -30,6 +30,6 @@ return [
             'd3js' => true,
             'topojson' => false
         ],
-        'logo' => 'user/images/isrlogo-wide.png'
+        'logo' => 'user/images/isrlogo-wide-white.png'
     ]
 ];

@@ -1,8 +1,8 @@
 <?php
 return [
     '@class' => 'Grav\\Common\\Config\\CompiledConfig',
-    'timestamp' => 1457381373,
-    'checksum' => '3da5efa2b0cd2e268c47a2022b461ba9',
+    'timestamp' => 1459190871,
+    'checksum' => '1ea78f017d51c7108db63b918a6e4040',
     'files' => [
         'user/config' => [
             'media' => [
@@ -27,7 +27,7 @@ return [
             ],
             'site' => [
                 'file' => 'user/config/site.yaml',
-                'modified' => 1456604903
+                'modified' => 1459190654
             ],
             'streams' => [
                 'file' => 'user/config/streams.yaml',
@@ -63,7 +63,7 @@ return [
             ],
             'plugins/archives' => [
                 'file' => 'user/plugins/archives/archives.yaml',
-                'modified' => 1456533233
+                'modified' => 1458750100
             ],
             'plugins/assets' => [
                 'file' => 'user/plugins/assets/assets.yaml',
@@ -71,11 +71,11 @@ return [
             ],
             'plugins/blog-injector' => [
                 'file' => 'user/plugins/blog-injector/blog-injector.yaml',
-                'modified' => 1456533236
+                'modified' => 1458750107
             ],
             'plugins/breadcrumbs' => [
                 'file' => 'user/plugins/breadcrumbs/breadcrumbs.yaml',
-                'modified' => 1456533235
+                'modified' => 1458750102
             ],
             'plugins/data-manager' => [
                 'file' => 'user/plugins/data-manager/data-manager.yaml',
@@ -91,7 +91,7 @@ return [
             ],
             'plugins/feed' => [
                 'file' => 'user/plugins/feed/feed.yaml',
-                'modified' => 1456533228
+                'modified' => 1458750096
             ],
             'plugins/form' => [
                 'file' => 'user/plugins/form/form.yaml',
@@ -107,7 +107,7 @@ return [
             ],
             'plugins/pagination' => [
                 'file' => 'user/plugins/pagination/pagination.yaml',
-                'modified' => 1456533231
+                'modified' => 1458750098
             ],
             'plugins/problems' => [
                 'file' => 'user/plugins/problems/problems.yaml',
@@ -115,7 +115,7 @@ return [
             ],
             'plugins/relatedpages' => [
                 'file' => 'user/plugins/relatedpages/relatedpages.yaml',
-                'modified' => 1456533230
+                'modified' => 1458750097
             ],
             'plugins/shortcodes' => [
                 'file' => 'user/plugins/shortcodes/shortcodes.yaml',
@@ -131,11 +131,11 @@ return [
             ],
             'plugins/simplesearch' => [
                 'file' => 'user/plugins/simplesearch/simplesearch.yaml',
-                'modified' => 1456533227
+                'modified' => 1458750093
             ],
             'plugins/taxonomylist' => [
                 'file' => 'user/plugins/taxonomylist/taxonomylist.yaml',
-                'modified' => 1456533232
+                'modified' => 1458750099
             ]
         ]
     ],
@@ -777,7 +777,7 @@ return [
                 'd3js' => true,
                 'topojson' => false
             ],
-            'logo' => 'user/images/isrlogo-wide.png'
+            'logo' => 'user/images/isrlogo-wide-white.png'
         ],
         'streams' => [
             'schemes' => [

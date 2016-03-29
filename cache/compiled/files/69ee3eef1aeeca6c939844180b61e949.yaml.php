@@ -2,10 +2,10 @@
 return [
     '@class' => 'Grav\\Common\\File\\CompiledYamlFile',
     'filename' => '/Applications/MAMP/htdocs/iSR_Grav/user/plugins/blog-injector/blueprints.yaml',
-    'modified' => 1456533236,
+    'modified' => 1458750107,
     'data' => [
         'name' => 'BlogInjector',
-        'version' => '1.1.8',
+        'version' => '1.2.1',
         'description' => 'BlogInjector is a Grav plugin that makes available the functionalities to add a blog to each Grav theme',
         'icon' => 'file-text-o',
         'author' => [
@@ -32,7 +32,7 @@ return [
             'fields' => [
                 'enabled' => [
                     'type' => 'toggle',
-                    'label' => 'Plugin status',
+                    'label' => 'PLUGIN_BLOG_INJECTOR.ADMIN.PLUGIN_STATUS',
                     'highlight' => 1,
                     'default' => 0,
                     'options' => [
@@ -45,18 +45,18 @@ return [
                 ],
                 'framework' => [
                     'type' => 'select',
-                    'label' => 'Framework',
+                    'label' => 'PLUGIN_BLOG_INJECTOR.ADMIN.FRAMEWORK',
                     'size' => 'small',
                     'default' => 'pure',
                     'options' => [
                         'pure' => 'pure',
                         'bootstrap' => 'bootstrap'
                     ],
-                    'help' => 'Choose the framework to use'
+                    'help' => 'PLUGIN_BLOG_INJECTOR.ADMIN.HELP.FRAMEWORK'
                 ],
                 'add_default_css' => [
                     'type' => 'toggle',
-                    'label' => 'Add default stylesheet',
+                    'label' => 'PLUGIN_BLOG_INJECTOR.ADMIN.DEFAULT_STYLESHEET',
                     'highlight' => 1,
                     'default' => 1,
                     'options' => [
@@ -66,11 +66,11 @@ return [
                     'validate' => [
                         'type' => 'bool'
                     ],
-                    'help' => 'Automatically adds the included blog stylesheet according to the selected framework, when true'
+                    'help' => 'PLUGIN_BLOG_INJECTOR.ADMIN.HELP.DEFAULT_STYLESHEET'
                 ],
                 'add_framework_assets' => [
                     'type' => 'toggle',
-                    'label' => 'Add framework assets',
+                    'label' => 'PLUGIN_BLOG_INJECTOR.ADMIN.FRAMEWORK_ASSETS',
                     'highlight' => 1,
                     'default' => 1,
                     'options' => [
@@ -80,7 +80,7 @@ return [
                     'validate' => [
                         'type' => 'bool'
                     ],
-                    'help' => 'Automatically adds selected framework assets, when true'
+                    'help' => 'PLUGIN_BLOG_INJECTOR.ADMIN.HELP.FRAMEWORK_ASSETS'
                 ]
             ]
         ]

@@ -16,8 +16,8 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
     protected function doDisplay(array $context, array $blocks = array())
     {
         // line 1
-        $this->loadTemplate("blog.html.twig", "blog.html.twig", 1, "572881629")->display($context);
-        // line 37
+        $this->loadTemplate("blog.html.twig", "blog.html.twig", 1, "1208829413")->display($context);
+        // line 52
         echo "
 
 ";
@@ -35,13 +35,13 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 
     public function getDebugInfo()
     {
-        return array (  21 => 37,  19 => 1,);
+        return array (  21 => 52,  19 => 1,);
     }
 }
 
 
 /* blog.html.twig */
-class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b9838b5c_572881629 extends Twig_Template
+class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b9838b5c_1208829413 extends Twig_Template
 {
     public function __construct(Twig_Environment $env)
     {
@@ -92,25 +92,38 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
         echo "\t\t\t";
         echo $this->getAttribute((isset($context["page"]) ? $context["page"] : null), "content", array());
         echo "
+\t\t\t<div id=\"issuehead\">
+\t\t\t<img src=\"user/pages/images/isrlogo-sq.png\" class=\"index-logo\"><h1>ISSUE ONE</h1>
+\t\t\t<div id=\"categories\">
+\t\t\t<h3><a href=\"#\">tech policy</a></h3>
+\t\t\t<h3>&middot;</h3>
+\t\t\t<h3><a href=\"#\">hci</a></h3>
+\t\t\t<h3>&middot;</h3>
+\t\t\t<h3><a href=\"#\">data science</a></h3>
+\t\t\t</div>
+
+\t\t\t</div>
 \t\t</div>
 
 \t\t\t";
-        // line 16
+        // line 27
         if ($this->getAttribute($this->getAttribute($this->getAttribute((isset($context["config"]) ? $context["config"] : null), "plugins", array()), "breadcrumbs", array()), "enabled", array())) {
-            // line 17
+            // line 28
             echo "\t\t\t\t";
-            $this->loadTemplate("partials/breadcrumbs.html.twig", "blog.html.twig", 17)->display($context);
-            // line 18
+            // line 29
             echo "\t\t\t";
         }
-        // line 19
+        // line 30
         echo "
 \t\t<div class=\"content-wrapper blog-content-list grid pure-g\">
 \t\t\t<div id=\"listing\" class=\"block pure-u-2-3\">
+\t\t\t<div id=\"techpolicy\">
+\t\t\t<h3>tech policy</h3>
+
 \t\t\t\t";
-        // line 22
+        // line 36
         $context['_parent'] = $context;
-        $context['_seq'] = twig_ensure_traversable((isset($context["collection"]) ? $context["collection"] : null));
+        $context['_seq'] = twig_ensure_traversable(twig_slice($this->env, (isset($context["collection"]) ? $context["collection"] : null), 1, 2));
         $context['loop'] = array(
           'parent' => $context['_parent'],
           'index0' => 0,
@@ -125,10 +138,10 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
             $context['loop']['last'] = 1 === $length;
         }
         foreach ($context['_seq'] as $context["_key"] => $context["child"]) {
-            // line 23
-            echo "\t\t\t        ";
-            $this->loadTemplate("partials/blog_item.html.twig", "blog.html.twig", 23)->display(array_merge($context, array("page" => $context["child"], "truncate" => true)));
-            // line 24
+            // line 37
+            echo "\t\t\t        \t";
+            $this->loadTemplate("partials/blog_item.html.twig", "blog.html.twig", 37)->display(array_merge($context, array("page" => $context["child"], "truncate" => true)));
+            // line 38
             echo "\t\t\t    ";
             ++$context['loop']['index0'];
             ++$context['loop']['index'];
@@ -142,24 +155,25 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['child'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 25
+        // line 39
         echo "
                 ";
-        // line 26
+        // line 40
         if (($this->getAttribute($this->getAttribute($this->getAttribute((isset($context["config"]) ? $context["config"] : null), "plugins", array()), "pagination", array()), "enabled", array()) && $this->getAttribute($this->getAttribute((isset($context["collection"]) ? $context["collection"] : null), "params", array()), "pagination", array()))) {
-            // line 27
+            // line 41
             echo "                    ";
-            $this->loadTemplate("partials/pagination.html.twig", "blog.html.twig", 27)->display(array_merge($context, array("base_url" => $this->getAttribute((isset($context["page"]) ? $context["page"] : null), "url", array()), "pagination" => $this->getAttribute($this->getAttribute((isset($context["collection"]) ? $context["collection"] : null), "params", array()), "pagination", array()))));
-            // line 28
+            $this->loadTemplate("partials/pagination.html.twig", "blog.html.twig", 41)->display(array_merge($context, array("base_url" => $this->getAttribute((isset($context["page"]) ? $context["page"] : null), "url", array()), "pagination" => $this->getAttribute($this->getAttribute((isset($context["collection"]) ? $context["collection"] : null), "params", array()), "pagination", array()))));
+            // line 42
             echo "                ";
         }
-        // line 29
-        echo "\t\t\t</div>
+        // line 43
+        echo "            </div>
+\t\t\t</div>
 \t\t\t<div id=\"sidebar\" class=\"block size-1-3 pure-u-1-3\">
 \t\t\t\t";
-        // line 31
-        $this->loadTemplate("partials/sidebar.html.twig", "blog.html.twig", 31)->display(array_merge($context, array("blog" => (isset($context["page"]) ? $context["page"] : null))));
-        // line 32
+        // line 46
+        $this->loadTemplate("partials/sidebar.html.twig", "blog.html.twig", 46)->display(array_merge($context, array("blog" => (isset($context["page"]) ? $context["page"] : null))));
+        // line 47
         echo "\t\t\t</div>
 \t\t</div>
 \t";
@@ -177,7 +191,7 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 
     public function getDebugInfo()
     {
-        return array (  163 => 32,  161 => 31,  157 => 29,  154 => 28,  151 => 27,  149 => 26,  146 => 25,  132 => 24,  129 => 23,  112 => 22,  107 => 19,  104 => 18,  101 => 17,  99 => 16,  92 => 13,  88 => 11,  82 => 9,  80 => 8,  77 => 7,  74 => 6,  71 => 5,  67 => 1,  65 => 3,  51 => 1,  21 => 37,  19 => 1,);
+        return array (  177 => 47,  175 => 46,  170 => 43,  167 => 42,  164 => 41,  162 => 40,  159 => 39,  145 => 38,  142 => 37,  125 => 36,  117 => 30,  114 => 29,  112 => 28,  110 => 27,  92 => 13,  88 => 11,  82 => 9,  80 => 8,  77 => 7,  74 => 6,  71 => 5,  67 => 1,  65 => 3,  51 => 1,  21 => 52,  19 => 1,);
     }
 }
 /* {% embed 'partials/base.html.twig' %}*/
@@ -193,21 +207,36 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 /* 		<div class="blog-header">*/
 /* 		{% endif %}*/
 /* 			{{ page.content }}*/
+/* 			<div id="issuehead">*/
+/* 			<img src="user/pages/images/isrlogo-sq.png" class="index-logo"><h1>ISSUE ONE</h1>*/
+/* 			<div id="categories">*/
+/* 			<h3><a href="#">tech policy</a></h3>*/
+/* 			<h3>&middot;</h3>*/
+/* 			<h3><a href="#">hci</a></h3>*/
+/* 			<h3>&middot;</h3>*/
+/* 			<h3><a href="#">data science</a></h3>*/
+/* 			</div>*/
+/* */
+/* 			</div>*/
 /* 		</div>*/
 /* */
 /* 			{% if config.plugins.breadcrumbs.enabled %}*/
-/* 				{% include 'partials/breadcrumbs.html.twig' %}*/
+/* 				{# {% include 'partials/breadcrumbs.html.twig' %} #}*/
 /* 			{% endif %}*/
 /* */
 /* 		<div class="content-wrapper blog-content-list grid pure-g">*/
 /* 			<div id="listing" class="block pure-u-2-3">*/
-/* 				{% for child in collection %}*/
-/* 			        {% include 'partials/blog_item.html.twig' with {'page':child, 'truncate':true} %}*/
+/* 			<div id="techpolicy">*/
+/* 			<h3>tech policy</h3>*/
+/* */
+/* 				{% for child in collection|slice (1, 2) %}*/
+/* 			        	{% include 'partials/blog_item.html.twig' with {'page':child, 'truncate':true} %}*/
 /* 			    {% endfor %}*/
 /* */
 /*                 {% if config.plugins.pagination.enabled and collection.params.pagination %}*/
 /*                     {% include 'partials/pagination.html.twig' with {'base_url':page.url, 'pagination':collection.params.pagination} %}*/
 /*                 {% endif %}*/
+/*             </div>*/
 /* 			</div>*/
 /* 			<div id="sidebar" class="block size-1-3 pure-u-1-3">*/
 /* 				{% include 'partials/sidebar.html.twig' with {'blog':page} %}*/

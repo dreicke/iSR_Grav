@@ -46,7 +46,7 @@ topojson: true
 <body>
    <div class="slider"></div>
 <script src="http://d3js.org/d3.v3.min.js"></script>
-    <script>
+<script>
     var width = 500;
 
     var x = d3.scale.linear()
