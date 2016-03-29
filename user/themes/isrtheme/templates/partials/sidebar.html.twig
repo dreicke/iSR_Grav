@@ -1,6 +1,24 @@
 {% set feed_url = blog.url == '/' or blog.url == base_url_relative ? (base_url_relative~'/'~blog.slug) : blog.url %}
 {% set new_base_url = blog.url == '/' ? '' : blog.url %}
 
+<div id="careers">
+    <h3>careers</h3>
+    <h4><a href="#">What IS a Product Manager, Anyway?</a></h4>
+    <span class="byline">By Rebecca K. Anderson</span>
+    <span class="by-org">University of California, Berkeley</span>
+</div>
+<div id="case-studies">
+    <h3>case studies</h3>
+    <h4><a href="#"><strike>Landlord</strike> Spacelord: Organizing Orbital Real Estate</a></h4>
+    <span class="byline">BY: Daniel Brenners</span>
+    <span class="by-org">University of California, Berkeley</span>
+    <h4><a href="#">The Design Decisions That Shaped a Citizen Science Project</a></h4>
+    <span class="byline">BY: Laura Montini</span>
+    <span class="by-org">University of California, Berkeley</span>
+</div>
+
+{# 
+
 {% if config.plugins.simplesearch.enabled %}
 <div class="sidebar-content">
     <h4>SimpleSearch</h4>
@@ -33,10 +51,13 @@
 	{% include 'partials/archives.html.twig' with {'base_url':new_base_url} %}
 </div>
 {% endif %}
+
+
 {% if config.plugins.feed.enabled %}
 <div class="sidebar-content syndicate">
-    <h4>Syndicate</h4>
     <a class="button" href="{{ feed_url }}.atom"><i class="fa fa-rss-square"></i> Atom 1.0</a>
     <a class="button" href="{{ feed_url }}.rss"><i class="fa fa-rss-square"></i> RSS</a>
 </div>
 {% endif %}
+
+#} 
