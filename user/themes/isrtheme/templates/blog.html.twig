@@ -32,12 +32,19 @@
 			<div id="listing" class="block pure-u-2-3">
 			<div id="techpolicy">
 			<h3>tech policy</h3>
-				{% for post in taxonomy.findTaxonomy({'tag':'tech policy'}) %}
-					{{ post.header.header_image }}
-				    <h4>{{ post.title }}</h4>
-				{% endfor %}
 
 				{% for child in collection|slice (1, 2) %}
+			        	{% include 'partials/blog_item.html.twig' with {'page':child, 'truncate':true} %}
+			    {% endfor %}
+
+                {% if config.plugins.pagination.enabled and collection.params.pagination %}
+                    {% include 'partials/pagination.html.twig' with {'base_url':page.url, 'pagination':collection.params.pagination} %}
+                {% endif %}
+            </div>
+            <div id="HCI">
+			<h3>HCI</h3>
+
+				{% for child in collection|slice (0,1) %}
 			        	{% include 'partials/blog_item.html.twig' with {'page':child, 'truncate':true} %}
 			    {% endfor %}
 

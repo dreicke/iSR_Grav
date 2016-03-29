@@ -1,6 +1,6 @@
 ---
 title: 'Current Issue'
-published: false
+published: true
 content:
     items: '@self.children'
     limit: 10
