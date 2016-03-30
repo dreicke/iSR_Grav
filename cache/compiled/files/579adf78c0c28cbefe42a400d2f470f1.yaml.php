@@ -2,7 +2,7 @@
 return [
     '@class' => 'Grav\\Common\\File\\CompiledYamlFile',
     'filename' => 'plugins://breadcrumbs/breadcrumbs.yaml',
-    'modified' => 1456533235,
+    'modified' => 1458750102,
     'data' => [
         'enabled' => true,
         'show_all' => true,

@@ -23,7 +23,7 @@ class __TwigTemplate_e92e96e45507a22d0b07ad0d3f7aebe60702250f6662fcdeec33e985931
         $context["header_image"] = $this->env->getExtension('GravTwigExtension')->definedDefaultFilter($this->getAttribute($this->getAttribute((isset($context["page"]) ? $context["page"] : null), "header", array()), "header_image", array()), true);
         // line 4
         echo "    ";
-        $context["header_image_width"] = $this->env->getExtension('GravTwigExtension')->definedDefaultFilter($this->getAttribute($this->getAttribute((isset($context["page"]) ? $context["page"] : null), "header", array()), "header_image_width", array()), 900);
+        $context["header_image_width"] = $this->env->getExtension('GravTwigExtension')->definedDefaultFilter($this->getAttribute($this->getAttribute((isset($context["page"]) ? $context["page"] : null), "header", array()), "header_image_width", array()), 400);
         // line 5
         echo "    ";
         $context["header_image_height"] = $this->env->getExtension('GravTwigExtension')->definedDefaultFilter($this->getAttribute($this->getAttribute((isset($context["page"]) ? $context["page"] : null), "header", array()), "header_image_height", array()), 300);
@@ -33,31 +33,48 @@ class __TwigTemplate_e92e96e45507a22d0b07ad0d3f7aebe60702250f6662fcdeec33e985931
         // line 7
         echo "
     <div class=\"list-blog-header\">
-        <span class=\"list-blog-date\">
-            <span>";
-        // line 10
-        echo twig_date_format_filter($this->env, $this->getAttribute((isset($context["page"]) ? $context["page"] : null), "date", array()), "d");
-        echo "</span>
-            <em>";
-        // line 11
-        echo twig_date_format_filter($this->env, $this->getAttribute((isset($context["page"]) ? $context["page"] : null), "date", array()), "M");
-        echo "</em>
-        </span>
+
         ";
-        // line 13
+        // line 10
+        if ((isset($context["header_image"]) ? $context["header_image"] : null)) {
+            // line 11
+            echo "            ";
+            if ((isset($context["header_image_file"]) ? $context["header_image_file"] : null)) {
+                // line 12
+                echo "                ";
+                $context["header_image_media"] = $this->getAttribute($this->getAttribute($this->getAttribute((isset($context["page"]) ? $context["page"] : null), "media", array()), "images", array()), (isset($context["header_image_file"]) ? $context["header_image_file"] : null), array(), "array");
+                // line 13
+                echo "            ";
+            } else {
+                // line 14
+                echo "                ";
+                $context["header_image_media"] = twig_first($this->env, $this->getAttribute($this->getAttribute((isset($context["page"]) ? $context["page"] : null), "media", array()), "images", array()));
+                // line 15
+                echo "            ";
+            }
+            // line 16
+            echo "            ";
+            echo $this->getAttribute($this->getAttribute((isset($context["header_image_media"]) ? $context["header_image_media"] : null), "cropZoom", array(0 => (isset($context["header_image_width"]) ? $context["header_image_width"] : null), 1 => (isset($context["header_image_height"]) ? $context["header_image_height"] : null)), "method"), "html", array());
+            echo "
+        ";
+        }
+        // line 18
+        echo "
+        ";
+        // line 19
         if ($this->getAttribute($this->getAttribute((isset($context["page"]) ? $context["page"] : null), "header", array()), "link", array())) {
-            // line 14
+            // line 20
             echo "            <h1>
                 ";
-            // line 15
+            // line 21
             if ( !($this->getAttribute($this->getAttribute((isset($context["page"]) ? $context["page"] : null), "header", array()), "continue_link", array()) === false)) {
-                // line 16
+                // line 22
                 echo "                <a href=\"";
                 echo $this->getAttribute((isset($context["page"]) ? $context["page"] : null), "url", array());
                 echo "\"><i class=\"fa fa-angle-double-right\"></i></a>
                 ";
             }
-            // line 18
+            // line 24
             echo "                <a href=\"";
             echo $this->getAttribute($this->getAttribute((isset($context["page"]) ? $context["page"] : null), "header", array()), "link", array());
             echo "\">";
@@ -66,51 +83,51 @@ class __TwigTemplate_e92e96e45507a22d0b07ad0d3f7aebe60702250f6662fcdeec33e985931
             </h1>
         ";
         } else {
-            // line 21
-            echo "            <h1><a href=\"";
+            // line 27
+            echo "            <h4><a href=\"";
             echo $this->getAttribute((isset($context["page"]) ? $context["page"] : null), "url", array());
             echo "\">";
             echo $this->getAttribute((isset($context["page"]) ? $context["page"] : null), "title", array());
-            echo "</a></h1>
+            echo "</a></h4>
         ";
         }
-        // line 23
+        // line 29
         echo "        
         <div id=\"author-info\">
         ";
-        // line 25
+        // line 31
         if ($this->getAttribute($this->getAttribute($this->getAttribute((isset($context["page"]) ? $context["page"] : null), "header", array()), "author", array()), "name", array())) {
-            // line 26
+            // line 32
             echo "                <span class=\"byline\"> BY: ";
             echo $this->getAttribute($this->getAttribute($this->getAttribute((isset($context["page"]) ? $context["page"] : null), "header", array()), "author", array()), "name", array());
             echo "</span>
         ";
         }
-        // line 28
+        // line 34
         echo "
         ";
-        // line 29
+        // line 35
         if ($this->getAttribute($this->getAttribute($this->getAttribute((isset($context["page"]) ? $context["page"] : null), "header", array()), "author", array()), "org", array())) {
-            // line 30
-            echo "                <span class=\"by-org\"> - ";
+            // line 36
+            echo "                <span class=\"by-org\">";
             echo $this->getAttribute($this->getAttribute($this->getAttribute((isset($context["page"]) ? $context["page"] : null), "header", array()), "author", array()), "org", array());
             echo "</span>
         ";
         }
-        // line 32
+        // line 38
         echo "        </div>
 
         ";
-        // line 34
+        // line 40
         if ($this->getAttribute($this->getAttribute((isset($context["page"]) ? $context["page"] : null), "taxonomy", array()), "tag", array())) {
-            // line 35
+            // line 41
             echo "        <span class=\"tags\">
             ";
-            // line 36
+            // line 42
             $context['_parent'] = $context;
             $context['_seq'] = twig_ensure_traversable($this->getAttribute($this->getAttribute((isset($context["page"]) ? $context["page"] : null), "taxonomy", array()), "tag", array()));
             foreach ($context['_seq'] as $context["_key"] => $context["tag"]) {
-                // line 37
+                // line 43
                 echo "            <a href=\"";
                 echo $this->env->getExtension('GravTwigExtension')->rtrimFilter($this->getAttribute((isset($context["blog"]) ? $context["blog"] : null), "url", array()), "/");
                 echo "/tag";
@@ -124,39 +141,15 @@ class __TwigTemplate_e92e96e45507a22d0b07ad0d3f7aebe60702250f6662fcdeec33e985931
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['tag'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 39
+            // line 45
             echo "        </span>
         ";
         }
-        // line 41
+        // line 47
         echo "        
         
-        ";
-        // line 43
-        if ((isset($context["header_image"]) ? $context["header_image"] : null)) {
-            // line 44
-            echo "            ";
-            if ((isset($context["header_image_file"]) ? $context["header_image_file"] : null)) {
-                // line 45
-                echo "                ";
-                $context["header_image_media"] = $this->getAttribute($this->getAttribute($this->getAttribute((isset($context["page"]) ? $context["page"] : null), "media", array()), "images", array()), (isset($context["header_image_file"]) ? $context["header_image_file"] : null), array(), "array");
-                // line 46
-                echo "            ";
-            } else {
-                // line 47
-                echo "                ";
-                $context["header_image_media"] = twig_first($this->env, $this->getAttribute($this->getAttribute((isset($context["page"]) ? $context["page"] : null), "media", array()), "images", array()));
-                // line 48
-                echo "            ";
-            }
-            // line 49
-            echo "            ";
-            echo $this->getAttribute($this->getAttribute((isset($context["header_image_media"]) ? $context["header_image_media"] : null), "cropZoom", array(0 => (isset($context["header_image_width"]) ? $context["header_image_width"] : null), 1 => (isset($context["header_image_height"]) ? $context["header_image_height"] : null)), "method"), "html", array());
-            echo "
-        ";
-        }
-        // line 51
-        echo "
+
+
     </div>
 
     <div class=\"list-blog-padding\">
@@ -164,100 +157,96 @@ class __TwigTemplate_e92e96e45507a22d0b07ad0d3f7aebe60702250f6662fcdeec33e985931
 
 
     ";
-        // line 58
+        // line 57
         if (($this->getAttribute($this->getAttribute((isset($context["page"]) ? $context["page"] : null), "header", array()), "continue_link", array()) === false)) {
-            // line 59
+            // line 58
             echo "        ";
             echo $this->getAttribute((isset($context["page"]) ? $context["page"] : null), "content", array());
             echo "
         ";
-            // line 60
+            // line 59
             if ( !(isset($context["truncate"]) ? $context["truncate"] : null)) {
-                // line 61
+                // line 60
                 echo "        ";
                 $context["show_prev_next"] = true;
-                // line 62
+                // line 61
                 echo "        ";
             }
-            // line 63
+            // line 62
             echo "    ";
         } elseif (((isset($context["truncate"]) ? $context["truncate"] : null) && ($this->getAttribute((isset($context["page"]) ? $context["page"] : null), "summary", array()) != $this->getAttribute((isset($context["page"]) ? $context["page"] : null), "content", array())))) {
-            // line 64
-            echo "        <p><strong>Abstract: </strong> ";
-            echo $this->getAttribute($this->getAttribute((isset($context["page"]) ? $context["page"] : null), "header", array()), "abstract", array());
+            // line 63
+            echo "        <p>";
             echo "</p>
-        <p><a href=\"";
-            // line 65
-            echo $this->getAttribute((isset($context["page"]) ? $context["page"] : null), "url", array());
-            echo "\">Continue Reading...</a></p>
     ";
-        } elseif (        // line 66
+        } elseif (        // line 64
 (isset($context["truncate"]) ? $context["truncate"] : null)) {
-            // line 67
+            // line 65
             echo "        ";
             if (($this->getAttribute((isset($context["page"]) ? $context["page"] : null), "summary", array()) != $this->getAttribute((isset($context["page"]) ? $context["page"] : null), "content", array()))) {
-                // line 68
+                // line 66
                 echo "            ";
                 echo call_user_func_array($this->env->getFilter('truncate')->getCallable(), array($this->getAttribute((isset($context["page"]) ? $context["page"] : null), "content", array()), 550));
                 echo "
         ";
             } else {
-                // line 70
+                // line 68
                 echo "            ";
                 echo $this->getAttribute((isset($context["page"]) ? $context["page"] : null), "content", array());
                 echo "
         ";
             }
-            // line 72
+            // line 70
             echo "        <p><a href=\"";
             echo $this->getAttribute((isset($context["page"]) ? $context["page"] : null), "url", array());
             echo "\">Continue Reading...</a></p>
     ";
         } else {
-            // line 74
+            // line 72
             echo "        ";
             echo $this->getAttribute((isset($context["page"]) ? $context["page"] : null), "content", array());
             echo "
         ";
-            // line 75
+            // line 73
             $context["show_prev_next"] = true;
-            // line 76
+            // line 74
             echo "    ";
         }
-        // line 77
+        // line 75
         echo "
 
+
     ";
-        // line 79
+        // line 78
         if ((isset($context["show_prev_next"]) ? $context["show_prev_next"] : null)) {
-            // line 80
+            // line 79
             echo "
         <p class=\"prev-next\">
             ";
-            // line 82
+            // line 81
             if ( !$this->getAttribute((isset($context["page"]) ? $context["page"] : null), "isFirst", array())) {
-                // line 83
+                // line 82
                 echo "                <a class=\"button\" href=\"";
                 echo $this->getAttribute($this->getAttribute((isset($context["page"]) ? $context["page"] : null), "nextSibling", array()), "url", array());
                 echo "\"><i class=\"fa fa-chevron-left\"></i> Next Post</a>
             ";
             }
-            // line 85
+            // line 84
             echo "
             ";
-            // line 86
+            // line 85
             if ( !$this->getAttribute((isset($context["page"]) ? $context["page"] : null), "isLast", array())) {
-                // line 87
+                // line 86
                 echo "                <a class=\"button\" href=\"";
                 echo $this->getAttribute($this->getAttribute((isset($context["page"]) ? $context["page"] : null), "prevSibling", array()), "url", array());
                 echo "\">Previous Post <i class=\"fa fa-chevron-right\"></i></a>
             ";
             }
-            // line 89
+            // line 88
             echo "        </p>
     ";
         }
-        // line 91
+        // line 90
         echo "
     </div>
 </div>";
@@ -275,21 +264,27 @@ class __TwigTemplate_e92e96e45507a22d0b07ad0d3f7aebe60702250f6662fcdeec33e985931
 
     public function getDebugInfo()
     {
-        return array (  261 => 91,  257 => 89,  251 => 87,  249 => 86,  246 => 85,  240 => 83,  238 => 82,  234 => 80,  232 => 79,  228 => 77,  225 => 76,  223 => 75,  218 => 74,  212 => 72,  206 => 70,  200 => 68,  197 => 67,  195 => 66,  191 => 65,  186 => 64,  183 => 63,  180 => 62,  177 => 61,  175 => 60,  170 => 59,  168 => 58,  159 => 51,  153 => 49,  150 => 48,  147 => 47,  144 => 46,  141 => 45,  138 => 44,  136 => 43,  132 => 41,  128 => 39,  114 => 37,  110 => 36,  107 => 35,  105 => 34,  101 => 32,  95 => 30,  93 => 29,  90 => 28,  84 => 26,  82 => 25,  78 => 23,  70 => 21,  61 => 18,  55 => 16,  53 => 15,  50 => 14,  48 => 13,  43 => 11,  39 => 10,  34 => 7,  31 => 6,  28 => 5,  25 => 4,  23 => 3,  19 => 1,);
+        return array (  250 => 90,  246 => 88,  240 => 86,  238 => 85,  235 => 84,  229 => 82,  227 => 81,  223 => 79,  221 => 78,  216 => 75,  213 => 74,  211 => 73,  206 => 72,  200 => 70,  194 => 68,  188 => 66,  185 => 65,  183 => 64,  179 => 63,  176 => 62,  173 => 61,  170 => 60,  168 => 59,  163 => 58,  161 => 57,  149 => 47,  145 => 45,  131 => 43,  127 => 42,  124 => 41,  122 => 40,  118 => 38,  112 => 36,  110 => 35,  107 => 34,  101 => 32,  99 => 31,  95 => 29,  87 => 27,  78 => 24,  72 => 22,  70 => 21,  67 => 20,  65 => 19,  62 => 18,  56 => 16,  53 => 15,  50 => 14,  47 => 13,  44 => 12,  41 => 11,  39 => 10,  34 => 7,  31 => 6,  28 => 5,  25 => 4,  23 => 3,  19 => 1,);
     }
 }
 /* <div class="list-item">*/
 /* */
 /*     {% set header_image = page.header.header_image|defined(true) %}*/
-/*     {% set header_image_width  = page.header.header_image_width|defined(900) %}*/
+/*     {% set header_image_width  = page.header.header_image_width|defined(400) %}*/
 /*     {% set header_image_height = page.header.header_image_height|defined(300) %}*/
 /*     {% set header_image_file = page.header.header_image_file %}*/
 /* */
 /*     <div class="list-blog-header">*/
-/*         <span class="list-blog-date">*/
-/*             <span>{{ page.date|date("d") }}</span>*/
-/*             <em>{{ page.date|date("M") }}</em>*/
-/*         </span>*/
+/* */
+/*         {% if header_image %}*/
+/*             {% if header_image_file %}*/
+/*                 {% set header_image_media = page.media.images[header_image_file] %}*/
+/*             {% else %}*/
+/*                 {% set header_image_media = page.media.images|first %}*/
+/*             {% endif %}*/
+/*             {{ header_image_media.cropZoom(header_image_width, header_image_height).html }}*/
+/*         {% endif %}*/
+/* */
 /*         {% if page.header.link %}*/
 /*             <h1>*/
 /*                 {% if page.header.continue_link is not sameas(false) %}*/
@@ -298,7 +293,7 @@ class __TwigTemplate_e92e96e45507a22d0b07ad0d3f7aebe60702250f6662fcdeec33e985931
 /*                 <a href="{{ page.header.link }}">{{ page.title }}</a>*/
 /*             </h1>*/
 /*         {% else %}*/
-/*             <h1><a href="{{ page.url }}">{{ page.title }}</a></h1>*/
+/*             <h4><a href="{{ page.url }}">{{ page.title }}</a></h4>*/
 /*         {% endif %}*/
 /*         */
 /*         <div id="author-info">*/
@@ -307,7 +302,7 @@ class __TwigTemplate_e92e96e45507a22d0b07ad0d3f7aebe60702250f6662fcdeec33e985931
 /*         {% endif %}*/
 /* */
 /*         {% if page.header.author.org %}*/
-/*                 <span class="by-org"> - {{ page.header.author.org }}</span>*/
+/*                 <span class="by-org">{{ page.header.author.org }}</span>*/
 /*         {% endif %}*/
 /*         </div>*/
 /* */
@@ -320,14 +315,7 @@ class __TwigTemplate_e92e96e45507a22d0b07ad0d3f7aebe60702250f6662fcdeec33e985931
 /*         {% endif %}*/
 /*         */
 /*         */
-/*         {% if header_image %}*/
-/*             {% if header_image_file %}*/
-/*                 {% set header_image_media = page.media.images[header_image_file] %}*/
-/*             {% else %}*/
-/*                 {% set header_image_media = page.media.images|first %}*/
-/*             {% endif %}*/
-/*             {{ header_image_media.cropZoom(header_image_width, header_image_height).html }}*/
-/*         {% endif %}*/
+/* */
 /* */
 /*     </div>*/
 /* */
@@ -341,8 +329,7 @@ class __TwigTemplate_e92e96e45507a22d0b07ad0d3f7aebe60702250f6662fcdeec33e985931
 /*         {% set show_prev_next = true %}*/
 /*         {% endif %}*/
 /*     {% elseif truncate and page.summary != page.content %}*/
-/*         <p><strong>Abstract: </strong> {{ page.header.abstract }}</p>*/
-/*         <p><a href="{{ page.url }}">Continue Reading...</a></p>*/
+/*         <p>{# <a href="{{ page.url }}">Continue Reading...</a> #}</p>*/
 /*     {% elseif truncate %}*/
 /*         {% if page.summary != page.content %}*/
 /*             {{ page.content|truncate(550) }}*/
@@ -354,6 +341,7 @@ class __TwigTemplate_e92e96e45507a22d0b07ad0d3f7aebe60702250f6662fcdeec33e985931
 /*         {{ page.content }}*/
 /*         {% set show_prev_next = true %}*/
 /*     {% endif %}*/
+/* */
 /* */
 /* */
 /*     {% if show_prev_next %}*/

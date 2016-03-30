@@ -11,21 +11,47 @@
 		<div class="blog-header">
 		{% endif %}
 			{{ page.content }}
+			<div id="issuehead">
+			<img src="user/pages/images/isrlogo-sq.png" class="index-logo"><h1>ISSUE ONE</h1>
+			<div id="categories">
+			<h3><a href="#">tech policy</a></h3>
+			<h3>&middot;</h3>
+			<h3><a href="#">hci</a></h3>
+			<h3>&middot;</h3>
+			<h3><a href="#">data science</a></h3>
+			</div>
+
+			</div>
 		</div>
 
 			{% if config.plugins.breadcrumbs.enabled %}
-				{% include 'partials/breadcrumbs.html.twig' %}
+				{# {% include 'partials/breadcrumbs.html.twig' %} #}
 			{% endif %}
 
 		<div class="content-wrapper blog-content-list grid pure-g">
 			<div id="listing" class="block pure-u-2-3">
-				{% for child in collection %}
-			        {% include 'partials/blog_item.html.twig' with {'page':child, 'truncate':true} %}
+			<div id="techpolicy">
+			<h3>tech policy</h3>
+
+				{% for child in collection|slice (1, 2) %}
+			        	{% include 'partials/blog_item.html.twig' with {'page':child, 'truncate':true} %}
 			    {% endfor %}
 
                 {% if config.plugins.pagination.enabled and collection.params.pagination %}
                     {% include 'partials/pagination.html.twig' with {'base_url':page.url, 'pagination':collection.params.pagination} %}
                 {% endif %}
+            </div>
+            <div id="HCI">
+			<h3>HCI</h3>
+
+				{% for child in collection|slice (0,1) %}
+			        	{% include 'partials/blog_item.html.twig' with {'page':child, 'truncate':true} %}
+			    {% endfor %}
+
+                {% if config.plugins.pagination.enabled and collection.params.pagination %}
+                    {% include 'partials/pagination.html.twig' with {'base_url':page.url, 'pagination':collection.params.pagination} %}
+                {% endif %}
+            </div>
 			</div>
 			<div id="sidebar" class="block size-1-3 pure-u-1-3">
 				{% include 'partials/sidebar.html.twig' with {'blog':page} %}

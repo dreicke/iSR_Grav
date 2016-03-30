@@ -2,7 +2,7 @@
 return [
     '@class' => 'Grav\\Common\\File\\CompiledYamlFile',
     'filename' => '/Applications/MAMP/htdocs/iSR_Grav/user/plugins/breadcrumbs/blueprints.yaml',
-    'modified' => 1456533235,
+    'modified' => 1458750102,
     'data' => [
         'name' => 'Breadcrumbs',
         'version' => '1.4.0',

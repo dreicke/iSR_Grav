@@ -1,8 +1,8 @@
 <?php
 return [
     '@class' => 'Grav\\Common\\Config\\CompiledBlueprints',
-    'timestamp' => 1456533537,
-    'checksum' => 'bb6c536de263086d4c02a8030f5cd498',
+    'timestamp' => 1458750108,
+    'checksum' => 'a69afd15dacb30ec4c45870b560d3fab',
     'files' => [
         'system/blueprints/config' => [
             'media' => [
@@ -29,7 +29,7 @@ return [
             ],
             'plugins/archives' => [
                 'file' => 'user/plugins/archives/blueprints.yaml',
-                'modified' => 1456533233
+                'modified' => 1458750100
             ],
             'plugins/assets' => [
                 'file' => 'user/plugins/assets/blueprints.yaml',
@@ -37,11 +37,11 @@ return [
             ],
             'plugins/blog-injector' => [
                 'file' => 'user/plugins/blog-injector/blueprints.yaml',
-                'modified' => 1456533236
+                'modified' => 1458750107
             ],
             'plugins/breadcrumbs' => [
                 'file' => 'user/plugins/breadcrumbs/blueprints.yaml',
-                'modified' => 1456533235
+                'modified' => 1458750102
             ],
             'plugins/data-manager' => [
                 'file' => 'user/plugins/data-manager/blueprints.yaml',
@@ -57,7 +57,7 @@ return [
             ],
             'plugins/feed' => [
                 'file' => 'user/plugins/feed/blueprints.yaml',
-                'modified' => 1456533228
+                'modified' => 1458750096
             ],
             'plugins/form' => [
                 'file' => 'user/plugins/form/blueprints.yaml',
@@ -73,7 +73,7 @@ return [
             ],
             'plugins/pagination' => [
                 'file' => 'user/plugins/pagination/blueprints.yaml',
-                'modified' => 1456533231
+                'modified' => 1458750098
             ],
             'plugins/problems' => [
                 'file' => 'user/plugins/problems/blueprints.yaml',
@@ -81,7 +81,7 @@ return [
             ],
             'plugins/relatedpages' => [
                 'file' => 'user/plugins/relatedpages/blueprints.yaml',
-                'modified' => 1456533230
+                'modified' => 1458750097
             ],
             'plugins/shortcodes' => [
                 'file' => 'user/plugins/shortcodes/blueprints.yaml',
@@ -97,11 +97,11 @@ return [
             ],
             'plugins/simplesearch' => [
                 'file' => 'user/plugins/simplesearch/blueprints.yaml',
-                'modified' => 1456533227
+                'modified' => 1458750093
             ],
             'plugins/taxonomylist' => [
                 'file' => 'user/plugins/taxonomylist/blueprints.yaml',
-                'modified' => 1456533232
+                'modified' => 1458750099
             ]
         ]
     ],
@@ -467,7 +467,7 @@ return [
             ],
             'plugins.blog-injector.enabled' => [
                 'type' => 'toggle',
-                'label' => 'Plugin status',
+                'label' => 'PLUGIN_BLOG_INJECTOR.ADMIN.PLUGIN_STATUS',
                 'highlight' => 1,
                 'default' => 0,
                 'options' => [
@@ -481,19 +481,19 @@ return [
             ],
             'plugins.blog-injector.framework' => [
                 'type' => 'select',
-                'label' => 'Framework',
+                'label' => 'PLUGIN_BLOG_INJECTOR.ADMIN.FRAMEWORK',
                 'size' => 'small',
                 'default' => 'pure',
                 'options' => [
                     'pure' => 'pure',
                     'bootstrap' => 'bootstrap'
                 ],
-                'help' => 'Choose the framework to use',
+                'help' => 'PLUGIN_BLOG_INJECTOR.ADMIN.HELP.FRAMEWORK',
                 'name' => 'plugins.blog-injector.framework'
             ],
             'plugins.blog-injector.add_default_css' => [
                 'type' => 'toggle',
-                'label' => 'Add default stylesheet',
+                'label' => 'PLUGIN_BLOG_INJECTOR.ADMIN.DEFAULT_STYLESHEET',
                 'highlight' => 1,
                 'default' => 1,
                 'options' => [
@@ -503,12 +503,12 @@ return [
                 'validate' => [
                     'type' => 'bool'
                 ],
-                'help' => 'Automatically adds the included blog stylesheet according to the selected framework, when true',
+                'help' => 'PLUGIN_BLOG_INJECTOR.ADMIN.HELP.DEFAULT_STYLESHEET',
                 'name' => 'plugins.blog-injector.add_default_css'
             ],
             'plugins.blog-injector.add_framework_assets' => [
                 'type' => 'toggle',
-                'label' => 'Add framework assets',
+                'label' => 'PLUGIN_BLOG_INJECTOR.ADMIN.FRAMEWORK_ASSETS',
                 'highlight' => 1,
                 'default' => 1,
                 'options' => [
@@ -518,7 +518,7 @@ return [
                 'validate' => [
                     'type' => 'bool'
                 ],
-                'help' => 'Automatically adds selected framework assets, when true',
+                'help' => 'PLUGIN_BLOG_INJECTOR.ADMIN.HELP.FRAMEWORK_ASSETS',
                 'name' => 'plugins.blog-injector.add_framework_assets'
             ],
             'plugins.breadcrumbs' => [

@@ -1,11 +1,20 @@
 <div class="list-item">
 
     {% set header_image = page.header.header_image|defined(true) %}
-    {% set header_image_width  = page.header.header_image_width|defined(900) %}
+    {% set header_image_width  = page.header.header_image_width|defined(400) %}
     {% set header_image_height = page.header.header_image_height|defined(300) %}
     {% set header_image_file = page.header.header_image_file %}
 
     <div class="list-blog-header">
+
+        {% if header_image %}
+            {% if header_image_file %}
+                {% set header_image_media = page.media.images[header_image_file] %}
+            {% else %}
+                {% set header_image_media = page.media.images|first %}
+            {% endif %}
+            {{ header_image_media.cropZoom(header_image_width, header_image_height).html }}
+        {% endif %}
 
         {% if page.header.link %}
             <h1>
@@ -24,7 +33,7 @@
         {% endif %}
 
         {% if page.header.author.org %}
-                <span class="by-org"> - {{ page.header.author.org }}</span>
+                <span class="by-org">{{ page.header.author.org }}</span>
         {% endif %}
         </div>
 
@@ -37,14 +46,7 @@
         {% endif %}
         
         
-        {% if header_image %}
-            {% if header_image_file %}
-                {% set header_image_media = page.media.images[header_image_file] %}
-            {% else %}
-                {% set header_image_media = page.media.images|first %}
-            {% endif %}
-            {{ header_image_media.cropZoom(header_image_width, header_image_height).html }}
-        {% endif %}
+
 
     </div>
 
@@ -58,7 +60,7 @@
         {% set show_prev_next = true %}
         {% endif %}
     {% elseif truncate and page.summary != page.content %}
-        <p><a href="{{ page.url }}">Continue Reading...</a></p>
+        <p>{# <a href="{{ page.url }}">Continue Reading...</a> #}</p>
     {% elseif truncate %}
         {% if page.summary != page.content %}
             {{ page.content|truncate(550) }}
@@ -70,6 +72,7 @@
         {{ page.content }}
         {% set show_prev_next = true %}
     {% endif %}
+
 
 
     {% if show_prev_next %}
