@@ -13,6 +13,7 @@ taxonomy:
 author:
     name: 'Kali Braden, Alex Herd, Brian Lau, Magdalene Schifferer & My Anh Troung'
     org: 'University of Toronto'
+header_image: user/themes/isrtheme/images/parc.png
 ---
 
 In the past half-decade, various individuals and groups have begun to record social media data from a variety of public events across the world, in particular political occurrences that have engaged a wide spectrum of insiders and outsiders. Contemporary information specialists are among those who seek to preserve this data, recognizing its importance for the historical record as representative of how early-21st century humans communicate and associated cultural norms, dialogue, trends and events (Scola, 2015). Moreover, collected data can serve numerous educational uses, now and in the future. There is no single method for this emerging task in the information field. This article suggests one approach, encompassed in a series of instructional guidelines (Figure 1.1 and Figure 1.2) aimed at assisting those archivists, librarians, and other information specialists tasked with harvesting and curating one form of social media data - Tweets - from international political events. These guidelines address the copyright, ethical, and task-related issues involved in the harvesting and curation of political Tweets.

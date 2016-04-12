@@ -1,7 +1,7 @@
 <div class="list-item">
 
     {% set header_image = page.header.header_image|defined(true) %}
-    {% set header_image_width  = page.header.header_image_width|defined(400) %}
+    {% set header_image_width  = page.header.header_image_width|defined(670) %}
     {% set header_image_height = page.header.header_image_height|defined(300) %}
     {% set header_image_file = page.header.header_image_file %}
 
@@ -37,13 +37,7 @@
         {% endif %}
         </div>
 
-        {% if page.taxonomy.tag %}
-        <span class="tags">
-            {% for tag in page.taxonomy.tag %}
-            <a href="{{ blog.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ tag }}">{{ tag }}</a>
-            {% endfor %}
-        </span>
-        {% endif %}
+
         
         
 

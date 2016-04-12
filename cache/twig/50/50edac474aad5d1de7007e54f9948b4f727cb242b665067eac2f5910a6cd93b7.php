@@ -16,8 +16,8 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
     protected function doDisplay(array $context, array $blocks = array())
     {
         // line 1
-        $this->loadTemplate("blog.html.twig", "blog.html.twig", 1, "731124273")->display($context);
-        // line 63
+        $this->loadTemplate("blog.html.twig", "blog.html.twig", 1, "935546601")->display($context);
+        // line 84
         echo "
 
 ";
@@ -35,13 +35,13 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 
     public function getDebugInfo()
     {
-        return array (  21 => 63,  19 => 1,);
+        return array (  21 => 84,  19 => 1,);
     }
 }
 
 
 /* blog.html.twig */
-class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b9838b5c_731124273 extends Twig_Template
+class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b9838b5c_935546601 extends Twig_Template
 {
     public function __construct(Twig_Environment $env)
     {
@@ -105,126 +105,146 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 \t\t\t</div>
 \t\t</div>
 
-\t\t\t";
-        // line 27
-        if ($this->getAttribute($this->getAttribute($this->getAttribute((isset($context["config"]) ? $context["config"] : null), "plugins", array()), "breadcrumbs", array()), "enabled", array())) {
-            // line 28
-            echo "\t\t\t\t";
-            // line 29
-            echo "\t\t\t";
-        }
-        // line 30
-        echo "
+
+
+
 \t\t<div class=\"content-wrapper blog-content-list grid pure-g\">
 \t\t\t<div id=\"listing\" class=\"block pure-u-2-3\">
 \t\t\t<div id=\"techpolicy\">
 \t\t\t<h3>tech policy</h3>
 
-\t\t\t\t";
-        // line 36
+\t\t\t";
+        // line 35
         $context['_parent'] = $context;
-        $context['_seq'] = twig_ensure_traversable(twig_slice($this->env, (isset($context["collection"]) ? $context["collection"] : null), 1, 2));
-        $context['loop'] = array(
-          'parent' => $context['_parent'],
-          'index0' => 0,
-          'index'  => 1,
-          'first'  => true,
-        );
-        if (is_array($context['_seq']) || (is_object($context['_seq']) && $context['_seq'] instanceof Countable)) {
-            $length = count($context['_seq']);
-            $context['loop']['revindex0'] = $length - 1;
-            $context['loop']['revindex'] = $length;
-            $context['loop']['length'] = $length;
-            $context['loop']['last'] = 1 === $length;
-        }
-        foreach ($context['_seq'] as $context["_key"] => $context["child"]) {
+        $context['_seq'] = twig_ensure_traversable($this->getAttribute((isset($context["taxonomy"]) ? $context["taxonomy"] : null), "findTaxonomy", array(0 => array("tag" => "tech policy")), "method"));
+        foreach ($context['_seq'] as $context["_key"] => $context["post"]) {
+            // line 36
+            echo "\t\t\t\t\t<div class=\"articulo\">
+\t\t\t\t\t    <a href=\"";
             // line 37
-            echo "\t\t\t        \t";
-            $this->loadTemplate("partials/blog_item.html.twig", "blog.html.twig", 37)->display(array_merge($context, array("page" => $context["child"], "truncate" => true)));
+            echo $this->getAttribute($context["post"], "url", array());
+            echo "\"><img class=\"indexthumb\" src=\"";
+            echo $this->getAttribute($this->getAttribute($context["post"], "header", array()), "header_image", array());
+            echo "\"></a>
+\t\t\t\t\t    <a href=\"";
             // line 38
-            echo "\t\t\t    ";
-            ++$context['loop']['index0'];
-            ++$context['loop']['index'];
-            $context['loop']['first'] = false;
-            if (isset($context['loop']['length'])) {
-                --$context['loop']['revindex0'];
-                --$context['loop']['revindex'];
-                $context['loop']['last'] = 0 === $context['loop']['revindex0'];
-            }
+            echo $this->getAttribute($context["post"], "url", array());
+            echo "\"><h4>";
+            echo $this->getAttribute($context["post"], "title", array());
+            echo "</h4></a>
+\t\t\t\t\t    <span class=\"byline\">";
+            // line 39
+            echo $this->getAttribute($this->getAttribute($this->getAttribute($context["post"], "header", array()), "author", array()), "name", array());
+            echo "</span>
+\t\t\t\t\t    <span class=\"by-org\">";
+            // line 40
+            echo $this->getAttribute($this->getAttribute($this->getAttribute($context["post"], "header", array()), "author", array()), "org", array());
+            echo "</span>
+\t\t\t\t    </div>
+\t\t\t";
         }
         $_parent = $context['_parent'];
-        unset($context['_seq'], $context['_iterated'], $context['_key'], $context['child'], $context['_parent'], $context['loop']);
+        unset($context['_seq'], $context['_iterated'], $context['_key'], $context['post'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 39
-        echo "
-                ";
-        // line 40
-        if (($this->getAttribute($this->getAttribute($this->getAttribute((isset($context["config"]) ? $context["config"] : null), "plugins", array()), "pagination", array()), "enabled", array()) && $this->getAttribute($this->getAttribute((isset($context["collection"]) ? $context["collection"] : null), "params", array()), "pagination", array()))) {
-            // line 41
-            echo "                    ";
-            $this->loadTemplate("partials/pagination.html.twig", "blog.html.twig", 41)->display(array_merge($context, array("base_url" => $this->getAttribute((isset($context["page"]) ? $context["page"] : null), "url", array()), "pagination" => $this->getAttribute($this->getAttribute((isset($context["collection"]) ? $context["collection"] : null), "params", array()), "pagination", array()))));
-            // line 42
-            echo "                ";
-        }
         // line 43
-        echo "            </div>
-            <div id=\"HCI\">
-\t\t\t<h3>HCI</h3>
+        echo "
+            </div>
+            <div id=\"infoviz\">
+\t            <h3>Information Visualization</h3>
+
+\t\t\t\t\t";
+        // line 48
+        $context['_parent'] = $context;
+        $context['_seq'] = twig_ensure_traversable($this->getAttribute((isset($context["taxonomy"]) ? $context["taxonomy"] : null), "findTaxonomy", array(0 => array("tag" => "infoviz")), "method"));
+        foreach ($context['_seq'] as $context["_key"] => $context["post"]) {
+            // line 49
+            echo "\t\t\t\t\t\t<div class=\"articulo featured\">
+\t\t\t\t\t\t    <a href=\"";
+            // line 50
+            echo $this->getAttribute($context["post"], "url", array());
+            echo "\"><img class=\"indexthumb\" src=\"";
+            echo $this->getAttribute($this->getAttribute($context["post"], "header", array()), "header_image", array());
+            echo "\"></a>
+\t\t\t\t\t\t    <a href=\"";
+            // line 51
+            echo $this->getAttribute($context["post"], "url", array());
+            echo "\"><h4>";
+            echo $this->getAttribute($context["post"], "title", array());
+            echo "</h4></a>
+\t\t\t\t\t\t    <span class=\"byline\">";
+            // line 52
+            echo $this->getAttribute($this->getAttribute($this->getAttribute($context["post"], "header", array()), "author", array()), "name", array());
+            echo "</span>
+\t\t\t\t\t\t    <span class=\"by-org\">";
+            // line 53
+            echo $this->getAttribute($this->getAttribute($this->getAttribute($context["post"], "header", array()), "author", array()), "org", array());
+            echo "</span>
+\t\t\t\t\t    </div>
+\t\t\t\t\t";
+        }
+        $_parent = $context['_parent'];
+        unset($context['_seq'], $context['_iterated'], $context['_key'], $context['post'], $context['_parent'], $context['loop']);
+        $context = array_intersect_key($context, $_parent) + $_parent;
+        // line 56
+        echo "
+
+            </div>
+            <div id=\"hci\">
+\t\t\t\t<h3>HCI</h3>
 
 \t\t\t\t";
-        // line 47
+        // line 62
         $context['_parent'] = $context;
-        $context['_seq'] = twig_ensure_traversable(twig_slice($this->env, (isset($context["collection"]) ? $context["collection"] : null), 0, 1));
-        $context['loop'] = array(
-          'parent' => $context['_parent'],
-          'index0' => 0,
-          'index'  => 1,
-          'first'  => true,
-        );
-        if (is_array($context['_seq']) || (is_object($context['_seq']) && $context['_seq'] instanceof Countable)) {
-            $length = count($context['_seq']);
-            $context['loop']['revindex0'] = $length - 1;
-            $context['loop']['revindex'] = $length;
-            $context['loop']['length'] = $length;
-            $context['loop']['last'] = 1 === $length;
-        }
-        foreach ($context['_seq'] as $context["_key"] => $context["child"]) {
-            // line 48
-            echo "\t\t\t        \t";
-            $this->loadTemplate("partials/blog_item.html.twig", "blog.html.twig", 48)->display(array_merge($context, array("page" => $context["child"], "truncate" => true)));
-            // line 49
-            echo "\t\t\t    ";
-            ++$context['loop']['index0'];
-            ++$context['loop']['index'];
-            $context['loop']['first'] = false;
-            if (isset($context['loop']['length'])) {
-                --$context['loop']['revindex0'];
-                --$context['loop']['revindex'];
-                $context['loop']['last'] = 0 === $context['loop']['revindex0'];
-            }
+        $context['_seq'] = twig_ensure_traversable($this->getAttribute((isset($context["taxonomy"]) ? $context["taxonomy"] : null), "findTaxonomy", array(0 => array("tag" => "HCI")), "method"));
+        foreach ($context['_seq'] as $context["_key"] => $context["post"]) {
+            // line 63
+            echo "\t\t\t\t\t<div class=\"articulo\">
+\t\t\t\t\t    <a href=\"";
+            // line 64
+            echo $this->getAttribute($context["post"], "url", array());
+            echo "\"><img class=\"indexthumb\" src=\"";
+            echo $this->getAttribute($this->getAttribute($context["post"], "header", array()), "header_image", array());
+            echo "\"></a>
+\t\t\t\t\t    <a href=\"";
+            // line 65
+            echo $this->getAttribute($context["post"], "url", array());
+            echo "\"><h4>";
+            echo $this->getAttribute($context["post"], "title", array());
+            echo "</h4></a>
+\t\t\t\t\t    <span class=\"byline\">";
+            // line 66
+            echo $this->getAttribute($this->getAttribute($this->getAttribute($context["post"], "header", array()), "author", array()), "name", array());
+            echo "</span>
+\t\t\t\t\t    <span class=\"by-org\">";
+            // line 67
+            echo $this->getAttribute($this->getAttribute($this->getAttribute($context["post"], "header", array()), "author", array()), "org", array());
+            echo "</span>
+\t\t\t\t    </div>
+\t\t\t\t";
         }
         $_parent = $context['_parent'];
-        unset($context['_seq'], $context['_iterated'], $context['_key'], $context['child'], $context['_parent'], $context['loop']);
+        unset($context['_seq'], $context['_iterated'], $context['_key'], $context['post'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 50
-        echo "
+        // line 70
+        echo "\t\t\t\t
+
                 ";
-        // line 51
+        // line 72
         if (($this->getAttribute($this->getAttribute($this->getAttribute((isset($context["config"]) ? $context["config"] : null), "plugins", array()), "pagination", array()), "enabled", array()) && $this->getAttribute($this->getAttribute((isset($context["collection"]) ? $context["collection"] : null), "params", array()), "pagination", array()))) {
-            // line 52
+            // line 73
             echo "                    ";
-            $this->loadTemplate("partials/pagination.html.twig", "blog.html.twig", 52)->display(array_merge($context, array("base_url" => $this->getAttribute((isset($context["page"]) ? $context["page"] : null), "url", array()), "pagination" => $this->getAttribute($this->getAttribute((isset($context["collection"]) ? $context["collection"] : null), "params", array()), "pagination", array()))));
-            // line 53
+            $this->loadTemplate("partials/pagination.html.twig", "blog.html.twig", 73)->display(array_merge($context, array("base_url" => $this->getAttribute((isset($context["page"]) ? $context["page"] : null), "url", array()), "pagination" => $this->getAttribute($this->getAttribute((isset($context["collection"]) ? $context["collection"] : null), "params", array()), "pagination", array()))));
+            // line 74
             echo "                ";
         }
-        // line 54
+        // line 75
         echo "            </div>
 \t\t\t</div>
 \t\t\t<div id=\"sidebar\" class=\"block size-1-3 pure-u-1-3\">
 \t\t\t\t";
-        // line 57
-        $this->loadTemplate("partials/sidebar.html.twig", "blog.html.twig", 57)->display(array_merge($context, array("blog" => (isset($context["page"]) ? $context["page"] : null))));
-        // line 58
+        // line 78
+        $this->loadTemplate("partials/sidebar.html.twig", "blog.html.twig", 78)->display(array_merge($context, array("blog" => (isset($context["page"]) ? $context["page"] : null))));
+        // line 79
         echo "\t\t\t</div>
 \t\t</div>
 \t";
@@ -242,7 +262,7 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 
     public function getDebugInfo()
     {
-        return array (  228 => 58,  226 => 57,  221 => 54,  218 => 53,  215 => 52,  213 => 51,  210 => 50,  196 => 49,  193 => 48,  176 => 47,  170 => 43,  167 => 42,  164 => 41,  162 => 40,  159 => 39,  145 => 38,  142 => 37,  125 => 36,  117 => 30,  114 => 29,  112 => 28,  110 => 27,  92 => 13,  88 => 11,  82 => 9,  80 => 8,  77 => 7,  74 => 6,  71 => 5,  67 => 1,  65 => 3,  51 => 1,  21 => 63,  19 => 1,);
+        return array (  248 => 79,  246 => 78,  241 => 75,  238 => 74,  235 => 73,  233 => 72,  229 => 70,  220 => 67,  216 => 66,  210 => 65,  204 => 64,  201 => 63,  197 => 62,  189 => 56,  180 => 53,  176 => 52,  170 => 51,  164 => 50,  161 => 49,  157 => 48,  150 => 43,  141 => 40,  137 => 39,  131 => 38,  125 => 37,  122 => 36,  118 => 35,  92 => 13,  88 => 11,  82 => 9,  80 => 8,  77 => 7,  74 => 6,  71 => 5,  67 => 1,  65 => 3,  51 => 1,  21 => 84,  19 => 1,);
     }
 }
 /* {% embed 'partials/base.html.twig' %}*/
@@ -271,29 +291,50 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 /* 			</div>*/
 /* 		</div>*/
 /* */
-/* 			{% if config.plugins.breadcrumbs.enabled %}*/
-/* 				{# {% include 'partials/breadcrumbs.html.twig' %} #}*/
-/* 			{% endif %}*/
+/* */
+/* */
 /* */
 /* 		<div class="content-wrapper blog-content-list grid pure-g">*/
 /* 			<div id="listing" class="block pure-u-2-3">*/
 /* 			<div id="techpolicy">*/
 /* 			<h3>tech policy</h3>*/
 /* */
-/* 				{% for child in collection|slice (1, 2) %}*/
-/* 			        	{% include 'partials/blog_item.html.twig' with {'page':child, 'truncate':true} %}*/
-/* 			    {% endfor %}*/
+/* 			{% for post in taxonomy.findTaxonomy({'tag':'tech policy'}) %}*/
+/* 					<div class="articulo">*/
+/* 					    <a href="{{ post.url }}"><img class="indexthumb" src="{{ post.header.header_image }}"></a>*/
+/* 					    <a href="{{ post.url }}"><h4>{{ post.title }}</h4></a>*/
+/* 					    <span class="byline">{{ post.header.author.name }}</span>*/
+/* 					    <span class="by-org">{{ post.header.author.org }}</span>*/
+/* 				    </div>*/
+/* 			{% endfor %}*/
 /* */
-/*                 {% if config.plugins.pagination.enabled and collection.params.pagination %}*/
-/*                     {% include 'partials/pagination.html.twig' with {'base_url':page.url, 'pagination':collection.params.pagination} %}*/
-/*                 {% endif %}*/
 /*             </div>*/
-/*             <div id="HCI">*/
-/* 			<h3>HCI</h3>*/
+/*             <div id="infoviz">*/
+/* 	            <h3>Information Visualization</h3>*/
 /* */
-/* 				{% for child in collection|slice (0,1) %}*/
-/* 			        	{% include 'partials/blog_item.html.twig' with {'page':child, 'truncate':true} %}*/
-/* 			    {% endfor %}*/
+/* 					{% for post in taxonomy.findTaxonomy({'tag':'infoviz'}) %}*/
+/* 						<div class="articulo featured">*/
+/* 						    <a href="{{ post.url }}"><img class="indexthumb" src="{{ post.header.header_image }}"></a>*/
+/* 						    <a href="{{ post.url }}"><h4>{{ post.title }}</h4></a>*/
+/* 						    <span class="byline">{{ post.header.author.name }}</span>*/
+/* 						    <span class="by-org">{{ post.header.author.org }}</span>*/
+/* 					    </div>*/
+/* 					{% endfor %}*/
+/* */
+/* */
+/*             </div>*/
+/*             <div id="hci">*/
+/* 				<h3>HCI</h3>*/
+/* */
+/* 				{% for post in taxonomy.findTaxonomy({'tag':'HCI'}) %}*/
+/* 					<div class="articulo">*/
+/* 					    <a href="{{ post.url }}"><img class="indexthumb" src="{{ post.header.header_image }}"></a>*/
+/* 					    <a href="{{ post.url }}"><h4>{{ post.title }}</h4></a>*/
+/* 					    <span class="byline">{{ post.header.author.name }}</span>*/
+/* 					    <span class="by-org">{{ post.header.author.org }}</span>*/
+/* 				    </div>*/
+/* 				{% endfor %}*/
+/* 				*/
 /* */
 /*                 {% if config.plugins.pagination.enabled and collection.params.pagination %}*/
 /*                     {% include 'partials/pagination.html.twig' with {'base_url':page.url, 'pagination':collection.params.pagination} %}*/

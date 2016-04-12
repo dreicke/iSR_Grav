@@ -15,7 +15,13 @@ author:
     org: 'University College London'
 visualization:
 topojson: true
+header_image: user/themes/isrtheme/images/paper2.jpg
 ---
+
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+
+<script src="http://a11y.nicolas-hoffmann.net/modal/js/jquery-accessible-modal-window-aria.js"></script>
+
 
 <style>
     .slider {
@@ -51,10 +57,71 @@ topojson: true
       top: -7px;
       left: -7px;
     }
+
+    dialog {
+        display: block;
+        z-index: 1;
+        position: fixed;
+        top: 100px;
+        right: 15%;
+        left: 15%;
+        width: 70%;
+        border: 1px solid #EAEAEA;
+        border-radius: 5px;
+        padding-right: 5%;
+        padding-left: 5%;
+        max-height: 550px;
+        overflow: scroll;
+        }
+
+    dialog h1{
+      font-size: 1.5rem;
+      text-transform: none;
+      letter-spacing:0px;
+    }
+    .modal {
+      position: fixed;
+      left: 25%;
+      right: auto;
+      top: 25%;
+      width: 50%;
+      margin: 0 auto;
+      border: 1px solid red; 
+      background: #fff;
+      z-index: 667;
+      padding: 2em;
+    }
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      background: #000;
+      opacity: .6;
+      z-index: 666;
+    }
+
+    .hidden{
+      display: none;
+    }
+
+    .js-modal{
+      width:100%;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
 </style>
 
-####Abstract:
->>>>>>This article examines the feasibility and desirability of a paperless, global information environment. It assesses the social and technological advantages and constraints of an entirely digital library environment. It focuses on the problems of digital preservation and access, the relationship between the private commerce of technological advancements and the library's obligation towards public access and stewardship, concentrating on the problems posed by rapid advancements and online obsolescence.  It weighs the preservation strategies to be gained from digitization against the potential legal and bibliographic losses to be made from an unsupervised monopoly on the market. This assessment takes stock of the current landscape and looks to hybrid possibilities for the future of the sector. 
+
+<div id="endorsement" class="hidden modal">
+  <p>This paper discusses the key issues around a paperless, global information environment focusing on the idea that a balance between physical and digital formats is not only more realistic but also more appropriate. The discussions consider the issues recognising the imperfections and unreliabilities of electronic media within the context of their affordances of widespread access and importance in the preservation process. The author recognises the impact of market forces on the process of digitisation and discusses quite clearly the tensions arising from these in the perpetuation and sharing of knowledge. The importance of information literacy is clearly identified in relation to the adoption of online materials and the complexity of supporting the development of these literacies within the complex information environment is linked effectively to a consideration role of the library and information professional within this context. Throughout the paper the author draws from relevant current examples from professional and academic literature and makes a very coherent argument that the optimum information environment in today’s context recognises a balance between the physical and the digital.</p>
+
+  <p><em>Dr Charles Inskip, Programme Director, MA Library and Information Studies, University College London</em></p>
+  
+</div>
+
+<button class="js-modal" data-modal-prefix-class="simple-animated" data-modal-content-id="endorsement" data-modal-title="Faculty Endorsement" data-modal-close-text="Close" data-modal-close-title="Close this modal window">Show faculty endorsement</button>
 
 
 In the BiblioTech of San Antonio, Texas, books have been replaced with digital collections: the transition towards paperless information environments has already begun. But the pace of change may be too fast for libraries to adapt to and still maintain their commitment to collection preservation and universal access to lifelong learning. While paperless, global information environments are desirable in an idealised form, the feasibility of current models suggests that a compromise – neither fully print nor fully digital – may be the best solution. 

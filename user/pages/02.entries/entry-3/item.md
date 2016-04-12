@@ -5,14 +5,14 @@ summary:
     enabled: '1'
     format: short
 taxonomy:
+    category: blog
     tag:
-        - HCI
-    category:
-        - blog
+        - 'HCI'
 topojson: true
 author:
     name: 'Joshua Appleman, Anand Rajagopal, Anubhav Gupta & Juan Shishido'
     org: 'University of California, Berkeley'
+header_image: user/themes/isrtheme/images/jeopardy.png
 ---
 
 ####Data

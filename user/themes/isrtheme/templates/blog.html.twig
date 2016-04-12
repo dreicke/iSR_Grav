@@ -24,29 +24,50 @@
 			</div>
 		</div>
 
-			{% if config.plugins.breadcrumbs.enabled %}
-				{# {% include 'partials/breadcrumbs.html.twig' %} #}
-			{% endif %}
+
+
 
 		<div class="content-wrapper blog-content-list grid pure-g">
 			<div id="listing" class="block pure-u-2-3">
 			<div id="techpolicy">
 			<h3>tech policy</h3>
 
-				{% for child in collection|slice (1, 2) %}
-			        	{% include 'partials/blog_item.html.twig' with {'page':child, 'truncate':true} %}
-			    {% endfor %}
+			{% for post in taxonomy.findTaxonomy({'tag':'tech policy'}) %}
+					<div class="articulo">
+					    <a href="{{ post.url }}"><img class="indexthumb" src="{{ post.header.header_image }}"></a>
+					    <a href="{{ post.url }}"><h4>{{ post.title }}</h4></a>
+					    <span class="byline">{{ post.header.author.name }}</span>
+					    <span class="by-org">{{ post.header.author.org }}</span>
+				    </div>
+			{% endfor %}
 
-                {% if config.plugins.pagination.enabled and collection.params.pagination %}
-                    {% include 'partials/pagination.html.twig' with {'base_url':page.url, 'pagination':collection.params.pagination} %}
-                {% endif %}
             </div>
-            <div id="HCI">
-			<h3>HCI</h3>
+            <div id="infoviz">
+	            <h3>Information Visualization</h3>
 
-				{% for child in collection|slice (0,1) %}
-			        	{% include 'partials/blog_item.html.twig' with {'page':child, 'truncate':true} %}
-			    {% endfor %}
+					{% for post in taxonomy.findTaxonomy({'tag':'infoviz'}) %}
+						<div class="articulo featured">
+						    <a href="{{ post.url }}"><img class="indexthumb" src="{{ post.header.header_image }}"></a>
+						    <a href="{{ post.url }}"><h4>{{ post.title }}</h4></a>
+						    <span class="byline">{{ post.header.author.name }}</span>
+						    <span class="by-org">{{ post.header.author.org }}</span>
+					    </div>
+					{% endfor %}
+
+
+            </div>
+            <div id="hci">
+				<h3>HCI</h3>
+
+				{% for post in taxonomy.findTaxonomy({'tag':'HCI'}) %}
+					<div class="articulo">
+					    <a href="{{ post.url }}"><img class="indexthumb" src="{{ post.header.header_image }}"></a>
+					    <a href="{{ post.url }}"><h4>{{ post.title }}</h4></a>
+					    <span class="byline">{{ post.header.author.name }}</span>
+					    <span class="by-org">{{ post.header.author.org }}</span>
+				    </div>
+				{% endfor %}
+				
 
                 {% if config.plugins.pagination.enabled and collection.params.pagination %}
                     {% include 'partials/pagination.html.twig' with {'base_url':page.url, 'pagination':collection.params.pagination} %}

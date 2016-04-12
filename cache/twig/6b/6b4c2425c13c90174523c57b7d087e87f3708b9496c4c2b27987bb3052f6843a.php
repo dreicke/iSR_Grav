@@ -23,17 +23,17 @@ class __TwigTemplate_61ab36261361ad1e4e5dfc1407617483b3cc7f72accbf33ff6c838fda49
         echo "
 <div id=\"careers\">
     <h3>careers</h3>
-    <h4><a href=\"#\">What IS a Product Manager, Anyway?</a></h4>
+    <h4><a href=\"/iSR_Grav/entries/what-is-a-pm\">What Is a Product Manager (at a Tech Company)?</a></h4>
     <span class=\"byline\">By Rebecca K. Anderson</span>
     <span class=\"by-org\">University of California, Berkeley</span>
 </div>
 <div id=\"case-studies\">
     <h3>case studies</h3>
-    <h4><a href=\"#\"><strike>Landlord</strike> Spacelord: Organizing Orbital Real Estate</a></h4>
-    <span class=\"byline\">BY: Daniel Brenners</span>
+    <h4><a href=\"/iSR_Grav/entries/spacelords-organizing-orbital-real-estate\">Spacelords: Organizing Orbital Real Estate</a></h4>
+    <span class=\"byline\">By Daniel Brenners</span>
     <span class=\"by-org\">University of California, Berkeley</span>
-    <h4><a href=\"#\">The Design Decisions That Shaped a Citizen Science Project</a></h4>
-    <span class=\"byline\">BY: Laura Montini</span>
+    <h4><a href=\"/iSR_Grav/entries/citizen-science\">The Design Decisions That Shaped a Citizen Science Project</a></h4>
+    <span class=\"byline\">By Laura Montini</span>
     <span class=\"by-org\">University of California, Berkeley</span>
 </div>
 
@@ -62,17 +62,17 @@ class __TwigTemplate_61ab36261361ad1e4e5dfc1407617483b3cc7f72accbf33ff6c838fda49
 /* */
 /* <div id="careers">*/
 /*     <h3>careers</h3>*/
-/*     <h4><a href="#">What IS a Product Manager, Anyway?</a></h4>*/
+/*     <h4><a href="/iSR_Grav/entries/what-is-a-pm">What Is a Product Manager (at a Tech Company)?</a></h4>*/
 /*     <span class="byline">By Rebecca K. Anderson</span>*/
 /*     <span class="by-org">University of California, Berkeley</span>*/
 /* </div>*/
 /* <div id="case-studies">*/
 /*     <h3>case studies</h3>*/
-/*     <h4><a href="#"><strike>Landlord</strike> Spacelord: Organizing Orbital Real Estate</a></h4>*/
-/*     <span class="byline">BY: Daniel Brenners</span>*/
+/*     <h4><a href="/iSR_Grav/entries/spacelords-organizing-orbital-real-estate">Spacelords: Organizing Orbital Real Estate</a></h4>*/
+/*     <span class="byline">By Daniel Brenners</span>*/
 /*     <span class="by-org">University of California, Berkeley</span>*/
-/*     <h4><a href="#">The Design Decisions That Shaped a Citizen Science Project</a></h4>*/
-/*     <span class="byline">BY: Laura Montini</span>*/
+/*     <h4><a href="/iSR_Grav/entries/citizen-science">The Design Decisions That Shaped a Citizen Science Project</a></h4>*/
+/*     <span class="byline">By Laura Montini</span>*/
 /*     <span class="by-org">University of California, Berkeley</span>*/
 /* </div>*/
 /* */
