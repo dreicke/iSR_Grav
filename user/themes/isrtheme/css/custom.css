@@ -2,6 +2,16 @@
 
 @import url(//fonts.googleapis.com/css?family=Lora:400,400italic,700,700italic|Lato:400,300,300italic,400italic,700,700italic);
 
+body{
+	font-family: 'Lato', 'Raleway';
+}
+
+h1,h2,h3,h4,h5,h6{
+	font-family: 'Lato', 'Raleway', sans-serif;
+	font-weight: 700;
+	letter-spacing: 0;
+}
+
 body a {
 	color: #BE66CC;
 }
@@ -11,15 +21,82 @@ body h1 a {
 }
 
 p{
-	font-family: 'Lora'
+	font-family: 'Lora';
+	margin-top: 0.7rem;
 }
-
 
 section#body.welcome{
 	background-image: url('../images/bar-bg3.png');
 	background-size: cover;
 	padding-top: 10rem;
 }
+
+/* ----------------------------------------------------------------hal varian page */
+
+#welcome-letter{
+	display: inline-block;
+	width: 66%;
+	padding-right: 30px;
+}
+
+#welcome-letter h1{
+	text-align: left;
+	text-transform: none;
+}
+
+#letter-header{
+	border-bottom: 2px solid #737373;
+	margin-bottom: 2rem;
+}
+
+.author{
+	font-size: 1.3rem;
+	margin-bottom: 0rem;
+	font-style: italic;
+	line-height: 1;
+}
+
+.bio{
+	margin-top: 0rem;
+	font-size: 1rem;
+	font-style: italic;
+}
+
+aside{
+	display: inline-block;
+	width: 33%;
+	padding-left: 30px;
+	vertical-align: top;
+	padding-top: 2.2rem;
+}
+
+aside > h1{
+	font-size: 1rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	color: #737373;
+	text-align: left;
+	margin-bottom: 0.3rem;
+}
+
+aside > ul{
+	list-style: none;
+	padding-left: 0px;
+	font-family: 'Lato', sans-serif;
+	font-size: 1.3rem;
+	font-weight: 700;
+}
+
+aside > ul > li{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #EAEAEA;
+	line-height: 1;
+
+}
+
+/* ----------------------------------------------------------------index page */
+
 
 #breadcrumbs{
 	display: none;
@@ -31,10 +108,6 @@ section#body.welcome{
 
 #header #logo h3 {
 	top: 55%;
-}
-
-p{
-	margin-top: 0.7rem;
 }
 
 h4{
@@ -50,6 +123,21 @@ h4{
 	display: inline-block;
 	line-height: 120%;
 	margin-top: 0.5rem;
+}
+
+#sidebar h4 a:hover{
+	color: #BE66CC;
+}
+
+.articulo{
+	width: 44%;
+	display: inline-block;
+	margin-right: 4%;
+	vertical-align: top;
+}
+
+.featured{
+	width: 92%;
 }
 
 div.articulo a h4{
@@ -95,6 +183,7 @@ h3{
 	border-bottom: 0px;
 }
 
+
 h1{
 	font-family: 'Lato';
 	text-transform: uppercase;
@@ -115,6 +204,7 @@ h1#frontpage{
 
 body h2{
 	text-align: left;
+	border-bottom: 2px solid #EAEAEA;
 }
 
 .buttonholder{
@@ -168,11 +258,13 @@ p.introtext{
 	padding-top:0px; 
 	font-size: 1.3rem; 
 	margin-top: 0px;
-/*	border-top: 1px solid #3E0C46; */
 	text-align:center; 
 	line-height:1.5;
 	font-family: 'Lato';
 }
+
+/* ----------------------------------------------------------------subscription form */
+
 
 form{
 	max-width: 600px;
@@ -306,6 +398,7 @@ header #logo h3 {
 
 #categories h3 a {
 	color: #737373;
+	word-spacing: 0.2rem;
 }
 
 #categories h3 a:hover {
@@ -316,30 +409,144 @@ header #logo h3 {
 	width: 100%;
 }
 
-.articulo{
-	width: 44%;
-	display: inline-block;
-	margin-right: 4%;
-	vertical-align: top;
-}
-
-.featured{
-	width: 92%;
-}
-
 .blog-content-item .list-item > .list-blog-padding > p:nth-child(2) {
 	font-size: 1rem;
 }
 
-.list-item .list-blog-header h4 {
+.list-item .list-blog-header h1 {
     margin-bottom: 1.5rem;
     margin-top: 2rem;
+    font-size: 2rem;
+    text-transform: none;
+    text-align: left;
+}
+
+.list-item .list-blog-header h1 a{
+    color: #444444;
+}
+
+.blog-content-item .list-item .list-blog-padding h2 {
+    margin-bottom: 1rem;
+    margin-top: 1.5rem;
     font-size: 1.5rem;
+    text-align: left;
+    color: #444444;
+}
+
+.list-item .list-blog-padding h3 {
+    margin-bottom: 1rem;
+    margin-top: 1.5rem;
+    font-size: 1.2rem;
+    text-align: left;
+    font-weight: 700;
+    color: #737373;
+    border: none;
+    text-transform: none;
+    line-height: 1.2;
 }
 
 #footer{
 	color: #A1A1A1;
 }
+
+dialog {
+        display: block;
+        z-index: 1;
+        position: fixed;
+        top: 100px;
+        right: 15%;
+        left: 15%;
+        width: 70%;
+        border: 1px solid #EAEAEA;
+        border-radius: 5px;
+        padding-right: 5%;
+        padding-left: 5%;
+        max-height: 550px;
+        overflow: scroll;
+        }
+
+    dialog h1{
+      font-size: 1.5rem;
+      text-transform: none;
+      letter-spacing:0px;
+    }
+    .modal {
+      position: fixed;
+      left: 25%;
+      right: auto;
+      top: 25%;
+      width: 50%;
+      margin: 0 auto;
+      border: 1px solid red; 
+      background: #fff;
+      z-index: 667;
+      padding: 2em;
+    }
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      background: #000;
+      opacity: .6;
+      z-index: 666;
+    }
+
+    .hidden{
+      display: none;
+    }
+
+    .js-modal{
+      width:100%;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    #endnotes{
+    }
+
+#stanza, #turingpoems{
+	padding-right:15px; 
+	padding-left:15px; 
+	padding-top: 10px; 
+	padding-bottom:10px; 
+	background-color: #ffffff; 
+	text-align:center; 
+	border-radius:5px;
+	border: 1px solid #A1A1A1;
+	font-family: 'Lato';
+	color: #3E0C46;
+	margin-bottom: 25px;
+}
+
+#stanza:hover,#turingpoems:hover{
+	background-color: #EAEAEA; 
+}
+
+#stanzap{
+	padding-left: 1rem;
+	font-style: italic;
+
+}
+
+p.answer{
+	display: none;
+	color: red;
+}
+
+#quiz{
+	display: none;
+}
+
+#showanswer{
+	font-style: italic;
+	padding: 0px;
+	border: none;
+	border-bottom: 1px solid #3E0C46;
+	border-radius: 0px;
+}
+
 
 
 

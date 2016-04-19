@@ -9,7 +9,7 @@ jscomments:
 taxonomy:
     category: blog
     tag:
-        - 'tech policy'
+        - 'social issues'
 author:
     name: 'Eve Lacey'
     org: 'University College London'

@@ -7,16 +7,29 @@ summary:
 jscomments:
     provider: facebook
 taxonomy:
-    category: blog
     tag:
-        - 'HCI'
+        - HCI
+    category:
+        - blog
 author:
     name: 'Katharina Leyrer'
     org: 'Humboldt-Universität zu Berlin'
 header_image: user/themes/isrtheme/images/publish1.jpg
 ---
 
-####Introduction
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+
+<script src="http://a11y.nicolas-hoffmann.net/modal/js/jquery-accessible-modal-window-aria.js"></script>
+
+<div id="endorsement" class="hidden modal">
+
+<p>The concept of Hybrid Publishing appears ambiguous as many of the new concepts in the realm of digital media, communication, and (enhanced) publishing. It is therefore necessary ‐ at least from the viewpoint of Library and Information Science ‐ to discuss and agree upon a definition for the ongoing discourse regarding future structures of publishing. Katharina Leyrer’s paper addresses the issue with the purpose of providing an elaborated and stable understanding of the concept as well as opportunities and challenges of such a publishing approach. She outlines three use cases (hybrid research publications, hybrid OA‐journals, hybrid exhibition catalogues) and exemplifies the case within the context of a real life case. Therefore, the paper combines the questions of definition and application convincingly and provides a valuable contribution to this particular field of LIS research.</p>
+
+</div>
+
+<button class="js-modal" data-modal-prefix-class="simple-animated" data-modal-content-id="endorsement" data-modal-title="Faculty Endorsement" data-modal-close-text="Close" data-modal-close-title="Close this modal window">Show faculty endorsement</button>
+
+##Introduction
 
 A six-meter-long beef tapeworm, an installation of living plants, a collection of stones, photographs of bark projected on a huge canvas – these objects were united in the exhibition “On The Edge”, presented in the Tieranatomisches Theater at Berlin Humboldt University in 2015. This unusual compilation goes back to the idea of creating a dialogue between seven artists and the university's 45 scientific collections of diverse disciplines from archeology to zoology.
 
@@ -24,7 +37,7 @@ In order to document the exhibition and to make it accessible beyond the duratio
 
 So how can hybrid publishing be implemented, and what benefits does it entail? This paper outlines the concept of hybrid publishing, discusses different approaches and analyzes its significance from the perspective of media theory. As distinct types of publications, each have specific potentials and challenges for the implementation of the hybrid concept. Examples of research publications, art catalogues and journal articles are discussed with regard to their particular requirements and possibilities. 
 
-####1. Definition
+##1. Definition
 
 According to the Oxford English Dictionary, the term “hybrid” (lat.) signifies “[...] having a mixed character; composed of two diverse elements [...]” (2016). Thus, a hybrid publication is composed of various components; it mixes different output formats. 
 
@@ -36,10 +49,12 @@ In the context of hybrid publishing, there's another aspect that plays a decisiv
 
 To sum up, hybrid publishing can be described as releasing a publication in two or more output formats at the same time – whether in print and electronic form, or in several different digital formats. For the recipients the value of the publication thus increases.
 
-####2. Concepts and workflows
+##2. Concepts and workflows
 
 So – without resorting to exact definitions – what common concept underlies hybrid publishing? 
 Hybrid publishing is both situated in the universe of the printed book and the universe of ebooks – it establishes the co-existence of both media formats and “ends […] the dichotomy printed book / ebook” (Silva & Borges, 2011, p.191). The product “book” is diversified by digital processes without implying that old is replaced by new. This is illustrated by the Adoni and Nossek model  that represents the interaction of media formats and demonstrates three possible scenarios: While “functional equivalence” entails the replacement of one media format by another, “functional differentiation” leads to co-existence or interchangeability of both; “functional multiplicity” describes the emergence of a new media format through the synthesis of two media. Thus, depending on the degree of differentiation of their editorial products (ebook, printed book, multimedia book) and on their delimitation of each other, hybrid publications range between co-existence and exchangeability (Silva & Borges, 2011). 
+
+<img src="/iSR_Grav/user/themes/isrtheme/images/HP_Leyrer_Figure1.png" width="80%">
 
 The stability, persistence and invariability of the printed book is dissolved by its hybrid publication “to mutate into dynamic, modular, and participative forms” (“From print to ebooks”, 2015, p.8). In other words, the same content is displayed to the user in different ways, depending on format and device. Moreover, publishing digitally makes it possible to split up the publication into individual components in order to allow the user to select specific contents (from one or several sources) and their compilation into individual ebooks (“From print to ebooks”, 2015).
 
@@ -47,11 +62,11 @@ To realize this dynamic – modularity and differentiation of hybrid publication
 
 Generating various output formats (e.g. print, EPUB, PDF and HTML) from one single source document entails major additional effort if standard formats of traditional publication workflows – such as Microsoft Word or Adobe InDesign – are used. Therefore, the hybrid workflow is based on the consistent, semantic markup of the content so that it can be displayed in a variety of different representations. For that reason, the Hybrid Publishing Toolkit recommends using the markup language SGML (Standard General Markup Language) because it is platform-independent, cost-saving and easy to learn. As the visual design of every single output format can be defined with the aid of style sheets, a multitude of products can be generated from one single source document (“From print to ebooks”, 2015). 
 
-####3. Aspects
+##3. Aspects
 
 Diverse types of publications such as journal articles, research publications and art catalogues differ in their design, production and perception. Therefore, specific aspects should be considered when publishing hybridly. In the following sections, both the possibilities and the challenges of hybrid publishing for these different types of publications will be discussed. 
 
-__3.1 Hybrid research publications__
+###3.1 Hybrid research publications
 
 Research publications are usually long texts with a standardized structure and complex referencing (e.g. footnotes, citations, indices); visualization can be expected to play a subordinate role. Hence, they (research publications) are especially suited for a modularized, database-based model of hybrid publishing: that way, parts of the publication can be extracted and published separately (e.g. abstracts, videos or bibliographies). At the same time, users get the opportunity to pick out exactly the modules for which they are looking. For example, the reader of an anthology could generate a personalized ebook containing all bibliographical references of the different texts (“From print to ebooks”, 2015). 
 
@@ -63,7 +78,7 @@ Authors enhance the visibility of their work if they choose to publish hybridly,
 
 However, Steinhauer leaves unfounded why the electronic and print versions of hybrid publications have to be identical to ensure these advantages. Thus, his concept has to be expanded regarding the integration of additional content and multimedia elements, as well as further electronic output formats in order to fully tap the possibilities of the digital publication.
 
-__3.2 Hybrid open access in academic journals__
+###3.2 Hybrid open access in academic journals
 
 With regard to academic journals, the concept of hybrid publishing is usually synonymous with hybrid open access: according to Bo-Christer Björk, hybrid journals are “traditional closed subscription journals that offer individual authors the opportunity to open their articles for free access from day one, against a payment” (2012, p.1496). In 2004, Springer was the first large scholarly publisher to offer its authors the option to make their individual journal articles available online without access barriers, but with an Article Processing Charge (APC) of $3,000 (USD). Other publishers followed this model and aligned their price level to Springer's (Björk, 2012).
 
@@ -74,7 +89,7 @@ Nol Verhagen criticizes the concept of hybrid open access because it combines th
 
 For academic journals, Björk does not see a future-oriented concept in hybrid open access either: “the hybrid experiment […] has failed as a way of significantly adding of the volumes of OA articles […]. [H]ybrid OA will remain a very marginal phenomenon in the scholarly publishing landscape” (Björk, 2012, p.1503).
 
-__3.3 Hybrid exhibition catalogues__
+###3.3 Hybrid exhibition catalogues
 
 When publishing art and exhibition catalogues, visualization plays a vital role: the focus is on images, while texts refer to them (the images) and play a secondary role. This implies two challenges for the creation of the electronic version of an exhibition catalogue: as images and texts that refer to each other should be displayed abreast, catalogues require a fixed page layout; this, on the other hand, doesn't allow for dynamic, user-driven display possibilities on various devices. Moreover, publications that contain lots of images in high resolution entail long download times and occupy a lot of storage space on the user's device. At the same time, the electronic version of an exhibition catalogue offers myriad possibilities that aren't feasible in the print equivalent: the publication can be enriched by additional multimedia contents like interviews, documentaries and interactive elements; high-quality images can allow zooming. Furthermore, many tablet displays provide better color accuracy than printed pages (“From print to ebooks”, 2015). 
 
@@ -82,7 +97,7 @@ As catalogues consist of various components that are modular by nature – for e
 
 To achieve that, the catalogue's content has to be split up into its individual components (e.g. texts, images, videos); it has to be “unitized”. Each module has to be described with precise, standardized metadata in the workflow as early as possible; finally, this will allow the aggregation of specific elements to one ebook.  Thus, the exhibition catalogue is split up into smaller sub-publications (e.g. monographic micro ebooks or individual artworks) that can be compiled flexibly and downloaded in an acceptable period of time. At the same time, this concept enables new business models: for example, individual components can be downloaded via a mobile application. Moreover, it is possible to imagine proposing various versions of the catalogue to different conditions so that an abridged EPUB version in low resolution is available free of charge, while the full EPUB version in high resolution is fee-based (“From print to ebooks”, 2015). 
 
-####Conclusion
+##Conclusion
 
 To sum up, the concept of hybrid publishing designates releasing a publication in two or more output formats at the same time – either in print and electronic form or in a variety of different digital formats. This adds value to the publication: the electronic version allows the integration of additional content, multimedia and interactive elements as well as full-text searchability. Moreover, the electronic publication can be split up into its individual components, which users can compile ad libitum. If a publication is available in several different digital formats (e.g. EPUB, PDF and HTML), its content can be displayed on various devices according to their specific requirements.
 
@@ -93,7 +108,7 @@ The design of the exhibition catalogue of “On The Edge” at Berlin Humboldt U
 
 The concept of hybrid publishing makes it possible to meet the different needs of diverse user groups, and therefore ensures that a publication can be both broadly perceived and read comfortably, regardless of the reading device. 
 
-####Sources
+##Sources
 
 * Björk, B. (2012). The hybrid model for open access publication of scholarly articles: A failed experiment?. Journal Of The American Society For Information Science & Technology, 63(8), 1496-1504. doi:10.1002/asi.22709
 * Cramer, F., Monk, J., Rasch, M. & Wu, A. (Eds.) (2015). From print to ebooks : a hybrid publishing toolkit for the arts. Amsterdam: Institute of Network Cultures.

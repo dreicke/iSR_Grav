@@ -84,11 +84,11 @@ class __TwigTemplate_e92e96e45507a22d0b07ad0d3f7aebe60702250f6662fcdeec33e985931
         ";
         } else {
             // line 27
-            echo "            <h4><a href=\"";
+            echo "            <h1><a href=\"";
             echo $this->getAttribute((isset($context["page"]) ? $context["page"] : null), "url", array());
             echo "\">";
             echo $this->getAttribute((isset($context["page"]) ? $context["page"] : null), "title", array());
-            echo "</a></h4>
+            echo "</a></h1>
         ";
         }
         // line 29
@@ -265,7 +265,7 @@ class __TwigTemplate_e92e96e45507a22d0b07ad0d3f7aebe60702250f6662fcdeec33e985931
 /*                 <a href="{{ page.header.link }}">{{ page.title }}</a>*/
 /*             </h1>*/
 /*         {% else %}*/
-/*             <h4><a href="{{ page.url }}">{{ page.title }}</a></h4>*/
+/*             <h1><a href="{{ page.url }}">{{ page.title }}</a></h1>*/
 /*         {% endif %}*/
 /*         */
 /*         <div id="author-info">*/

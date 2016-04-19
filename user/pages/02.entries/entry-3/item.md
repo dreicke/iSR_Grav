@@ -7,7 +7,7 @@ summary:
 taxonomy:
     category: blog
     tag:
-        - 'HCI'
+        - 'infoviz'
 topojson: true
 author:
     name: 'Joshua Appleman, Anand Rajagopal, Anubhav Gupta & Juan Shishido'
