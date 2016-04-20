@@ -27,7 +27,7 @@ header_image: user/themes/isrtheme/images/sonnet.jpg
 
 </div>
 
-<button class="js-modal" data-modal-prefix-class="simple-animated" data-modal-content-id="endorsement" data-modal-title="Faculty Endorsement" data-modal-close-text="Close" data-modal-close-title="Close this modal window">Show faculty endorsement</button>
+<button class="js-modal" data-modal-prefix-class="simple-animated" data-modal-content-id="endorsement" data-modal-title="Endorsement from Marti Hearst" data-modal-close-text="Close" data-modal-close-title="Close this modal window">Show faculty endorsement</button>
 
 ##Overview
 
@@ -167,20 +167,46 @@ Our aim with this work is not to claim that computers can replace human poets bu
 Thank you to Kyle Booten, Marti Hearst and David Bamman for their continued guidance, insight, and direction. 
 
 
-###<em>Can you tell the difference between real Shakespearean stanzas and computer-generated ones?</em>
+##The Test!
+###Can you tell the difference between Shakespearean stanzas and computer-generated ones?
 <input id="turingpoems" type="button" value="Take a Quiz" onclick="populate_quiz();" />
 
 <div id="quiz">
     <p><strong>For each stanza, choose Shakespeare or Python, then click "Show Answers" to see if you were right!</strong></p>
-    <div class="pregunta"></div>
-    <div class="pregunta"></div>
-    <div class="pregunta"></div>
+    <div class="pregunta">
+        <select name="cars">
+          <option value="null">Choose...</option>
+          <option value="shakes">Shakespeare</option>
+          <option value="python">Python</option>
+        </select>
+    </div>
+    <div class="pregunta">
+        <select name="cars">
+          <option value="null">Choose...</option>
+          <option value="shakes">Shakespeare</option>
+          <option value="python">Python</option>
+        </select>
+    </div>
+    <div class="pregunta">
+        <select name="cars">
+          <option value="null">Choose...</option>
+          <option value="shakes">Shakespeare</option>
+          <option value="python">Python</option>
+        </select>
+    </div>
+    <div class="pregunta">
+        <select name="cars">
+          <option value="null">Choose...</option>
+          <option value="shakes">Shakespeare</option>
+          <option value="python">Python</option>
+        </select>
+    </div>
     <button id="showanswer">Show Answers</button>
 </div>
 
 <h2>End Notes</h2>
 <p id="endnotes">
-<sup id="fn1"><span>1. A phoneme is a distinct unit of sound. Words are composed of many phonemes.<a href="#ref1" title="Jump back to footnote 1 in the text.">↩</a></sup></span><br>
+<sup id="fn1">1. A phoneme is a distinct unit of sound. Words are composed of many phonemes.<a href="#ref1" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
 <sup id="fn2"><span>2. McCurdy, N., Lein, J., Coles, K., Meyer, M. 2015. Poemage: Visualizing the Sonic Topology of a Poem. IEEE Transactions on Visualization and Computer Graphics.<a href="#ref2" title="Jump back to footnote 2 in the text.">↩</a></sup></span><br>
 <sup id="fn3"><span>3. McCurdy, N., Srikumar, V., Meyer, M. 2015. RhymeDesign: A Tool for Analyzing Sonic Devices in Poetry. Proceedings of NAACL-HLT Fourth Workshop on Computational Linguistics for Literature.<a href="#ref3" title="Jump back to footnote 3 in the text.">↩</a></sup></span><br>
 <sup id="fn4"><span>4. Black, A., Lenzo, K., and Pagel, V. 1998. Issues in Building General Letter to Sound Rules.<a href="#ref4" title="Jump back to footnote 4 in the text.">↩</a></sup></span><br>
@@ -246,9 +272,9 @@ function return_turing_stanza(){
         var stanza = randomSelection['poem'];
         var label = randomSelection['label'];
         stanza = stanza.replace(/\n/g, "<br />");
-        console.log(label);
-        console.log(stanza);
-        console.log(element);
+        // console.log(label);
+        // console.log(stanza);
+        // console.log(element);
         $(element).prepend("<p class='sample'>" + stanza + "</p>");
         $(element).append("<p class='answer'>" + label + "</p>");
         $('#quiz').show();

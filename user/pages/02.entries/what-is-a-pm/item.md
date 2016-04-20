@@ -16,8 +16,10 @@ author:
 
 How is it that such a simple question provokes such complicated and varied answers? Much like trying to define an “iSchool”, agreeing on concrete characteristics of a Product Manager (PM) can feel impossible as the position is inherently fluid, multi-disciplinary, and adaptable. In many technical paths, such as engineering, for example, one can point to direct, tangible outputs to form a characterization. In contrast, the definition of a PM is found at the intersections. Luckily, that’s also where many students of information management are found.
 
-  
-Figure 1
+**Figure 1**
+
+<img src="/iSR_Grav/user/themes/isrtheme/images/pm-diagram.png" width="80%">
+
 
 As shown in Figure 1, product managers can be found at the intersection of business, technology, and user experience. While the specifics of the PM role often vary depending on the maturity of the product(s), the size of the company, and the industry, the common thread among product managers is having perspective and skills in these three areas. 
 
@@ -35,6 +37,6 @@ Ultimately a product manager is a bit of everything - a jack-of-all-trades or a 
 
 Want to learn more from experienced and expert PMs? I suggest starting with the following resources, which were used to guide this article: 
 
-●	https://www.kennorton.com/essays/productmanager.html
-●	https://medium.com/greylock-perspectives/let-s-talk-about-product-management-d7bc5606e0c4#.y999bnwnx
-●	https://www.quora.com/Whats-a-product-managers-responsibility 
+* [https://www.kennorton.com/essays/productmanager.html](https://www.kennorton.com/essays/productmanager.html)
+* [https://medium.com/greylock-perspectives/let-s-talk-about-product-management-d7bc5606e0c4#.y999bnwnx](https://medium.com/greylock-perspectives/let-s-talk-about-product-management-d7bc5606e0c4#.y999bnwnx)
+* [https://www.quora.com/Whats-a-product-managers-responsibility](https://www.quora.com/Whats-a-product-managers-responsibility) 

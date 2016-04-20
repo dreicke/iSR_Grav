@@ -16,9 +16,31 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
     protected function doDisplay(array $context, array $blocks = array())
     {
         // line 1
-        $this->loadTemplate("blog.html.twig", "blog.html.twig", 1, "1665288857")->display($context);
+        $this->loadTemplate("blog.html.twig", "blog.html.twig", 1, "2120339523")->display($context);
         // line 97
         echo "
+<script>
+// from http://stackoverflow.com/questions/17534661/make-anchor-link-go-some-pixels-above-where-its-linked-to
+\$(document).ready(function () {
+    \$('a').on('click', function (e) {
+        // e.preventDefault();
+
+        var target = this.hash,
+            \$target = \$(target);
+
+       \$('html, body').stop().animate({
+        'scrollTop': \$target.offset().top-100
+    }, 900, 'swing', function () {
+    });
+
+        console.log(window.location);
+
+        return false;
+    });
+
+});
+</script>
+
 
 ";
     }
@@ -41,7 +63,7 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 
 
 /* blog.html.twig */
-class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b9838b5c_1665288857 extends Twig_Template
+class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b9838b5c_2120339523 extends Twig_Template
 {
     public function __construct(Twig_Environment $env)
     {
@@ -95,13 +117,13 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 \t\t\t<div id=\"issuehead\">
 \t\t\t<img src=\"user/pages/images/isrlogo-sq.png\" class=\"index-logo\"><h1>ISSUE ONE</h1>
 \t\t\t<div id=\"categories\">
-\t\t\t<h3><a href=\"#\">info viz</a></h3>
+\t\t\t<h3><a href=\"#infoviz\">info viz</a></h3>
 \t\t\t<h3>&middot;</h3>
-\t\t\t<h3><a href=\"#\">info science</a></h3>
+\t\t\t<h3><a href=\"#lis\">LIS</a></h3>
 \t\t\t<h3>&middot;</h3>
-\t\t\t<h3><a href=\"#\">hci</a></h3>
+\t\t\t<h3><a href=\"#hci\">hci</a></h3>
 \t\t\t<h3>&middot;</h3>
-\t\t\t<h3><a href=\"#\">business & society</a></h3>
+\t\t\t<h3><a href=\"#socio\">business & society</a></h3>
 \t\t\t</div>
 
 \t\t\t</div>
@@ -112,7 +134,7 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 
 \t\t<div class=\"content-wrapper blog-content-list grid pure-g\">
 \t\t\t<div id=\"listing\" class=\"block pure-u-2-3\">
-\t\t\t<div id=\"techpolicy\">
+\t\t\t<div id=\"infoviz\">
 \t\t\t\t<h3>info viz</h3>
 
 \t\t\t\t";
@@ -151,8 +173,8 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
         // line 45
         echo "
             </div>
-            <div id=\"infoviz\">
-\t            <h3>Info Science</h3>
+            <div id=\"lis\">
+\t            <h3>LIS</h3>
 
 \t\t\t\t\t";
         // line 50
@@ -294,7 +316,7 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 
     public function getDebugInfo()
     {
-        return array (  280 => 92,  278 => 91,  271 => 86,  262 => 83,  258 => 82,  252 => 81,  246 => 80,  243 => 79,  239 => 78,  231 => 72,  222 => 69,  218 => 68,  212 => 67,  206 => 66,  203 => 65,  199 => 64,  191 => 58,  182 => 55,  178 => 54,  172 => 53,  166 => 52,  163 => 51,  159 => 50,  152 => 45,  143 => 42,  139 => 41,  133 => 40,  127 => 39,  124 => 38,  120 => 37,  92 => 13,  88 => 11,  82 => 9,  80 => 8,  77 => 7,  74 => 6,  71 => 5,  67 => 1,  65 => 3,  51 => 1,  21 => 97,  19 => 1,);
+        return array (  302 => 92,  300 => 91,  293 => 86,  284 => 83,  280 => 82,  274 => 81,  268 => 80,  265 => 79,  261 => 78,  253 => 72,  244 => 69,  240 => 68,  234 => 67,  228 => 66,  225 => 65,  221 => 64,  213 => 58,  204 => 55,  200 => 54,  194 => 53,  188 => 52,  185 => 51,  181 => 50,  174 => 45,  165 => 42,  161 => 41,  155 => 40,  149 => 39,  146 => 38,  142 => 37,  114 => 13,  110 => 11,  104 => 9,  102 => 8,  99 => 7,  96 => 6,  93 => 5,  89 => 1,  87 => 3,  73 => 1,  21 => 97,  19 => 1,);
     }
 }
 /* {% embed 'partials/base.html.twig' %}*/
@@ -313,13 +335,13 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 /* 			<div id="issuehead">*/
 /* 			<img src="user/pages/images/isrlogo-sq.png" class="index-logo"><h1>ISSUE ONE</h1>*/
 /* 			<div id="categories">*/
-/* 			<h3><a href="#">info viz</a></h3>*/
+/* 			<h3><a href="#infoviz">info viz</a></h3>*/
 /* 			<h3>&middot;</h3>*/
-/* 			<h3><a href="#">info science</a></h3>*/
+/* 			<h3><a href="#lis">LIS</a></h3>*/
 /* 			<h3>&middot;</h3>*/
-/* 			<h3><a href="#">hci</a></h3>*/
+/* 			<h3><a href="#hci">hci</a></h3>*/
 /* 			<h3>&middot;</h3>*/
-/* 			<h3><a href="#">business & society</a></h3>*/
+/* 			<h3><a href="#socio">business & society</a></h3>*/
 /* 			</div>*/
 /* */
 /* 			</div>*/
@@ -330,7 +352,7 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 /* */
 /* 		<div class="content-wrapper blog-content-list grid pure-g">*/
 /* 			<div id="listing" class="block pure-u-2-3">*/
-/* 			<div id="techpolicy">*/
+/* 			<div id="infoviz">*/
 /* 				<h3>info viz</h3>*/
 /* */
 /* 				{% for post in taxonomy.findTaxonomy({'tag':'infoviz'}) %}*/
@@ -343,8 +365,8 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 /* 				{% endfor %}*/
 /* */
 /*             </div>*/
-/*             <div id="infoviz">*/
-/* 	            <h3>Info Science</h3>*/
+/*             <div id="lis">*/
+/* 	            <h3>LIS</h3>*/
 /* */
 /* 					{% for post in taxonomy.findTaxonomy({'tag':'is'}) %}*/
 /* 						<div class="articulo featured">*/
@@ -393,6 +415,28 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 /* 	{% endblock %}*/
 /* */
 /* {% endembed %}*/
+/* */
+/* <script>*/
+/* // from http://stackoverflow.com/questions/17534661/make-anchor-link-go-some-pixels-above-where-its-linked-to*/
+/* $(document).ready(function () {*/
+/*     $('a').on('click', function (e) {*/
+/*         // e.preventDefault();*/
+/* */
+/*         var target = this.hash,*/
+/*             $target = $(target);*/
+/* */
+/*        $('html, body').stop().animate({*/
+/*         'scrollTop': $target.offset().top-100*/
+/*     }, 900, 'swing', function () {*/
+/*     });*/
+/* */
+/*         console.log(window.location);*/
+/* */
+/*         return false;*/
+/*     });*/
+/* */
+/* });*/
+/* </script>*/
 /* */
 /* */
 /* */

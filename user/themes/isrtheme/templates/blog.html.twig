@@ -14,13 +14,13 @@
 			<div id="issuehead">
 			<img src="user/pages/images/isrlogo-sq.png" class="index-logo"><h1>ISSUE ONE</h1>
 			<div id="categories">
-			<h3><a href="#">info viz</a></h3>
+			<h3><a href="#infoviz">info viz</a></h3>
 			<h3>&middot;</h3>
-			<h3><a href="#">info science</a></h3>
+			<h3><a href="#lis">LIS</a></h3>
 			<h3>&middot;</h3>
-			<h3><a href="#">hci</a></h3>
+			<h3><a href="#hci">hci</a></h3>
 			<h3>&middot;</h3>
-			<h3><a href="#">business & society</a></h3>
+			<h3><a href="#socio">business & society</a></h3>
 			</div>
 
 			</div>
@@ -31,7 +31,7 @@
 
 		<div class="content-wrapper blog-content-list grid pure-g">
 			<div id="listing" class="block pure-u-2-3">
-			<div id="techpolicy">
+			<div id="infoviz">
 				<h3>info viz</h3>
 
 				{% for post in taxonomy.findTaxonomy({'tag':'infoviz'}) %}
@@ -44,8 +44,8 @@
 				{% endfor %}
 
             </div>
-            <div id="infoviz">
-	            <h3>Info Science</h3>
+            <div id="lis">
+	            <h3>LIS</h3>
 
 					{% for post in taxonomy.findTaxonomy({'tag':'is'}) %}
 						<div class="articulo featured">
@@ -94,5 +94,27 @@
 	{% endblock %}
 
 {% endembed %}
+
+<script>
+// from http://stackoverflow.com/questions/17534661/make-anchor-link-go-some-pixels-above-where-its-linked-to
+$(document).ready(function () {
+    $('a').on('click', function (e) {
+        // e.preventDefault();
+
+        var target = this.hash,
+            $target = $(target);
+
+       $('html, body').stop().animate({
+        'scrollTop': $target.offset().top-100
+    }, 900, 'swing', function () {
+    });
+
+        console.log(window.location);
+
+        return false;
+    });
+
+});
+</script>
 
 

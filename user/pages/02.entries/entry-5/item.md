@@ -8,7 +8,7 @@ jscomments:
     provider: facebook
 taxonomy:
     tag:
-        - HCI
+        - 'social issues'
     category:
         - blog
 author:
@@ -27,23 +27,23 @@ header_image: user/themes/isrtheme/images/publish1.jpg
 
 </div>
 
-<button class="js-modal" data-modal-prefix-class="simple-animated" data-modal-content-id="endorsement" data-modal-title="Faculty Endorsement" data-modal-close-text="Close" data-modal-close-title="Close this modal window">Show faculty endorsement</button>
+<button class="js-modal" data-modal-prefix-class="simple-animated" data-modal-content-id="endorsement" data-modal-title="Endorsement from Ben Kaden" data-modal-close-text="Close" data-modal-close-title="Close this modal window">Show faculty endorsement</button>
 
 ##Introduction
 
-A six-meter-long beef tapeworm, an installation of living plants, a collection of stones, photographs of bark projected on a huge canvas – these objects were united in the exhibition “On The Edge”, presented in the Tieranatomisches Theater at Berlin Humboldt University in 2015. This unusual compilation goes back to the idea of creating a dialogue between seven artists and the university's 45 scientific collections of diverse disciplines from archeology to zoology.
+A six-meter-long beef tapeworm, an installation of living plants, a collection of stones, photographs of bark projected on a huge canvas – these objects were united in the exhibition “On The Edge”, presented in the *Tieranatomisches Theater* at Berlin Humboldt University in 2015. This unusual compilation goes back to the idea of creating a dialogue between seven artists and the university's 45 scientific collections of diverse disciplines from archeology to zoology.
 
-In order to document the exhibition and to make it accessible beyond the duration of its presentation, an exhibition catalogue is intended to be published. As there are many different target groups with diverse user behavior and needs – students, researchers, artists, interested laypersons – various formats come to mind: while the curator and the exhibiting artists are likely to opt for a print edition, or a coffee-table-book displaying their work, researchers could especially be interested in precise representations of the university's collections' objects; an interested non-professional might want to browse through the catalogue on her smartphone while on the subway. To meet these diverse needs, the university decided to publish the exhibition catalogue following a hybrid concept: both publishing a print edition and making use of the possibilities of electronic publishing, focussing on the publication's design, referencing and dissemination at the same time. 
+In order to document the exhibition and to make it accessible beyond the duration of its presentation, an exhibition catalogue is intended to be published. As there are many different target groups with diverse user behavior and needs – students, researchers, artists, interested laypersons – various formats come to mind: while the curator and the exhibiting artists are likely to opt for a print edition, or a coffee-table-book displaying their work, researchers could especially be interested in precise representations of the university's collections' objects; an interested non-professional might want to browse through the catalogue on her smartphone while on the subway. To meet these diverse needs, the university decided to publish the exhibition catalogue following a hybrid concept: both publishing a print edition and making use of the possibilities of electronic publishing, focusing on the publication's design, referencing and dissemination at the same time. 
 
-So how can hybrid publishing be implemented, and what benefits does it entail? This paper outlines the concept of hybrid publishing, discusses different approaches and analyzes its significance from the perspective of media theory. As distinct types of publications, each have specific potentials and challenges for the implementation of the hybrid concept. Examples of research publications, art catalogues and journal articles are discussed with regard to their particular requirements and possibilities. 
+So how can *hybrid publishing* be implemented, and what benefits does it entail? This paper outlines the concept of *hybrid publishing*, discusses different approaches and analyzes its significance from the perspective of media theory. As distinct types of publications, each have specific potentials and challenges for the implementation of the hybrid concept. Examples of research publications, art catalogues and journal articles are discussed with regard to their particular requirements and possibilities. 
 
 ##1. Definition
 
 According to the Oxford English Dictionary, the term “hybrid” (lat.) signifies “[...] having a mixed character; composed of two diverse elements [...]” (2016). Thus, a hybrid publication is composed of various components; it mixes different output formats. 
 
-The Lexikon für Bibliotheks- und Informationswissenschaft describes hybrid publishing as the parallel publication of a print version and an electronic version in order to offer additional value to its recipient (“Lexikon der Bibliotheks- und Informationswissenschaft”, 2009).  The advantages that hybrid publications entail are specified by the Brockhaus-Enzyklopädie: releasing an electronic version of a print publication offers the possibility to adjoin additional content like multimedia elements or digitized sources and enhanced functionalities like full-text searchability and continuous updatability (“Brockhaus-Enzyklopädie”, 2008).  
+The *Lexikon für Bibliotheks- und Informationswissenschaft* describes hybrid publishing as the parallel publication of a print version and an electronic version in order to offer additional value to its recipient (“Lexikon der Bibliotheks- und Informationswissenschaft”, 2009) <a href="#fn1" id="ref1">[1]</a>.  The advantages that hybrid publications entail are specified by the *Brockhaus-Enzyklopädie*: releasing an electronic version of a print publication offers the possibility to adjoin additional content like multimedia elements or digitized sources and enhanced functionalities like full-text searchability and continuous updatability (“Brockhaus-Enzyklopädie”, 2008). <a href="#fn2" id="ref2">[2]</a>  
 
-The Hybrid Publishing Toolkit, edited by the Institute of Network Cultures of Amsterdam University of Applied Sciences and Rotterdam University of Applied Sciences, offers a definition that far exceeds the idea of publishing both a print and an electronic version. Here, three steps of hybrid publishing are identified: “One-to-one”, which merely aims at creating an accurate digital representation of the printed book; “one-to-many”, which offers a variety of output formats, depending on the context and the reading device; and “one-to-database”, where users can choose various, independent components to individually compile a publication (“From print to ebooks”, 2015).
+The *Hybrid Publishing Toolkit*, edited by the Institute of Network Cultures of Amsterdam University of Applied Sciences and Rotterdam University of Applied Sciences, offers a definition that far exceeds the idea of publishing both a print and an electronic version. Here, three steps of hybrid publishing are identified: “One-to-one”, which merely aims at creating an accurate digital representation of the printed book; “one-to-many”, which offers a variety of output formats, depending on the context and the reading device; and “one-to-database”, where users can choose various, independent components to individually compile a publication (“From print to ebooks”, 2015).
 
 In the context of hybrid publishing, there's another aspect that plays a decisive role and that hasn't been mentioned in the definitions cited above: the open access availability of the electronic version. Petra Hauke defines hybrid publishing as works that are distributed both as a print edition and as an electronic version that is freely available on the Internet (Hauke, 2010). 
 
@@ -58,9 +58,12 @@ Hybrid publishing is both situated in the universe of the printed book and the u
 
 The stability, persistence and invariability of the printed book is dissolved by its hybrid publication “to mutate into dynamic, modular, and participative forms” (“From print to ebooks”, 2015, p.8). In other words, the same content is displayed to the user in different ways, depending on format and device. Moreover, publishing digitally makes it possible to split up the publication into individual components in order to allow the user to select specific contents (from one or several sources) and their compilation into individual ebooks (“From print to ebooks”, 2015).
 
-To realize this dynamic – modularity and differentiation of hybrid publications – the work processes of the manufacturer have to be reconsidered and transformed into a hybrid workflow. Ana Catarina Silva and Maria Manuel Borges criticize that the quality of hybrid publications is often deficient as the same digital files are used for the production of versions in diverse media formats (for example, print and electronic) without taking into account their particularities. They claim a redesign of the production process: in a “true digital workflow” (Silva & Borges, Book design program, 2011, p.192) each version has its origin in the same file; however, the digital content has no fixed form but assumes the appropriate form for each of the different channels of distribution. The media format and its usage determine how the digital information is processed in the manufacturing chain, “to enable the best experience of the book, both as printed and ebook” (Silva & Borges, Book design program, 2011, p.196). Hence, publication is no longer perceived as a fixed and immutable structure, but as an “information architecture” (Silva & Borges, Book design program, 2011, p.196).
+To realize this dynamic – modularity and differentiation of hybrid publications – the work processes of the manufacturer have to be reconsidered and transformed into a *hybrid workflow*. Ana Catarina Silva and Maria Manuel Borges criticize that the quality of hybrid publications is often deficient as the same digital files are used for the production of versions in diverse media formats (for example, print and electronic) without taking into account their particularities. They claim a redesign of the production process: in a “true digital workflow” (Silva & Borges, Book design program, 2011, p.192) each version has its origin in the same file; however, the digital content has no fixed form but assumes the appropriate form for each of the different channels of distribution. The media format and its usage determine how the digital information is processed in the manufacturing chain, “to enable the best experience of the book, both as printed and ebook” (Silva & Borges, Book design program, 2011, p.196). Hence, publication is no longer perceived as a fixed and immutable structure, but as an “information architecture” (Silva & Borges, Book design program, 2011, p.196).
 
-Generating various output formats (e.g. print, EPUB, PDF and HTML) from one single source document entails major additional effort if standard formats of traditional publication workflows – such as Microsoft Word or Adobe InDesign – are used. Therefore, the hybrid workflow is based on the consistent, semantic markup of the content so that it can be displayed in a variety of different representations. For that reason, the Hybrid Publishing Toolkit recommends using the markup language SGML (Standard General Markup Language) because it is platform-independent, cost-saving and easy to learn. As the visual design of every single output format can be defined with the aid of style sheets, a multitude of products can be generated from one single source document (“From print to ebooks”, 2015). 
+Generating various output formats (e.g. print, EPUB, PDF and HTML) from one single source document entails major additional effort if standard formats of traditional publication workflows – such as Microsoft Word or Adobe InDesign – are used. Therefore, the hybrid workflow is based on the consistent, semantic markup of the content so that it can be displayed in a variety of different representations. For that reason, the *Hybrid Publishing Toolkit* recommends using the markup language SGML (Standard General Markup Language) because it is platform-independent, cost-saving and easy to learn. As the visual design of every single output format can be defined with the aid of style sheets, a multitude of products can be generated from one single source document (“From print to ebooks”, 2015). 
+
+<img src="/iSR_Grav/user/themes/isrtheme/images/HP_Leyrer_Figure2.png" width="80%">
+<img src="/iSR_Grav/user/themes/isrtheme/images/HP_Leyrer_Figure3.png" width="80%">
 
 ##3. Aspects
 
@@ -95,7 +98,9 @@ When publishing art and exhibition catalogues, visualization plays a vital role:
 
 As catalogues consist of various components that are modular by nature – for example, individual objects, paintings or installations – they are especially suited for the “one-to-database” model of hybrid publishing. By recognizing the catalogue's single modules as separate entities, it is both possible to publish diverse editions of the catalogue (e.g. small, medium, large) and to offer personalized publications that users create themselves by compiling the modules of their choice (“From print to ebooks”, 2015). 
 
-To achieve that, the catalogue's content has to be split up into its individual components (e.g. texts, images, videos); it has to be “unitized”. Each module has to be described with precise, standardized metadata in the workflow as early as possible; finally, this will allow the aggregation of specific elements to one ebook.  Thus, the exhibition catalogue is split up into smaller sub-publications (e.g. monographic micro ebooks or individual artworks) that can be compiled flexibly and downloaded in an acceptable period of time. At the same time, this concept enables new business models: for example, individual components can be downloaded via a mobile application. Moreover, it is possible to imagine proposing various versions of the catalogue to different conditions so that an abridged EPUB version in low resolution is available free of charge, while the full EPUB version in high resolution is fee-based (“From print to ebooks”, 2015). 
+To achieve that, the catalogue's content has to be split up into its individual components (e.g. texts, images, videos); it has to be “unitized”. Each module has to be described with precise, standardized metadata in the workflow as early as possible; finally, this will allow the aggregation of specific elements to one ebook.  Thus, the exhibition catalogue is split up into smaller sub-publications (e.g. monographic micro ebooks or individual artworks) that can be compiled flexibly and downloaded in an acceptable period of time. At the same time, this concept enables new business models: for example, individual components can be downloaded via a mobile application. Moreover, it is possible to imagine proposing various versions of the catalogue to different conditions so that an abridged EPUB version in low resolution is available free of charge, while the full EPUB version in high resolution is fee-based (“From print to ebooks”, 2015).
+
+<img src="/iSR_Grav/user/themes/isrtheme/images/HP_Leyrer_Figure4.png" width="80%"> 
 
 ##Conclusion
 
@@ -108,6 +113,12 @@ The design of the exhibition catalogue of “On The Edge” at Berlin Humboldt U
 
 The concept of hybrid publishing makes it possible to meet the different needs of diverse user groups, and therefore ensures that a publication can be both broadly perceived and read comfortably, regardless of the reading device. 
 
+##End Notes
+<p id="endnotes">
+<sup id="fn1">1. “Publikation eines Werks sowohl in traditionell gedruckter und gebundener Form als auch als digitales Medium (z.B. CD oder DVD). Die Kombination verschiedener Ausgabesysteme für Informationen (Buch, digitales Medium) ermöglicht dem Nutzer (Leser / Hörer) eine individuelle multimediale Auseinandersetzung mit ausgewählten Inhalten” (“Lexikon der Bibliotheks- und Informationswissenschaft”, 2009).<a href="#ref1" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
+<sup id="fn2">2. “Publikation von Werken, oft wiss. Editionen, Zeitschriften oder Lexika, zugleich im Druck und in elektron. Form (offline als CD-ROM und DVD, online im Internet). Häufig findet das Prinzip des Cross-Media-Publishing Anwendung. Die in der Papierversion und der elektron. Version dargebotenen Texte und Daten können identisch sein. Es besteht auch die Möglichkeit, die im gedruckten Teil der H. gelieferten Informationen durch erweiterte Präsentationsmöglichkeiten der elektronischen Publikationsform zu ergänzen, etwa durch Filme, digitalisierte Quellen oder umfangreiche Kommentare. Volltextsuchfunktionen und fortwährende Aktualisierungsmöglichkeiten der elektron. Versionen bieten zusätzl. Nutzervorteile” (“Brockhaus-Enzyklopädie”, 2008).<a href="#ref2" title="Jump back to footnote 2 in the text.">↩</a></sup>
+</p>
+
 ##Sources
 
 * Björk, B. (2012). The hybrid model for open access publication of scholarly articles: A failed experiment?. Journal Of The American Society For Information Science & Technology, 63(8), 1496-1504. doi:10.1002/asi.22709
@@ -119,4 +130,27 @@ The concept of hybrid publishing makes it possible to meet the different needs o
 * Umlauf, K. (Ed.). (2009). Lexikon der Bibliohteks- und Informationswissenschaft (p.397). Stuttgart: Hiersemann.
 * Verhagen, N. (2013). Hybrid OA - a way to go?. Insights: The UKSG Journal, 26(1), 51-54. doi:10.1629/2048-7754.26.1.51
 * Zwahr, A. (Ed.). (2008). Brockhaus-Enzyklopädie (p.26). Leipzig: Brockhaus. 
+
+
+<script>
+// from http://stackoverflow.com/questions/17534661/make-anchor-link-go-some-pixels-above-where-its-linked-to
+$(document).ready(function () {
+    $('a').on('click', function (e) {
+        // e.preventDefault();
+
+        var target = this.hash,
+            $target = $(target);
+
+       $('html, body').stop().animate({
+        'scrollTop': $target.offset().top-100
+    }, 900, 'swing', function () {
+    });
+
+        console.log(window.location);
+
+        return false;
+    });
+
+});
+</script>
  

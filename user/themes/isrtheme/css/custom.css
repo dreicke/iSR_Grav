@@ -12,6 +12,10 @@ h1,h2,h3,h4,h5,h6{
 	letter-spacing: 0;
 }
 
+h2 + h3{
+	font-family: 'Lato', 'Raleway', sans-serif;
+}
+
 body a {
 	color: #BE66CC;
 }
@@ -461,6 +465,7 @@ dialog {
         border-radius: 5px;
         padding-right: 5%;
         padding-left: 5%;
+        padding-top: 3%;
         max-height: 550px;
         overflow: scroll;
         }
@@ -503,6 +508,12 @@ dialog {
       margin-bottom: 20px;
     }
 
+    #js-modal-close{
+    	position: absolute;
+    	top:20px;
+    	right:20px;
+    }
+
     #endnotes{
     }
 
@@ -524,10 +535,9 @@ dialog {
 	background-color: #EAEAEA; 
 }
 
-#stanzap{
+#stanzap, .sample{
 	padding-left: 1rem;
 	font-style: italic;
-
 }
 
 p.answer{
@@ -537,6 +547,7 @@ p.answer{
 
 #quiz{
 	display: none;
+	padding-bottom: 3rem;
 }
 
 #showanswer{
