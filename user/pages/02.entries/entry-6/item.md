@@ -174,31 +174,31 @@ Thank you to Kyle Booten, Marti Hearst and David Bamman for their continued guid
 <div id="quiz">
     <p><strong>For each stanza, choose Shakespeare or Python, then click "Show Answers" to see if you were right!</strong></p>
     <div class="pregunta">
-        <select name="cars">
+        <select name="author">
           <option value="null">Choose...</option>
           <option value="shakes">Shakespeare</option>
-          <option value="python">Python</option>
+          <option value="python">Python Poet</option>
         </select>
     </div>
     <div class="pregunta">
-        <select name="cars">
+        <select name="author">
           <option value="null">Choose...</option>
           <option value="shakes">Shakespeare</option>
-          <option value="python">Python</option>
+          <option value="python">Pythonic Poet</option>
         </select>
     </div>
     <div class="pregunta">
-        <select name="cars">
+        <select name="author">
           <option value="null">Choose...</option>
           <option value="shakes">Shakespeare</option>
-          <option value="python">Python</option>
+          <option value="python">Pythonic Poet</option>
         </select>
     </div>
     <div class="pregunta">
-        <select name="cars">
+        <select name="author">
           <option value="null">Choose...</option>
           <option value="shakes">Shakespeare</option>
-          <option value="python">Python</option>
+          <option value="python">Pythonic Poet</option>
         </select>
     </div>
     <button id="showanswer">Show Answers</button>
@@ -270,7 +270,14 @@ function return_turing_stanza(){
                     });
         var randomSelection = stanzas[Math.floor(Math.random() * stanzas.length)][1];
         var stanza = randomSelection['poem'];
-        var label = randomSelection['label'];
+        // var label = randomSelection['label'];
+        var raw_label = randomSelection['label'];
+        
+        if (raw_label == "shakes") {
+            var label = "Shakespeare"
+        } else {
+            var label =  "Pythonic Poet"
+                };
         stanza = stanza.replace(/\n/g, "<br />");
         // console.log(label);
         // console.log(stanza);
@@ -302,7 +309,7 @@ $(document).ready(function () {
 });
 
 $('#showanswer').click(function(){
-    $('p.answer').show();
+    $('p.answer').css("display","inline-block");
 });
 
 

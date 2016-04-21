@@ -522,17 +522,17 @@ dialog {
 	padding-left:15px; 
 	padding-top: 10px; 
 	padding-bottom:10px; 
-	background-color: #ffffff; 
+	background-color: #3E0C46; 
 	text-align:center; 
 	border-radius:5px;
 	border: 1px solid #A1A1A1;
 	font-family: 'Lato';
-	color: #3E0C46;
+	color: #ffffff;
 	margin-bottom: 25px;
 }
 
 #stanza:hover,#turingpoems:hover{
-	background-color: #EAEAEA; 
+	background-color: #BE66CC; 
 }
 
 #stanzap, .sample{
@@ -558,6 +558,38 @@ p.answer{
 	border-radius: 0px;
 }
 
+#quiz select{
+	display: inline-block;
+	margin-right: 2rem;
+}
+
+/*------------------------------------------------------------------------responsive styles */
+
+@media only screen and (max-width: 600px) {
+	#categories h3{
+		display: block;
+		border-bottom: 1px solid #777777;
+		margin-top: 0px;
+		background-color: #EAEAEA;
+		margin-bottom: 0px;
+		padding-top: 10px;
+		padding-bottom: 10px;
+	}
+
+	#categories h3.sep{
+		display: none;
+	}
+
+	.articulo{
+		width: 92%;
+		margin-bottom: 2rem;
+	}
+
+	#sidebar{
+		border-left: none;
+		margin-left: 0px;
+	}
+}
 
 
 

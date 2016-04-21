@@ -16,7 +16,7 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
     protected function doDisplay(array $context, array $blocks = array())
     {
         // line 1
-        $this->loadTemplate("blog.html.twig", "blog.html.twig", 1, "2120339523")->display($context);
+        $this->loadTemplate("blog.html.twig", "blog.html.twig", 1, "34216601")->display($context);
         // line 97
         echo "
 <script>
@@ -63,7 +63,7 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 
 
 /* blog.html.twig */
-class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b9838b5c_2120339523 extends Twig_Template
+class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b9838b5c_34216601 extends Twig_Template
 {
     public function __construct(Twig_Environment $env)
     {
@@ -118,11 +118,11 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 \t\t\t<img src=\"user/pages/images/isrlogo-sq.png\" class=\"index-logo\"><h1>ISSUE ONE</h1>
 \t\t\t<div id=\"categories\">
 \t\t\t<h3><a href=\"#infoviz\">info viz</a></h3>
-\t\t\t<h3>&middot;</h3>
+\t\t\t<h3 class=\"sep\">&middot;</h3>
 \t\t\t<h3><a href=\"#lis\">LIS</a></h3>
-\t\t\t<h3>&middot;</h3>
+\t\t\t<h3 class=\"sep\">&middot;</h3>
 \t\t\t<h3><a href=\"#hci\">hci</a></h3>
-\t\t\t<h3>&middot;</h3>
+\t\t\t<h3 class=\"sep\">&middot;</h3>
 \t\t\t<h3><a href=\"#socio\">business & society</a></h3>
 \t\t\t</div>
 
@@ -336,11 +336,11 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 /* 			<img src="user/pages/images/isrlogo-sq.png" class="index-logo"><h1>ISSUE ONE</h1>*/
 /* 			<div id="categories">*/
 /* 			<h3><a href="#infoviz">info viz</a></h3>*/
-/* 			<h3>&middot;</h3>*/
+/* 			<h3 class="sep">&middot;</h3>*/
 /* 			<h3><a href="#lis">LIS</a></h3>*/
-/* 			<h3>&middot;</h3>*/
+/* 			<h3 class="sep">&middot;</h3>*/
 /* 			<h3><a href="#hci">hci</a></h3>*/
-/* 			<h3>&middot;</h3>*/
+/* 			<h3 class="sep">&middot;</h3>*/
 /* 			<h3><a href="#socio">business & society</a></h3>*/
 /* 			</div>*/
 /* */
