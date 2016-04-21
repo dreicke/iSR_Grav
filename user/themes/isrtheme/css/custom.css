@@ -574,6 +574,7 @@ p.answer{
 		margin-bottom: 0px;
 		padding-top: 10px;
 		padding-bottom: 10px;
+		margin-right: 0px;
 	}
 
 	#categories h3.sep{
@@ -589,6 +590,18 @@ p.answer{
 		border-left: none;
 		margin-left: 0px;
 	}
+	#issuehead h1{
+	display: block;
+	margin-left: 0px;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+	}
+
+	.index-logo{
+		width: 9.4rem;
+		vertical-align: top;
+	}
+
 }
 
 
