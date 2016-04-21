@@ -101,7 +101,7 @@ To support better exploration, navigation, and discoverability of features, tool
 __Workflow:__
 The general workflow of MetaReader is similar to Profiler.
 
-![Hassan-1](images/Hassan-1.png)
+![Hassan-1](Hassan-1.png)
 
 __Core Libraries:__
 There are 3 main script libraries developed to provide the core functionality of MetaReader.
@@ -171,15 +171,15 @@ Number Card:	Mean, median, minimum, maximum, range, quartiles, quantiles, interq
 
 __Number Card:__	Mean, median, minimum, maximum, range, quartiles, quantiles, interquartile range, and binned frequency distribution.
 
-![Hassan-2](images/Hassan-2.png)
+![Hassan-2](Hassan-2.png)
 
 __Date Cards:__ Humanized range, start date, end date, and date format.
 
-![Hassan-3](images/Hassan-3.png)
+![Hassan-3](Hassan-3.png)
 
 __Text Cards:__ Average word count, and average character count.
 
-![Hassan-4](images/Hassan-4.png)
+![Hassan-4](Hassan-4.png)
 
 ###Visualizations
 
@@ -194,11 +194,11 @@ The visualizations rendered for each column depend on the data type and some oth
 
 __Box Plot:__ A box-plot chart with minimum, maximum, first and third quartile, median and mean value. The chart also shows the number of outlier values on both sides of the chart. The chart will not be shown if there were less than 4 unique values in the data. 
 
-![Hassan-5](images/Hassan-5.png)
+![Hassan-5](Hassan-5.png)
 
 __Frequency Distribution Lollipop:__ A Lollipop (stick and circle) chart representing the frequency distributions of the values. The chart is sortable by keys (x-axis values) or frequencies. Hovering over a lollipop will show a pop-up of the key and frequency. The reason for using a Lollipop is to distinguish it from the column histogram used for binned frequency distributions. For large datasets, the lollipops are replaced with an area chart. This is because individual lollipops cannot be distinguished from each other in a dense chart. In addition, areas reduce the number of SVG elements the browser renders, which improves performance.
 
-![Hassan-6](images/Hassan-6.png)
+![Hassan-6](Hassan-6.png)
 
 __Frequency Distribution with Bins:__ A histogram of the frequency distributions after binning (or grouping) the data values into 10 bins of equal width. 
 
@@ -207,43 +207,43 @@ __Frequency Distribution with Bins:__ A histogram of the frequency distributions
 
 Each column represents the frequency of all the numbers in the range between the beginning of a column and the beginning of the next one. The bin start and end values are generated from the data and are not rounded. The chart will only be displayed if there are more than 20 unique values in the dataset. This will ensure that a bin will at least combine 2 values in a single bin. Using a lower threshold will reduce the value of this chart if it is shown next to the previous lollipop chart. The chart is also sortable.
 
-![Hassan-7](images/Hassan-7.png)
+![Hassan-7](Hassan-7.png)
 
 __Color Spectrum:__ This is a micro-chart that shows the individual values in the column in their original order (i.e. index). The values are color coded on a gradient from faded-green to dark green. Missing or invalid values (e.g. Null or NaN) are shown in black. The chart helps in spotting general trends and also gaps in the data quickly. For example, sorted values show as a clean gradient and cyclical data show as repeating color gradient segments.
 
-![Hassan-8](images/Hassan-8.png)
-![Hassan-9](images/Hassan-9.png)
+![Hassan-8](Hassan-8.png)
+![Hassan-9](Hassan-9.png)
 
 __Scatter Plot with Outliers:__  A scatter plot with the index on the x-axis and the value on the y-axis. The information it presents is similar to the spectrum chart. Although somewhat redundant, it was added because it is more familiar to users than the spectrum chart. Missing values are represented by a box with a fill pattern. The chart also highlights statistical outliers in red.
 
-![Hassan-10](images/Hassan-10.png)
-![Hassan-11](images/Hassan-11.png)
+![Hassan-10](Hassan-10.png)
+![Hassan-11](Hassan-11.png)
 
 #######Date Visualizations
 
 __Frequency Distribution Time Series:__  A line chart of the frequency distribution of each date value in the dataset. The data is sorted ascendingly by date. The line chart was generated using the MetricGraphics.js library [14].
 
-![Hassan-12](images/Hassan-12.png)
+![Hassan-12](Hassan-12.png)
 
 
 #######Text Visualizations
 
 __Frequency Distribution Lollipop:__ Similar to the lollipop chart for numbers. The only difference is that if the number of unique values (or lollipops) is 20 or less, each lollipop will have a different color. The colors use the d3 linear color scale which has 20 unique colors. The colors also mirror the colors in the spectrum chart below.
 
-![Hassan-13](images/Hassan-13.png)
+![Hassan-13](Hassan-13.png)
 
 __Color Spectrum:__ Uses the same concepts of the numerical color spectrum chart above. Instead of using a gradient, this color spectrum uses the d3 categorical colors to represent each unique value. Missing values are still colored black. This chart is only rendered if the number of unique values is 20 or less. This is to avoid duplicating colors for different values when using the d3 linear scale. 
 
-![Hassan-14](images/Hassan-14.png)
+![Hassan-14](Hassan-14.png)
 
 The spectrum chart also provides an additional functionality for text data. When there are many pure numerical values in the data, numerical values will be shown as light green while textual values will have different colors. This helps users identify mixed data type columns easily and take action to clean the text, if needed.
 
-![Hassan-15](images/Hassan-15.png)
+![Hassan-15](Hassan-15.png)
 
 __Text Statistics Color Spectrum:__ A variation of the color spectrum. It encodes the word or character counts of each element in the column using a color gradient. A different color gradient scale was used for each chart (word and character counts) to avoid mixing this chart with the other color spectrum. 
 
-![Hassan-16](images/Hassan-16.png)
-![Hassan-17](images/Hassan-17.png)
+![Hassan-16](Hassan-16.png)
+![Hassan-17](Hassan-17.png)
 
 ###Suggestions
 
@@ -260,7 +260,7 @@ There are currently two main categories for suggestions: tips and warnings. Tips
 
 __Missing Values:__ A warning that shows the percentage of missing or invalid values in the column. This is a data quality tip that could help identify missing or null values in a column. 
 
-![Hassan-18](images/Hassan-18.png)
+![Hassan-18](Hassan-18.png)
 
 __Mixed Values:__ A tip showing the percentage of pure numerical values in a text column. This is a data quality tip that could help identify numerical columns that have “rogue” text entries. 
 
@@ -271,7 +271,7 @@ __Equal Intervals:__ A tip indicating that the data values in this column increa
 __Contiguous Values:__ A tip indicating that the values in this column are contiguous (i.e. the interval between values is 1).
 
 
-![Hassan-19](images/Hassan-19.png)
+![Hassan-19](Hassan-19.png)
 
 #######Statistical Suggestions
 
@@ -313,7 +313,7 @@ Users can write observational notes about a column based on the information they
 Users can add questions or hypotheses about each column. These questions can act as guides for exploratory data analysis.
 
 
-![Hassan-20](images/Hassan-20.png)
+![Hassan-20](Hassan-20.png)
 
 ###Saving and Printing
 
