@@ -21,6 +21,13 @@ class __TwigTemplate_61ab36261361ad1e4e5dfc1407617483b3cc7f72accbf33ff6c838fda49
         $context["new_base_url"] = ((($this->getAttribute((isset($context["blog"]) ? $context["blog"] : null), "url", array()) == "/")) ? ("") : ($this->getAttribute((isset($context["blog"]) ? $context["blog"] : null), "url", array())));
         // line 3
         echo "
+
+<div id=\"editors\">
+    <h3>From the Editors</h3>
+    <h4><a href=\"/iSR_Grav/entries/editor-letter\">Why We Made This</a></h4>
+    <span class=\"byline\">By The iSchool Review</span>
+    <span class=\"by-org\">University of California, Berkeley</span>
+</div>
 <div id=\"careers\">
     <h3>careers</h3>
     <h4><a href=\"/iSR_Grav/entries/what-is-a-pm\">What Is a Product Manager (at a Tech Company)?</a></h4>
@@ -38,7 +45,7 @@ class __TwigTemplate_61ab36261361ad1e4e5dfc1407617483b3cc7f72accbf33ff6c838fda49
 </div>
 
 ";
-        // line 63
+        // line 70
         echo " ";
     }
 
@@ -54,12 +61,19 @@ class __TwigTemplate_61ab36261361ad1e4e5dfc1407617483b3cc7f72accbf33ff6c838fda49
 
     public function getDebugInfo()
     {
-        return array (  42 => 63,  23 => 3,  21 => 2,  19 => 1,);
+        return array (  49 => 70,  23 => 3,  21 => 2,  19 => 1,);
     }
 }
 /* {% set feed_url = blog.url == '/' or blog.url == base_url_relative ? (base_url_relative~'/'~blog.slug) : blog.url %}*/
 /* {% set new_base_url = blog.url == '/' ? '' : blog.url %}*/
 /* */
+/* */
+/* <div id="editors">*/
+/*     <h3>From the Editors</h3>*/
+/*     <h4><a href="/iSR_Grav/entries/editor-letter">Why We Made This</a></h4>*/
+/*     <span class="byline">By The iSchool Review</span>*/
+/*     <span class="by-org">University of California, Berkeley</span>*/
+/* </div>*/
 /* <div id="careers">*/
 /*     <h3>careers</h3>*/
 /*     <h4><a href="/iSR_Grav/entries/what-is-a-pm">What Is a Product Manager (at a Tech Company)?</a></h4>*/

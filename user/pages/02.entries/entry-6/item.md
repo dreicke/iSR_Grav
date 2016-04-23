@@ -53,7 +53,7 @@ To select rhyme pairs for the stanza, we investigated two approaches. The first 
 
 Both approaches extend beyond simply looking up pronunciations in the Prondict, because (a) not all words are included in the Prondict, (b) the Prondict provides no understanding of words that poets typically rhyme together, and (c) the Prondict is limited in identifying non-true rhymes. <a href="#fn14" id="ref14">[14]</a>
 
-###Approach 1: Inferring rhymes based on phonemes
+####Approach 1: Inferring rhymes based on phonemes
 
 In this approach, for each sonnet in the corpus, we begin by looking at the end words of each line. 
 
@@ -103,7 +103,7 @@ If a stanza has three or more end words that are unidentifiable using the Prondi
 | [None, a, b, None]                 | [a, b, a, b] or [a, a, b, b] | No                               |
 
 
-###Approach 2: Learning rhymes from unsupervised expectation maximization algorithm
+####Approach 2: Learning rhymes from unsupervised expectation maximization algorithm
 
 Our second approach aims to extract rhymes based on the statistical closeness of words within stanzas without relying on the sounds of given words. We use an unsupervised expectation maximization learning algorithm to tag stanzas with their most likely rhyme scheme. This algorithm, developed by Sravana, R. and Knight, K., <a href="#fn15" id="ref15">[15]</a> is driven by the theory that if two end words co-occur in multiple n-line stanzas, then those two words are more likely to rhyme. 
 
@@ -127,7 +127,7 @@ Our second approach aims to extract rhymes based on the statistical closeness of
 
 In the above stanzas, the end words ‘back’ and ‘track’ would have a higher rhyme strength, because they co-occur in more than one stanza. 
 
-###Selecting an approach
+####Selecting an approach
 
 The Inferring Rhymes approach has perfect precision in identifying rhyme pairs because rhymes are only extracted if we are certain of the inferred rhyme scheme. Although, this means that this approach does not recall all of the rhyme pairs from the corpus. However, due to its probabilistic nature, with the EM Rhymes approach we cannot guarantee perfect precision, but we can achieve perfect recall. Thus, we elect to rely solely on the Inferring Rhymes approach because of its high level of precision as required in the rhyme bank creation. 
 
@@ -140,7 +140,7 @@ The resulting rhyme bank has 344 rhyme sounds. Transitively adding words to the 
 
 ###Poem generation
 
-###Building a line
+####Building a line
 We generate lines using a trigram language model trained on the sonnet corpora. <a href="#fn16" id="ref16">[16]</a> The lines are generated in reverse allowing us to initiate the line generation with a randomly selected word from the rhyme bank. We then build the lines backwards from the end word, stopping at ten syllables. <a href="#fn17" id="ref17">[17]</a>
 
 After the randomly selected end word, the next word in the line is a weighted pick from all of the words that appear before that word in the corpus. After the last and penultimate words are selected, each subsequent word—moving backwards through the line—is selected by a weighted pick from words that precede the bigram in the corpus. The weights are determined by a Maximum Likelihood Estimate (MLE) that measures the count of the trigram in the corpus relative to the count of the bigram that follows it.
@@ -148,7 +148,7 @@ After the randomly selected end word, the next word in the line is a weighted pi
 P(w_i  | w_(i-2),w_(i-1)) = count(w_(i-2),w_(i-1),w_i) / count(w_(i-2),w_(i-1))
 
 
-###Implementing rhyme scheme
+####Implementing rhyme scheme
 
 Currently we are able to generate poems in either a Shakespearean (a-b-a-b) or Petrarchan (a-b-b-a) rhyme scheme. In order to select our a and b rhymes for each poem, the poem generation function randomly selects two different lists of rhyming words from the rhyme bank. The end word for the first a line is randomly selected from the a rhyme list and used to generate the first line of the poem. The end word for the second line is randomly selected from the b rhyme list to generate the second line of the poem. For the third and fourth rhymes a word is selected that rhymes with the appropriate preceding line. 
 
