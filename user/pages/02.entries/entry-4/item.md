@@ -16,6 +16,23 @@ author:
 header_image: user/themes/isrtheme/images/meta4.png
 ---
 
+
+<script src="http://a11y.nicolas-hoffmann.net/modal/js/jquery-accessible-modal-window-aria.js"></script>
+
+<div id="endorsement" class="hidden modal">
+
+<p>I am pleased to write a letter in support of publication of the submission: "MetaReader: A Dataset Meta-Exploration and Documentation Tool" by Hassan Jannah in "The I School Review".  
+
+MetaReader is an innovative analysis tool that allows a data scientist to quickly obtain an overview of the variables present in a dataset.  The analyst sees distributions from many different viewpoints at once; the visualization goes beyond standard histograms to show nominal, interval, and boolean data distributions in one compact format, along with information about outliers and patterns.    Using this tool, the analyst can also annotate their data, rename variables, and further prepare data for the next steps of processing.  The implementation is done well, allowing for upload on a single server and processing a wide range of data represented as CVS files. I have demonstrated this tool in class and recommended it to my students to help them prepare for exploratory data analysis.
+
+The accompanying paper is well-written and highlights the novel aspects of the work.  I hope its publication helps MetaReader achieve wider recognition and use among data scientists.</p>
+
+<p><em>Marti Hearst, Professor, UC Berkeley School of Information</em></p>
+  
+</div>
+
+<button class="js-modal" data-modal-prefix-class="simple-animated" data-modal-content-id="endorsement" data-modal-title="Faculty Endorsement" data-modal-close-text="Close" data-modal-close-title="Close this modal window">Show faculty endorsement</button>
+
 Exploratory Data Analysis (EDA) using visual or statistical methods can often be improved by doing pre-analysis of a given dataset. Getting to know the contents of the dataset, the types of data it contains, the shape of its values, and some of its quality issues will allow analysts to spend more time doing more meaningful analysis instead of wasting time dealing with data quality issues. This early discovery process can also help formulate initial questions or hypotheses that can help guide the analysis. For data creators, providing clear documentation for a dataset increases its value and reusability. MetaReader is a dataset meta-exploration and documentation tool designed to help analysts learn about a dataset. The tool uses simple and effective statistical and visualization techniques to help jump start EDA activities. It also provides insights about the shape and quality of the data. In addition, MetaReader provides documentation features for analysts and data creators to facilitate information retention and sharing.
 
 
@@ -190,7 +207,11 @@ Focusing on the shape provides a user with an idea about what values are present
 The visualizations rendered for each column depend on the data type and some other statistical measures (primarily the domain, or the number of unique values in the column). Most visualizations retain the original ordering of the data in the column, which is referred to as the index. When used, the index is always plotted on the x-axis. Using the index highlights the focus on visualizing the shape of the data. It also helps users find any point of interest (e.g. a block of missing data) in the original data file using the row number. 
 
 
+<<<<<<< HEAD
 ####Numerical Visualizations
+=======
+#######Numerical Visualizations
+>>>>>>> 610069d7e0eabaecd2e07a77f96ff112632e5ae4
 
 __Box Plot:__ A box-plot chart with minimum, maximum, first and third quartile, median and mean value. The chart also shows the number of outlier values on both sides of the chart. The chart will not be shown if there were less than 4 unique values in the data. 
 
@@ -219,11 +240,14 @@ __Scatter Plot with Outliers:__  A scatter plot with the index on the x-axis and
 ![Hassan-10](images/Hassan-10.png)
 ![Hassan-11](images/Hassan-11.png)
 
+
 ####Date Visualizations
+
 
 __Frequency Distribution Time Series:__  A line chart of the frequency distribution of each date value in the dataset. The data is sorted ascendingly by date. The line chart was generated using the MetricGraphics.js library [14].
 
 ![Hassan-12](images/Hassan-12.png)
+
 
 
 ####Text Visualizations
@@ -256,6 +280,7 @@ Another key note about suggestions is that they are currently independent of eac
 There are currently two main categories for suggestions: tips and warnings. Tips are used to highlight potentially useful information inferred from the data. Warnings highlight potential quality issues with the data (e.g. missing values).
 
 
+
 ####Date Shape Suggestions
 
 __Missing Values:__ A warning that shows the percentage of missing or invalid values in the column. This is a data quality tip that could help identify missing or null values in a column. 
@@ -275,6 +300,7 @@ __Contiguous Values:__ A tip indicating that the values in this column are conti
 
 ####Statistical Suggestions
 
+
 __Categorical Values:__ A tip indicating that the values in the column could be considered categorical data (or dimensions) for analysis purposes. It is calculated based on the number and ratio of unique values within the column. The current threshold is 10 unique values or a 20% ratio of unique values to total count.
 
 __Boolean Values:__ A tip indicating that the values in this column could be Boolean. It is based on a unique value count of 2. It does not validate against the actual values (0|1, y|n, yes|no, true|false, etc.).
@@ -283,7 +309,9 @@ __Primary Key:__ A tip indicating that the values in this column could represent
 
 __Outliers:__ A tip showing the number and percentage of statistical outliers in numerical columns.
 
+
 ####Semantic Suggestions
+
 
 In general, MetaReader does not look into semantic attributes of the data. This is done for two reasons. First, there is a very high variation in the semantics of the data. Second, including semantics might indicate that MetaReader is semantic-capable, which dilutes the intended focus on the shape, not the meaning, of the data.
 
