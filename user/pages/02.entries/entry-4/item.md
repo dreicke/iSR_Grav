@@ -207,11 +207,8 @@ Focusing on the shape provides a user with an idea about what values are present
 The visualizations rendered for each column depend on the data type and some other statistical measures (primarily the domain, or the number of unique values in the column). Most visualizations retain the original ordering of the data in the column, which is referred to as the index. When used, the index is always plotted on the x-axis. Using the index highlights the focus on visualizing the shape of the data. It also helps users find any point of interest (e.g. a block of missing data) in the original data file using the row number. 
 
 
-<<<<<<< HEAD
 ####Numerical Visualizations
-=======
-#######Numerical Visualizations
->>>>>>> 610069d7e0eabaecd2e07a77f96ff112632e5ae4
+
 
 __Box Plot:__ A box-plot chart with minimum, maximum, first and third quartile, median and mean value. The chart also shows the number of outlier values on both sides of the chart. The chart will not be shown if there were less than 4 unique values in the data. 
 
