@@ -1,12 +1,33 @@
 ---
 title: Welcome
-body_classes: "welcome"
+body_classes: "letter"
 ---
 
-<img src="user/images/isrlogo-sq.png" style="display: block; margin-right:auto; margin-left:auto; width:350px;">
+<div id="welcome-letter">
 
-<h1 id="frontpage"> Welcome, Colleagues!</h1>
-<p class="introtext"> <strong>The iSchool Review</strong> is a new publication designed to showcase the best work from students in information-centric professional programs. As we begin to compile content for the inaugural issue, we are seeking submissions related to information management, design, and policy.</p>
+	<div id="letter-header">
+		<h1>Welcome</h1>
+		<p class="author">by Hal Varian</p>
+		<p class="bio">Chief Technologist at Google and First Dean of UC Berkeley's School of Information</p>
+	</div>
+	<p class="letter">Berkeley's School of Information was born in 1995 and it will turn 21 this year.  In the next few years, a number of iSchools will also come of age. They are no longer adolescents: they are now officially grown ups.</p>
+	<p class="letter">The same is true of the Web.  What was once a geeky curiosity has now been firmly established as one of the most important technologies ever created.</p>
+	<p class="letter">Thanks to the Internet and the Web, it is now technologically feasible to provide universal access to all human knowledge.  The barriers now do not have to do with technological feasibilty but economic and policy problems, which take longer to change. But these problems will be overcome in time.</p>
+	<p class="letter">iSchool students will continue to play an important role in this communications revolution.  They are relentlessly interdisciplinary. And due to that breadth, they can apply tools from technology, design, networking, communications, and policy to the problems at hand.</p>
+	<p class="letter"><em>The iSchool Review</em> will play a role as well, by helping to improve communication among Information Schools by sharing experiences, ideas, and visions for a networked world.  Thanks to everyone who made this possible!</p>
 
-<div class="buttonholder"><a href="sub" class="fakebutton" style="color: #B2FFE8; font-weight: 700;">STAY IN TOUCH!</a></div>
+</div>
+
+<aside>
+	<h1>IN THIS ISSUE</h1>
+	<ul>
+		<li>Computer-Generated Sonnets
+		<li>Political Tweets Librarianship
+		<li>A Web-Enabled Sweater
+		<li>Exploring Jeopardy! Data
+		<li>Global Paperlessness
+		<li>Hybrid Publishing
+		<li>A Tool for Meta-Exploration
+	</uL>
+</aside>
 

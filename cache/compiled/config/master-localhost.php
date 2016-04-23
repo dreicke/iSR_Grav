@@ -1,8 +1,8 @@
 <?php
 return [
     '@class' => 'Grav\\Common\\Config\\CompiledConfig',
-    'timestamp' => 1459190871,
-    'checksum' => '1ea78f017d51c7108db63b918a6e4040',
+    'timestamp' => 1461440095,
+    'checksum' => '6460c5433a998a079f975e277ce1e08b',
     'files' => [
         'user/config' => [
             'media' => [
@@ -35,7 +35,7 @@ return [
             ],
             'system' => [
                 'file' => 'user/config/system.yaml',
-                'modified' => 1456533236
+                'modified' => 1461440095
             ]
         ],
         'system/config' => [
@@ -874,7 +874,7 @@ return [
                 'etag' => false,
                 'vary_accept_encoding' => false,
                 'redirect_default_route' => false,
-                'redirect_default_code' => 301,
+                'redirect_default_code' => '301',
                 'redirect_trailing_slash' => true,
                 'ignore_files' => [
                     0 => '.DS_Store'
