@@ -16,6 +16,23 @@ author:
 header_image: user/themes/isrtheme/images/meta4.png
 ---
 
+
+<script src="http://a11y.nicolas-hoffmann.net/modal/js/jquery-accessible-modal-window-aria.js"></script>
+
+<div id="endorsement" class="hidden modal">
+
+<p>I am pleased to write a letter in support of publication of the submission: "MetaReader: A Dataset Meta-Exploration and Documentation Tool" by Hassan Jannah in "The I School Review".  
+
+MetaReader is an innovative analysis tool that allows a data scientist to quickly obtain an overview of the variables present in a dataset.  The analyst sees distributions from many different viewpoints at once; the visualization goes beyond standard histograms to show nominal, interval, and boolean data distributions in one compact format, along with information about outliers and patterns.    Using this tool, the analyst can also annotate their data, rename variables, and further prepare data for the next steps of processing.  The implementation is done well, allowing for upload on a single server and processing a wide range of data represented as CVS files. I have demonstrated this tool in class and recommended it to my students to help them prepare for exploratory data analysis.
+
+The accompanying paper is well-written and highlights the novel aspects of the work.  I hope its publication helps MetaReader achieve wider recognition and use among data scientists.</p>
+
+<p><em>Marti Hearst, Professor, UC Berkeley School of Information</em></p>
+  
+</div>
+
+<button class="js-modal" data-modal-prefix-class="simple-animated" data-modal-content-id="endorsement" data-modal-title="Faculty Endorsement" data-modal-close-text="Close" data-modal-close-title="Close this modal window">Show faculty endorsement</button>
+
 Exploratory Data Analysis (EDA) using visual or statistical methods can often be improved by doing pre-analysis of a given dataset. Getting to know the contents of the dataset, the types of data it contains, the shape of its values, and some of its quality issues will allow analysts to spend more time doing more meaningful analysis instead of wasting time dealing with data quality issues. This early discovery process can also help formulate initial questions or hypotheses that can help guide the analysis. For data creators, providing clear documentation for a dataset increases its value and reusability. MetaReader is a dataset meta-exploration and documentation tool designed to help analysts learn about a dataset. The tool uses simple and effective statistical and visualization techniques to help jump start EDA activities. It also provides insights about the shape and quality of the data. In addition, MetaReader provides documentation features for analysts and data creators to facilitate information retention and sharing.
 
 
