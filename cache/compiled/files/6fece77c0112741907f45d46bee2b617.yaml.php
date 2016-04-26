@@ -2,10 +2,10 @@
 return [
     '@class' => 'Grav\\Common\\File\\CompiledYamlFile',
     'filename' => '/Applications/MAMP/htdocs/iSR_Grav/user/plugins/email/blueprints.yaml',
-    'modified' => 1456024514,
+    'modified' => 1461617014,
     'data' => [
         'name' => 'Email',
-        'version' => '2.2.0',
+        'version' => '2.3.0',
         'description' => 'Enables the emailing system for Grav',
         'icon' => 'envelope',
         'author' => [
@@ -110,7 +110,8 @@ return [
                     'options' => [
                         'none' => 'None',
                         'ssl' => 'SSL',
-                        'ttl' => 'TTL'
+                        'tls' => 'TLS',
+                        'starttls' => 'STARTTLS'
                     ]
                 ],
                 'mailer.smtp.user' => [
@@ -128,6 +129,19 @@ return [
                     'size' => 'medium',
                     'label' => 'Path to sendmail',
                     'placeholder' => '/usr/sbin/sendmail'
+                ],
+                'debug' => [
+                    'type' => 'toggle',
+                    'label' => 'Debug',
+                    'highlight' => 1,
+                    'default' => 0,
+                    'options' => [
+                        1 => 'PLUGIN_ADMIN.ENABLED',
+                        0 => 'PLUGIN_ADMIN.DISABLED'
+                    ],
+                    'validate' => [
+                        'type' => 'bool'
+                    ]
                 ]
             ]
         ]

@@ -1,13 +1,17 @@
 <?php
 return [
     '@class' => 'Grav\\Common\\Config\\CompiledConfig',
-    'timestamp' => 1461440095,
-    'checksum' => '6460c5433a998a079f975e277ce1e08b',
+    'timestamp' => 1461617855,
+    'checksum' => '1036380d544e6d81663138a33fedf7c4',
     'files' => [
         'user/config' => [
             'media' => [
                 'file' => 'user/config/media.yaml',
                 'modified' => 1455058285
+            ],
+            'plugins/comments' => [
+                'file' => 'user/config/plugins/comments.yaml',
+                'modified' => 1461617850
             ],
             'plugins/email' => [
                 'file' => 'user/config/plugins/email.yaml',
@@ -35,7 +39,7 @@ return [
             ],
             'system' => [
                 'file' => 'user/config/system.yaml',
-                'modified' => 1461440095
+                'modified' => 1461617016
             ]
         ],
         'system/config' => [
@@ -77,13 +81,17 @@ return [
                 'file' => 'user/plugins/breadcrumbs/breadcrumbs.yaml',
                 'modified' => 1458750102
             ],
+            'plugins/comments' => [
+                'file' => 'user/plugins/comments/comments.yaml',
+                'modified' => 1461617015
+            ],
             'plugins/data-manager' => [
                 'file' => 'user/plugins/data-manager/data-manager.yaml',
                 'modified' => 1456022395
             ],
             'plugins/email' => [
                 'file' => 'user/plugins/email/email.yaml',
-                'modified' => 1456024514
+                'modified' => 1461617014
             ],
             'plugins/error' => [
                 'file' => 'user/plugins/error/error.yaml',
@@ -95,11 +103,7 @@ return [
             ],
             'plugins/form' => [
                 'file' => 'user/plugins/form/form.yaml',
-                'modified' => 1456024504
-            ],
-            'plugins/jscomments' => [
-                'file' => 'user/plugins/jscomments/jscomments.yaml',
-                'modified' => 1456005280
+                'modified' => 1461617001
             ],
             'plugins/login' => [
                 'file' => 'user/plugins/login/login.yaml',
@@ -204,6 +208,92 @@ return [
                 'icon_divider_classes' => 'fa fa-angle-right',
                 'link_trailing' => false
             ],
+            'comments' => [
+                'enabled' => true,
+                'enable_on_routes' => [
+                    0 => '/blog',
+                    1 => '/item'
+                ],
+                'disable_on_routes' => [
+                    0 => '/blog/blog-post-to-ignore',
+                    1 => '/ignore-this-route'
+                ],
+                'form' => [
+                    'name' => 'comments',
+                    'fields' => [
+                        0 => [
+                            'name' => 'name',
+                            'label' => 'Name',
+                            'placeholder' => 'Enter your name',
+                            'autocomplete' => 'on',
+                            'type' => 'text',
+                            'validate' => [
+                                'required' => true
+                            ]
+                        ],
+                        1 => [
+                            'name' => 'email',
+                            'label' => 'Email',
+                            'placeholder' => 'Enter your email address',
+                            'type' => 'email',
+                            'validate' => [
+                                'required' => true
+                            ]
+                        ],
+                        2 => [
+                            'name' => 'text',
+                            'label' => 'Message',
+                            'placeholder' => 'Enter your message',
+                            'type' => 'textarea',
+                            'validate' => [
+                                'required' => true
+                            ]
+                        ],
+                        3 => [
+                            'name' => 'date',
+                            'type' => 'hidden',
+                            'process' => [
+                                'fillWithCurrentDateTime' => true
+                            ]
+                        ],
+                        4 => [
+                            'name' => 'title',
+                            'type' => 'hidden',
+                            'evaluateDefault' => 'grav.page.header.title'
+                        ],
+                        5 => [
+                            'name' => 'lang',
+                            'type' => 'hidden',
+                            'evaluateDefault' => 'grav.language.getLanguage'
+                        ],
+                        6 => [
+                            'name' => 'path',
+                            'type' => 'hidden',
+                            'evaluateDefault' => 'grav.uri.path'
+                        ]
+                    ],
+                    'buttons' => [
+                        0 => [
+                            'type' => 'submit',
+                            'value' => 'Submit'
+                        ]
+                    ],
+                    'process' => [
+                        0 => [
+                            'email' => [
+                                'subject' => '[New Comment] from {{ form.value.name|e }}',
+                                'body' => '{% include \'forms/data.html.twig\' %}'
+                            ]
+                        ],
+                        1 => [
+                            'addComment' => NULL
+                        ],
+                        2 => [
+                            'message' => 'Thank you for writing a comment!'
+                        ]
+                    ]
+                ]
+            ],
             'data-manager' => [
                 'enabled' => true
             ],
@@ -226,7 +316,8 @@ return [
                         'bin' => '/usr/sbin/sendmail'
                     ]
                 ],
-                'content_type' => 'text/html'
+                'content_type' => 'text/html',
+                'debug' => false
             ],
             'error' => [
                 'enabled' => true,
@@ -248,36 +339,6 @@ return [
                     'destination' => '@self',
                     'accept' => [
                         0 => 'image/*'
-                    ]
-                ]
-            ],
-            'jscomments' => [
-                'enabled' => true,
-                'providers' => [
-                    'disqus' => [
-                        'shortname' => '',
-                        'default_lang' => 'en'
-                    ],
-                    'intensedebate' => [
-                        'acct' => ''
-                    ],
-                    'facebook' => [
-                        'appId' => '',
-                        'lang' => 'en_US',
-                        'num_posts' => 5,
-                        'colorscheme' => 'light',
-                        'order_by' => 'social',
-                        'width' => '100%'
-                    ],
-                    'muut' => [
-                        'forum' => '',
-                        'channel' => 'General',
-                        'show_online' => false,
-                        'show_title' => false,
-                        'upload' => false,
-                        'share' => true,
-                        'widget' => false,
-                        'lang' => 'en'
                     ]
                 ]
             ],

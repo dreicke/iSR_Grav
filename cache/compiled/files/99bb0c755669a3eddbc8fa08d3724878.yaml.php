@@ -2,7 +2,7 @@
 return [
     '@class' => 'Grav\\Common\\File\\CompiledYamlFile',
     'filename' => 'plugins://email/email.yaml',
-    'modified' => 1456024514,
+    'modified' => 1461617014,
     'data' => [
         'enabled' => true,
         'from' => NULL,
@@ -22,6 +22,7 @@ return [
                 'bin' => '/usr/sbin/sendmail'
             ]
         ],
-        'content_type' => 'text/html'
+        'content_type' => 'text/html',
+        'debug' => false
     ]
 ];

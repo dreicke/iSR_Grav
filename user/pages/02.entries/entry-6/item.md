@@ -244,6 +244,8 @@ Thank you to Kyle Booten, Marti Hearst and David Bamman for their continued guid
 <script>
 
 function return_random_stanza(){
+        $('#stanzap').hide('normal');
+        $('#stanzap').empty();
         $.getJSON('https://api.myjson.com/bins/47w30', function(data) {
                 var stanzas = []
                 $.each ( data, function( key, val ) {
@@ -253,6 +255,7 @@ function return_random_stanza(){
         randomStanza = randomStanza.replace(/\n/g, "<br />");
         console.log(randomStanza);
         $('#stanzap').append(randomStanza + "<br />");
+        $('#stanzap').show('slow');
 
   })};
 

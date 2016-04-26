@@ -4,12 +4,13 @@ summary:
     enabled: '1'
     size: 1
     format: short
+taxonomy:
+    tag:
+        - is
+    category:
+        - blog
 jscomments:
     provider: facebook
-taxonomy:
-    category: blog
-    tag:
-        - 'is'
 author:
     name: 'Kali Braden, Alex Herd, Brian Lau, Magdalene Schifferer & My Anh Troung'
     org: 'University of Toronto'
@@ -22,7 +23,23 @@ header_image: user/themes/isrtheme/images/parc2.jpg
 
 <button class="js-modal" data-modal-prefix-class="simple-animated" data-modal-content-id="endorsement" data-modal-title="Faculty Endorsement" data-modal-close-text="Close" data-modal-close-title="Close this modal window">Show faculty endorsement</button>
 
+<div id="endorsement" class="hidden modal">
+<p>I’m proud to endorse this paper for The iSchool Review.  I think that this work makes a significant contribution to an emerging area of librarianship and is relevant to the iSchool movement.  Having seen this effort evolve since its conception, I am impressed with the direction in which the authors have undertaken their research and I think that their methods, framework, and conclusions are solid.  Web archiving is an active and expanding practice in libraries, and much of it is being done without the proper policy analysis set in place.  In the CHI and CSCW literature, there has been an increased focus on policy, and this paper resonates with this emerging disciplinary trend.</p>
+<p><em>Robert Glushko, Head of Scholarly Communications and Copyright - University of Toronto Libraries</em>
+</p>
+</div>
+
 In the past half-decade, various individuals and groups have begun to record social media data from a variety of public events across the world, in particular political occurrences that have engaged a wide spectrum of insiders and outsiders. Contemporary information specialists are among those who seek to preserve this data, recognizing its importance for the historical record as representative of how early-21st century humans communicate and associated cultural norms, dialogue, trends and events (Scola, 2015). Moreover, collected data can serve numerous educational uses, now and in the future. There is no single method for this emerging task in the information field. This article suggests one approach, encompassed in a series of instructional guidelines (Figure 1.1 and Figure 1.2) aimed at assisting those archivists, librarians, and other information specialists tasked with harvesting and curating one form of social media data - Tweets - from international political events. These guidelines address the copyright, ethical, and task-related issues involved in the harvesting and curation of political Tweets.
+
+__Figure 1.1__
+
+![Architectural concept of giant wall skinned with solar panels](images/parc-pamplet.jpg)
+
+__Figure 1.2__
+
+![Architectural concept of giant wall skinned with solar panels](images/parc-pamplet-int.jpg)
+
+
 The role of the Political Tweets Librarian is also proposed. As the primary employer of the guidelines, this individual is envisioned as an academic librarian; but, the guidelines’ principles are applicable to other information specialists working at public libraries and nonprofit organizations. This article also conceptualizes the related Political ARChive (PARC), an institution devoted to recording the “political voices” reflected in Tweets. At the PARC, Political Tweets Librarians collect, record, and preserve Tweets and hashtags from political events all over the world.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/GRfn8buN75o" frameborder="0" allowfullscreen></iframe>
@@ -90,4 +107,174 @@ With this in mind, Librarians may not be able to access every Tweet regarding a 
 There are two sides to every story and an issue associated with media collaboration is potential bias. To obtain a balanced political Tweets collection, Librarians must also crawl the web for all possible data about political events. They must look at all sides of a story, including collecting data from international authors (e.g. external to the political event’s participants). Achieving an appropriately balanced Tweets collection can be very time consuming, especially if there is a limited number of Librarians harvesting, curating, and archiving Tweets from political events. Not only do Political Tweets Librarians need to crawl the Web and Twitter at least every three days for hashtags about political events (Antracoli et al., 2014; S. Li & N. Worby, personal communication, January 29, 2015), but also they must collect data from every angle of the situation.
 
 In order to save time, a proposed solution is for the Political Tweets Librarians to collaborate with other academic institutions, either internal or external. For example, Robarts Library at the University of Toronto relies primarily on two Librarians to crawl the Web for Tweets  relating to political events. To save time and effort and put fresh eyes on the subject, they have suggested that they could potentially reach out to other Tweet archivists from other institutions to help with curating and archiving Tweets from Hong Kong, for example. This situation would allow them to spend more time crawling the Web for other political events, rather than endlessly searching for possible hashtags and perspectives of the same political event (S. Li & N. Worby, personal communication, January 29, 2015). Lastly, it is possible that there may be limited information on how to search and curate specific social media. The guidelines provided will prepare future Political Tweets Librarian to harvest and curate Tweets.
+
+## PARC
+
+The Political ARChive (PARC) (Figure 2.1) is a conceptual library devoted to capturing and archiving political Tweets, as well as other types of politically relevant social media data. PARC’s mandate is to lead efforts in political Tweet archiving, curation, advocacy and research. To meet the demands of a political digital library and fulfill its mandate, PARC’s staff would include Political Tweets Librarians, digital archivists, copyright experts, ethics scholars and technology experts. The institution’s primary goal is to address issues surrounding the archiving of increasingly ephemeral political digital knowledge and the changing role of libraries in society.
+
+__Figure 2.1__
+
+![Architectural concept of giant wall displaying dynamic information](images/parc.png)
+
+As PARC’s concept extends from the Political Tweets Librarian guidelines, the institution embodies the imperative to organize political social media data in a digital archive and thereby create a physical space devoted to this endeavour. Such a dedicated library houses political Tweets with staff ensuring that copyright, privacy, and ethical curation practices are followed and providing expert guidance to educators and academic researchers. Having a physical structure to house political Tweets also provides a platform for immaterial digital knowledge to become “material”. PARC’s physicality is of special importance in an institution dedicated to political Tweets because politics demand expression, politics demand voice, voice gives it force, and force requires mass. PARC gives mass to what would otherwise be voiceless in its ephemerality.
+
+Ephemerality is also encroaching on the institution of the library. With the significant shift to querying the Internet for information and knowledge, libraries are “relinquishing [their] place as the top source of inquiry” (Campbell, 2006, pp. 16) and becoming in a sense ephemeral, losing their physicality through irrelevance. This context questions the role of the “new” intangibles and their place within the “tangible” world of the library. Campbell (2006) states that there is a “need for a new mission” (pp. 20) and suggests that libraries can provide quality learning spaces, with librarians teaching digital information literacy (e.g. Twitter literacy), collecting and digitizing archival materials, and maintaining digital repositories - all of which are skills that require specific spatial organization. The development of PARC demonstrates how librarians can and should make the shaping of space a serious consideration of their practice.
+
+Architecture as a spatial organization has been used to “embody knowledge” (Perez-Gomez, 1987, pp. 1) and, as such, librarians should consider embodying digital knowledge as a crucial part of their profession. Organized spaces can enchant, emplace, and enact (Griffs, 2013, pp. 2-3). When such spaces are made public, they can influence and shape public perception and behaviour (Lockton, 2011, pp. 14). Moreover, the “power of aesthetics” can improve learning (Kjaervang, 2006, pp. 1) and create associations and identities forged by shaping urban public spaces, thereby connecting this aestheticism to the democratic governance of the public sphere (Harvey, 2005, pp. 1).
+
+PARC is an early exploration towards making Twitter political voices heard and the role of libraries and librarians visible in society again. This institution is conceptually structured for public relevance through several interfacing connections. PARC’s vertical structure is configured as a server tower (see Figure 2.2) to facilitate a digital repository for political Tweets (and potentially other digital political information). One core aspect of PARC is that it is connected via a digital network to other similar digital repositories around the globe, which allows researchers to access dark archives anywhere in the world via PARC’s secure computer facilities.
+
+__Figure 2.2__
+
+![Architectural concept of giant wall that is also a server tower](images/parc-server.png)
+
+The server tower also generates heat, which is captured to provide a part, if not all, of the library’s electrical needs. PARC’s vertical structure is also envisioned to have skinned solar panels (see Figure 2.3) to generate more electricity. Excess electricity created by the solar panels can be fed directly into the city power grid, thus establishing connections with the people and spaces around it. The vertical structure will also feature a video wall (see Figure 2.4) that can live-broadcast or re-broadcast significant political events expressed via Twitter (see Figure 2.5), video, social media, or other digital platforms.
+
+__Figure 2.3__
+
+![Architectural concept of giant wall skinned with solar panels](images/parc-solar.png)
+
+__Figure 2.4__
+
+![Architectural concept of giant wall displaying video broadcast](images/parc-video.png)
+
+__Figure 2.5__
+
+![Architectural concept of giant wall displaying live Tweets](images/parc-live.png)
+
+
+PARC’s vertical tower connects with a horizontal platform, which creates a physical space that the public can use to stage political protests, or digitally connect with other communal spaces to form a nexus of local or global political activity. This nexus provides an additional connection between PARC and the public. The inside of PARC’s horizontal platform is the library itself, which provides research space and facilities for the public. The conceptual Hall of Pillars connects to PARC’s digital archives and provides real-time interaction with Tweets, as well as with other political entities from around the world. Users have the option of viewing Twitter data on each pillar’s full-length video display for the immersive audio-visual experience, or through a directed audio cone that constrains sensitive information to the viewer only.
+
+In addition to harvesting, archiving, storing, and providing access to curated political Tweets, other activities PARC and its staff might undertake to support its mandate include:
+
+* Provide a forum for library and information science professionals, technology experts, legal scholars, ethics scholars, social media scholars, digital archivists, and museum and industry professionals by hosting workshops and annual conferences (Osterburg, as cited in Scola, 2015);
+* Lead collaborative efforts with other libraries and external institutions to harvest and curate political Tweets as events occur;
+* Explore options regarding how to deal with continually expanding Tweet catalogues in order to improve archiving methods and Tweet accessibility and use by researchers (Zimmerman, 2015);
+* Continually develop open source Tweet harvesting, archiving, and curation platforms (NSCU, 2014); and
+* Explore the possibility of creating a Tweet metadata schema for use by libraries and other institutions that archive social media to create interoperability between databases (Dwoskin, 2014; Zimmer, 2015).
+
+Beyond these activities, PARC’s mandate could expand to include: Tweets on other thematic topics (e.g. cultural, social, business, education, health); the archiving of different social media platforms (e.g. Facebook); and an examination of how social media platforms can better allow for distinct cultural, social, political, and other unique types of digital representation (Brock, 2012; Williams, Terras & Warwick, 2012).
+
+Overall, PARC is designed as a node for digital political knowledge, and is responsible for archiving, organizing, and disseminating information across local and global networks. As this institutional role gains social relevance, its presence and functions can instigate questions of how other institutions whose traditional primary function is curating physical items (libraries, museums, and art galleries) can find relevance in the age of digital information and potentially contribute to the collection of important digital data. In this respect, PARC adds to the efforts of other institutions in the cultural arena, including Japan’s Kyoto Costume Institute, which currently offers digital image and text information for 300 of its 12,000 items of clothing dating back to the 17th century (The Kyoto Costume Institute, 2016).
+
+
+##Conclusion
+
+Tweets have rapidly become the “preferred communication and information-sharing” tool of the early 21st century (Zimmer, 2015). This development ensures that Tweets will have enduring historical importance, embodied by Twitter’s aforementioned release to the Library of Congress of its entire Tweet collection from March 2006 to April 2010 (as well as all future publicly available Tweets) (Allen, 2013; Twitter, Inc., 2010; Zimmer, 2015). This situation is no less true for political movements, for which Tweets are used to organize protesters (Zimmer, 2015). The historical and cultural significance of political Tweets is reflected in the efforts of many individuals and institutions to capture, archive, and curate this social media data from events across the world. As Williams (2015) notes, “Twitter has become a necessary platform for dissent, discussion … [and] breaking news” giving a “voice to many of the issues that 20 years ago would’ve remained far away from mainstream radar” (para. 2). As a result, harvesting and curating political social media data preserves this valuable information.
+
+Concomitantly, the harvesting and curation of social media data presents numerous challenges to information specialists assigned this task. Proposing the role of the Political Tweets Librarian, this article has outlined a set of guidelines to assist information specialists in the harvesting and curation of political Tweets, and addressed relevant issues that arise when undertaking these initiatives. While issues of copyright are generally circumvented by Twitter’s Terms of Service, they are also subject to national copyright legislation. In this case, Canada’s Fair Dealing exemption to copyright law enables Political Tweets Librarians to capture social media data for contemporary and future educational use. At the same time, there are numerous privacy and ethics issues to consider, and the subset of guidelines suggested in this article are just a starting point for Political Tweets Librarians in respecting these elements. The proposed Political ARChive is designed as a central node for discussion, development, and employment of the tasks involved in collecting politically-sensitive social media data. PARC is envisioned as a permanent home for political Tweets to ensure that the voices of Tweet authors are not lost due to Tweets’ ephemerality and that this data is appropriately stored as a part of history. The Political Tweets Librarian, PARC, and the guidelines are therefore considered important contributions to the emerging dialogue on, and continually evolving efforts in, the information field to capture social media data.
+
+##Works Cited
+
+* AAA Commission on the Engagement of Anthropology with the US Security and    
+	Intelligence Communities (CEAUSSIC). (2009). Final Report on the 
+	Army’s Human Terrain System Proof of Concept Program. Retrieved from
+	[http://s3.amazonaws.com/rdcms-aaa/files/production/public/FileDownloads/pdf
+	cmtes/commissions/CEAUSSIC/upload/CEAUSSIC_HTS_Final_Report.pdf](http://s3.amazonaws.com/rdcms-aaa/files/production/public/FileDownloads/pdf
+	cmtes/commissions/CEAUSSIC/upload/CEAUSSIC_HTS_Final_Report.pdf)
+
+* Allen, E. (2013). Update on the Twitter Archive at the Library of Congress.
+ Library of  Congress Blog. Retrieved from [http://blogs.loc.gov/loc/2013/01/update-on-the-twitter-archive-at-the-library-of-congress/](http://blogs.loc.gov/loc/2013/01/update-on-the-twitter-archive-at-the-library-of-congress/)
+
+* American Anthropological Association. (2012a). Do no harm. 	
+	Retrieved from [http://ethics.aaanet.org/ethics-statement-1-do-no-harm/](http://ethics.aaanet.org/ethics-statement-1-do-no-harm/)
+
+* American Anthropological Association. (2012b). Make your results accessible.
+ Retrieved from [http://ethics.aaanet.org/ethics-statement-5-make-your-results-accessible/](http://ethics.aaanet.org/ethics-statement-5-make-your-results-accessible/)
+
+* American Anthropological Association. (2012c). Obtain informed consent and necessary  permissions.  Retrieved from [http://ethics.aaanet.org/ethics-statement-3-obtain-informed-consent-and-necessary-permissions/](http://ethics.aaanet.org/ethics-statement-3-obtain-informed-consent-and-necessary-permissions/)
+
+* American Anthropological Association. (2012d). Principles of professional responsibility. Retrieved from  [http://ethics.aaanet.org/ethics-statement-0-preamble/](http://ethics.aaanet.org/ethics-statement-0-preamble/)
+
+* American Anthropological Association. (2012e). Protect and preserve your records. Retrieved from 
+[http://ethics.aaanet.org/ethics-statement-6-protect-and-preserve-your-records/](http://ethics.aaanet.org/ethics-statement-6-protect-and-preserve-your-records/)
+
+* American Anthropological Association. (2012f). Weigh competing ethical obligations due collaborators and affected parties.
+	Retrieved from 
+	[http://ethics.aaanet.org/ethics-statement-4-weigh-competing-ethical-obligations-due-collaborators-and-affected-parties/](http://ethics.aaanet.org/ethics-statement-4-weigh-competing-ethical-obligations-due-collaborators-and-affected-parties/)
+
+* Antracoli, A., Duckworth, S., Silva, J., & Yarmey, K. (2014). Capture all the URLs: First steps in web archiving. Pennsylvania Libraries: Research & Practice, 2(2), 155-170. doi: 10.5195/palrap.2014.67
+
+* Archive-It. (2015). Retrieved from [https://www.archive-it.org/](https://www.archive-it.org/)
+
+* BBC News. (2014, December 2). Hong Kong protests: The key players. 
+	Retrieved from [http://www.bbc.com/news/world-asia-china-29408476](http://www.bbc.com/news/world-asia-china-29408476)
+
+* Bragg, M., & Rollason-Cass, S. (2014). Archiving social networking sites w/Archive-It. Retrieved from [https://webarchive.jira.com/wiki/pages/viewpage.action?pageId=3113092](https://webarchive.jira.com/wiki/pages/viewpage.action?pageId=3113092)
+
+* Brock, A. (2012). From the Blackhand Side: Twitter as a Cultural Conversation. Journal of Broadcasting and Electronic Media, 56(4), 529-549. doi:10.1080/08838151.2012.732147
+
+* Buettner, R. (2012). A Brooklyn protester pleads guilty after his Twitter post sinks his case. The New York Times. Retrieved from [http://www.nytimes.com/2012/12/13/nyregion/malcolm-harris-pleads-guilty-over-2011-march.html](http://www.nytimes.com/2012/12/13/nyregion/malcolm-harris-pleads-guilty-over-2011-march.html)
+
+* Campbell, J. D. (2006). Changing a cultural icon: The academic library as a virtual destination. Educause Review, (January/February), 16-30. Retrieved from [https://www.educause.edu/ero/article/changing-cultural-icon-academic-library-virtual-destination](https://www.educause.edu/ero/article/changing-cultural-icon-academic-library-virtual-destination)
+
+* Carter, R. (n.d.). Semiotics of American public library architecture and its influence on the user experience. Retrieved from [http://pixelquarium.com/portfolio/papers/RobertCarter_SemioticsofLibraryArch.pdf](http://pixelquarium.com/portfolio/papers/RobertCarter_SemioticsofLibraryArch.pdf)
+
+* Code of Ethics of the American Library Association (2008, January 22). Retrieved from
+[http://www.ala.org/advocacy/proethics/codeofethics/codeethics](http://www.ala.org/advocacy/proethics/codeofethics/codeethics)
+
+* Commission for the Protection of Privacy (2016). The Privacy Act. Retrieved from [https://www.privacycommission.be/en/privacy-act](https://www.privacycommission.be/en/privacy-act)
+
+* Copyright Act, Revised Statutes of Canada, 1985, c. C-42. Retrieved February 2, 2015 from [http://laws.justice.gc.ca/en/C-42/index.html](http://laws.justice.gc.ca/en/C-42/index.html)
+
+* Dougherty, R. L. (2011). Documenting revolution in the Middle East. Focus on Global Resources, 31(1), 5-7. Retrieved from [http://www.crl.edu/focus/article/7437](http://www.crl.edu/focus/article/7437)
+
+* Dwoskin, E. (2014, June 6). In a single tweet, as many pieces of metadata as there are characters. Wall Street Journal. Retrieved from
+[http://blogs.wsj.com/digits/2014/06/06/in-a-single-tweet-as-many-pieces-of-metadata-as-there-are-characters/](http://blogs.wsj.com/digits/2014/06/06/in-a-single-tweet-as-many-pieces-of-metadata-as-there-are-characters/)
+
+* Griffs, M. (2011). Space, power and the public library: A multicase examination of the public library as organized space. Proceedings of the Annual Conference of CAIS, 1-4.  Retrieved from [http://www.cais-acsi.ca/proceedings/2011/38_Griffis.pdf](http://www.cais-acsi.ca/proceedings/2011/38_Griffis.pdf)
+
+* Harvey, D. (2005). The political economy of public space. In Low, S., & Smith, N. (eds), The Politics of Public Space, 17-34. New York, NY: Routledge.
+
+* Internet Archive. (2015). Wayback Machine. Retrieved from [http://archive.org/web/](http://archive.org/web/)
+
+* International Emergency Economic Powers Act of 1977, 50 U.S.C. §§ 1701-1708 (2014). Retrieved from [https://www.law.cornell.edu/uscode/text/50/chapter-35](https://www.law.cornell.edu/uscode/text/50/chapter-35)
+
+* Jinfang, N. (2012). An overview of web archiving. D-Lib Magazine: The Magazine of Digital Library research, 18(3). Retrieved from [http://dlib.org/dlib/march12/niu/03niu1.html](http://dlib.org/dlib/march12/niu/03niu1.html)
+
+* Kjaervang, U. (2006). Power of aesthetics to improve student learning. Retrieved from [http://www.designshare.com/index.php/articles/aesthetics-and learning/](http://www.designshare.com/index.php/articles/aesthetics-and learning/)
+
+* Kuner, C. (2010). Data Protection Law and International Jurisdiction on the Internet (Part 2). International Journal of Law and Information Technology, 18(3), 227-247. doi:10.1093/ijlit/eaq004 
+
+* Lockton, D. (2011). Architecture, urbanism, design and behaviour: A brief review. Retrieved from [http://architectures.danlockton.co.uk/2011/09/12/architecture-urbanism-design-and-behaviour-a-brief-review/](http://architectures.danlockton.co.uk/2011/09/12/architecture-urbanism-design-and-behaviour-a-brief-review/)
+
+* Luyk, S., & Sherbaniuk, P. (2015, January). The role of grey literature in academic library collections: Discovering, capturing, preservation and access [PowerPoint slides]. Paper presented at the annual Ontario Library Association Super Conference, Toronto, Ontario.
+
+* North Carolina State University (2014). NSCU libraries developing toolkit to make it easier to collect and preserve social media. Retrieved from [http://news.lib.ncsu.edu/blog/2014/09/09/ncsu-libraries-developing-toolkit-to-make-it-easier-to-collect-and-preserve-social-media/](http://news.lib.ncsu.edu/blog/2014/09/09/ncsu-libraries-developing-toolkit-to-make-it-easier-to-collect-and-preserve-social-media/)
+
+* Perez-Gomez, A. (1987). Architecture as embodied knowledge. Journal of Architectural Education, 40(2), Jubilee Issue, 57-58.
+
+* Reinberg, C. (2009). Are tweets copyright-protected? WIPO Magazine. Retrieved from [http://www.wipo.int/wipo_magazine/en/2009/04/article_0005.html](http://www.wipo.int/wipo_magazine/en/2009/04/article_0005.html)
+
+* SalahEldeen, H. M., & Nelson, M. L. (2012). Losing my revolution: how many resources shared on social media have been lost? In Theory and practice of digital libraries second International Conference, TPDL 2012, Paphos, Cyprus, September 23-27, 2012. Proceedings. Berlin: Springer. Retrieved from [http://link.springer.com/chapter/10.1007%2F978-3-642-33290-6_14](http://link.springer.com/chapter/10.1007%2F978-3-642-33290-6_14)
+
+* Scola, N. (2015). Library of Congress’ Twitter archive is a huge #FAIL. Politico. Retrieved from [http://www.politico.com/story/2015/07/library-of-congress-twitter- archive-119698.htm](http://link.springer.com/chapter/10.1007%2F978-3-642-33290-6_14)
+
+* Sio, T. (2014). [Untitled photograph of Hong Kong protester]. Retrieved from [http://blogs.wsj.com/chinarealtime/2014/10/01/hong-kong-protests-mark-twist-in-history-of-umbrella-symbolism/](http://blogs.wsj.com/chinarealtime/2014/10/01/hong-kong-protests-mark-twist-in-history-of-umbrella-symbolism/)
+
+* Small, H., Kasianovitz, K., Blanford, R., & Celaya, I. (2012). What your Tweets tell us about you: Identity, ownership and privacy of Twitter data. International Journal of Digital Curation, 174-197. Retrieved from [http://www.ijdc.net/index.php/ijdc/article/view/214http://www.ijdc.net/index.php/ijdc/article/view/214](http://www.ijdc.net/index.php/ijdc/article/view/214http://www.ijdc.net/index.php/ijdc/article/view/214)
+
+* Taylor, D. (2014). What is fair dealing and how does it relate to copyright? Retrieved from [http://www.lib.sfu.ca/faqs/copyright-fair-dealing](http://www.lib.sfu.ca/faqs/copyright-fair-dealing)
+
+* The Kyoto Costume Institute (2016). Digital Archives. Retrieved from [http://www.kci.or.jp/archives/index_e.html](http://www.kci.or.jp/archives/index_e.html)
+
+* Twitter, Inc. (2010). Gift Agreement. Retrieved from [http://blogs.loc.gov/loc/files/2010/04/LOC-Twitter.pdf](http://blogs.loc.gov/loc/files/2010/04/LOC-Twitter.pdf)
+
+* Twitter, Inc. (2015a). GET help/languages. Retrieved from [https://dev.twitter.com/rest/reference/get/help/languages](https://dev.twitter.com/rest/reference/get/help/languages)
+
+* Twitter, Inc. (2016b). Terms of Service. Retrieved from [https://twitter.com/tos?lang=en](https://twitter.com/tos?lang=en)
+
+* Twitter, Inc. (2016c). The story of a Tweet. Retrieved from [https://about.twitter.com/what-is-twitter/story-of-a-tweet](https://about.twitter.com/what-is-twitter/story-of-a-tweet)
+
+* Van Overstraeten, T. & Cumbley, R. (2009). After two-year investigation, Belgian commission finds no violation of data protection law. The Privacy Advisor. Retrieved from [https://iapp.org/news/a/2009-04-swift-receives-clean-bill-of-health/](https://iapp.org/news/a/2009-04-swift-receives-clean-bill-of-health/)
+
+* Williams, S. (2015). The Power of Black Twitter. The Daily Beast. Retrieved from [http://www.thedailybeast.com/articles/2015/07/06/the-power-of-black-twitter.html](http://www.thedailybeast.com/articles/2015/07/06/the-power-of-black-twitter.html)
+
+* Williams, S.A., Terras, M.M., & Warwick, C. (2012). What do people study when they study Twitter? Classifying Twitter related academic papers. Journal of Documentation, 69(3), 384-410. doi: 10.1108/JD-03-2012-0027.
+
+* Young, J.O. & Brunk (2009). Introduction. In J.O. Young & C.G. Brunk (Eds.), The Ethics of Cultural Appropriation. West Sussex, U.K.: Wiley-Blackwell. 
+
+* Zetter, K. (2012). Twitter ordered to release OWS protester’s data or be fined for contempt. *Wired Magazine*. Retrieved from [http://www.wired.com/2012/09/twitter-ordered-release/](http://www.wired.com/2012/09/twitter-ordered-release/)
+
+* Zimmer, M. (2015). The Twitter Archive at the Library of Congress: Challenges for information practice and information policy. First Monday, 20(7). doi: [http://dx.doi.org/10.5210/fm.v20i7.5619](http://dx.doi.org/10.5210/fm.v20i7.5619)
 

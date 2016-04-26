@@ -1,8 +1,8 @@
 <?php
 return [
     '@class' => 'Grav\\Common\\Config\\CompiledBlueprints',
-    'timestamp' => 1458750108,
-    'checksum' => 'a69afd15dacb30ec4c45870b560d3fab',
+    'timestamp' => 1461617440,
+    'checksum' => 'faebc19f669832fe511453683c23f347',
     'files' => [
         'system/blueprints/config' => [
             'media' => [
@@ -43,13 +43,17 @@ return [
                 'file' => 'user/plugins/breadcrumbs/blueprints.yaml',
                 'modified' => 1458750102
             ],
+            'plugins/comments' => [
+                'file' => 'user/plugins/comments/blueprints.yaml',
+                'modified' => 1461617015
+            ],
             'plugins/data-manager' => [
                 'file' => 'user/plugins/data-manager/blueprints.yaml',
                 'modified' => 1456022395
             ],
             'plugins/email' => [
                 'file' => 'user/plugins/email/blueprints.yaml',
-                'modified' => 1456024514
+                'modified' => 1461617014
             ],
             'plugins/error' => [
                 'file' => 'user/plugins/error/blueprints.yaml',
@@ -61,11 +65,7 @@ return [
             ],
             'plugins/form' => [
                 'file' => 'user/plugins/form/blueprints.yaml',
-                'modified' => 1456024504
-            ],
-            'plugins/jscomments' => [
-                'file' => 'user/plugins/jscomments/blueprints.yaml',
-                'modified' => 1456005280
+                'modified' => 1461617001
             ],
             'plugins/login' => [
                 'file' => 'user/plugins/login/blueprints.yaml',
@@ -609,6 +609,24 @@ return [
                 ],
                 'name' => 'plugins.breadcrumbs.link_trailing'
             ],
+            'plugins.comments' => [
+                'type' => '_parent',
+                'name' => 'plugins.comments'
+            ],
+            'plugins.comments.enabled' => [
+                'type' => 'toggle',
+                'label' => 'PLUGIN_ADMIN.PLUGIN_STATUS',
+                'highlight' => 1,
+                'default' => 0,
+                'options' => [
+                    1 => 'PLUGIN_ADMIN.ENABLED',
+                    0 => 'PLUGIN_ADMIN.DISABLED'
+                ],
+                'validate' => [
+                    'type' => 'bool'
+                ],
+                'name' => 'plugins.comments.enabled'
+            ],
             'plugins.data-manager' => [
                 'type' => '_parent',
                 'name' => 'plugins.data-manager'
@@ -738,7 +756,8 @@ return [
                 'options' => [
                     'none' => 'None',
                     'ssl' => 'SSL',
-                    'ttl' => 'TTL'
+                    'tls' => 'TLS',
+                    'starttls' => 'STARTTLS'
                 ],
                 'name' => 'plugins.email.mailer.smtp.encryption'
             ],
@@ -764,6 +783,20 @@ return [
                 'label' => 'Path to sendmail',
                 'placeholder' => '/usr/sbin/sendmail',
                 'name' => 'plugins.email.mailer.sendmail.bin'
+            ],
+            'plugins.email.debug' => [
+                'type' => 'toggle',
+                'label' => 'Debug',
+                'highlight' => 1,
+                'default' => 0,
+                'options' => [
+                    1 => 'PLUGIN_ADMIN.ENABLED',
+                    0 => 'PLUGIN_ADMIN.DISABLED'
+                ],
+                'validate' => [
+                    'type' => 'bool'
+                ],
+                'name' => 'plugins.email.debug'
             ],
             'plugins.error' => [
                 'type' => '_parent',
@@ -904,185 +937,6 @@ return [
                     'type' => 'commalist'
                 ],
                 'name' => 'plugins.form.files.accept'
-            ],
-            'plugins.jscomments' => [
-                'type' => '_parent',
-                'name' => 'plugins.jscomments'
-            ],
-            'plugins.jscomments.enabled' => [
-                'type' => 'toggle',
-                'label' => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.ENABLED.LABEL',
-                'highlight' => 1,
-                'default' => 1,
-                'options' => [
-                    1 => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.GLOBAL.ENABLED',
-                    0 => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.GLOBAL.DISABLED'
-                ],
-                'validate' => [
-                    'type' => 'bool'
-                ],
-                'name' => 'plugins.jscomments.enabled'
-            ],
-            'plugins.jscomments.providers' => [
-                'type' => '_parent',
-                'name' => 'plugins.jscomments.providers'
-            ],
-            'plugins.jscomments.providers.disqus' => [
-                'type' => '_parent',
-                'name' => 'plugins.jscomments.providers.disqus'
-            ],
-            'plugins.jscomments.providers.disqus.shortname' => [
-                'type' => 'text',
-                'label' => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.DISQUS.FIELDS.SHORTNAME.LABEL',
-                'name' => 'plugins.jscomments.providers.disqus.shortname'
-            ],
-            'plugins.jscomments.providers.disqus.default_lang' => [
-                'type' => 'text',
-                'label' => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.DISQUS.FIELDS.DEFAULT_LANG.LABEL',
-                'name' => 'plugins.jscomments.providers.disqus.default_lang'
-            ],
-            'plugins.jscomments.providers.intensedebate' => [
-                'type' => '_parent',
-                'name' => 'plugins.jscomments.providers.intensedebate'
-            ],
-            'plugins.jscomments.providers.intensedebate.acct' => [
-                'type' => 'text',
-                'label' => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.INTENSEDEBATE.FIELDS.ACCT.LABEL',
-                'name' => 'plugins.jscomments.providers.intensedebate.acct'
-            ],
-            'plugins.jscomments.providers.facebook' => [
-                'type' => '_parent',
-                'name' => 'plugins.jscomments.providers.facebook'
-            ],
-            'plugins.jscomments.providers.facebook.appId' => [
-                'type' => 'text',
-                'label' => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.FACEBOOK.FIELDS.APPID.LABEL',
-                'name' => 'plugins.jscomments.providers.facebook.appId'
-            ],
-            'plugins.jscomments.providers.facebook.lang' => [
-                'type' => 'text',
-                'label' => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.FACEBOOK.FIELDS.LANG.LABEL',
-                'name' => 'plugins.jscomments.providers.facebook.lang'
-            ],
-            'plugins.jscomments.providers.facebook.num_posts' => [
-                'type' => 'text',
-                'label' => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.FACEBOOK.FIELDS.NUM_POSTS.LABEL',
-                'validate' => [
-                    'type' => 'int'
-                ],
-                'name' => 'plugins.jscomments.providers.facebook.num_posts'
-            ],
-            'plugins.jscomments.providers.facebook.colorscheme' => [
-                'type' => 'select',
-                'label' => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.FACEBOOK.FIELDS.COLORSCHEME.LABEL',
-                'default' => 'light',
-                'options' => [
-                    'light' => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.FACEBOOK.FIELDS.COLORSCHEME.OPTIONS.LIGHT',
-                    'dark' => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.FACEBOOK.FIELDS.COLORSCHEME.OPTIONS.DARK'
-                ],
-                'name' => 'plugins.jscomments.providers.facebook.colorscheme'
-            ],
-            'plugins.jscomments.providers.facebook.order_by' => [
-                'type' => 'select',
-                'label' => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.FACEBOOK.FIELDS.ORDER_BY.LABEL',
-                'default' => 'social',
-                'options' => [
-                    'social' => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.FACEBOOK.FIELDS.ORDER_BY.OPTIONS.SOCIAL',
-                    'reverse_time' => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.FACEBOOK.FIELDS.ORDER_BY.OPTIONS.REVERSE_TIME',
-                    'time' => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.FACEBOOK.FIELDS.ORDER_BY.OPTIONS.TIME'
-                ],
-                'name' => 'plugins.jscomments.providers.facebook.order_by'
-            ],
-            'plugins.jscomments.providers.facebook.width' => [
-                'type' => 'text',
-                'label' => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.FACEBOOK.FIELDS.WIDTH.LABEL',
-                'name' => 'plugins.jscomments.providers.facebook.width'
-            ],
-            'plugins.jscomments.providers.muut' => [
-                'type' => '_parent',
-                'name' => 'plugins.jscomments.providers.muut'
-            ],
-            'plugins.jscomments.providers.muut.forum' => [
-                'type' => 'text',
-                'label' => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.MUUT.FIELDS.FORUM.LABEL',
-                'name' => 'plugins.jscomments.providers.muut.forum'
-            ],
-            'plugins.jscomments.providers.muut.channel' => [
-                'type' => 'text',
-                'label' => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.MUUT.FIELDS.CHANNEL.LABEL',
-                'name' => 'plugins.jscomments.providers.muut.channel'
-            ],
-            'plugins.jscomments.providers.muut.show_online' => [
-                'type' => 'toggle',
-                'label' => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.MUUT.FIELDS.SHOW_ONLINE.LABEL',
-                'highlight' => 1,
-                'default' => 1,
-                'options' => [
-                    1 => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.GLOBAL.ENABLED',
-                    0 => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.GLOBAL.DISABLED'
-                ],
-                'validate' => [
-                    'type' => 'bool'
-                ],
-                'name' => 'plugins.jscomments.providers.muut.show_online'
-            ],
-            'plugins.jscomments.providers.muut.show_title' => [
-                'type' => 'toggle',
-                'label' => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.MUUT.FIELDS.SHOW_TITLE.LABEL',
-                'highlight' => 1,
-                'default' => 1,
-                'options' => [
-                    1 => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.GLOBAL.ENABLED',
-                    0 => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.GLOBAL.DISABLED'
-                ],
-                'validate' => [
-                    'type' => 'bool'
-                ],
-                'name' => 'plugins.jscomments.providers.muut.show_title'
-            ],
-            'plugins.jscomments.providers.muut.upload' => [
-                'type' => 'toggle',
-                'label' => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.MUUT.FIELDS.UPLOAD.LABEL',
-                'highlight' => 1,
-                'options' => [
-                    1 => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.GLOBAL.ENABLED',
-                    0 => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.GLOBAL.DISABLED'
-                ],
-                'validate' => [
-                    'type' => 'bool'
-                ],
-                'name' => 'plugins.jscomments.providers.muut.upload'
-            ],
-            'plugins.jscomments.providers.muut.share' => [
-                'type' => 'toggle',
-                'label' => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.MUUT.FIELDS.SHARE.LABEL',
-                'highlight' => 1,
-                'options' => [
-                    1 => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.GLOBAL.ENABLED',
-                    0 => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.GLOBAL.DISABLED'
-                ],
-                'validate' => [
-                    'type' => 'bool'
-                ],
-                'name' => 'plugins.jscomments.providers.muut.share'
-            ],
-            'plugins.jscomments.providers.muut.widget' => [
-                'type' => 'toggle',
-                'label' => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.MUUT.FIELDS.WIDGET.LABEL',
-                'highlight' => 1,
-                'options' => [
-                    1 => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.GLOBAL.ENABLED',
-                    0 => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.GLOBAL.DISABLED'
-                ],
-                'validate' => [
-                    'type' => 'bool'
-                ],
-                'name' => 'plugins.jscomments.providers.muut.widget'
-            ],
-            'plugins.jscomments.providers.muut.lang' => [
-                'type' => 'text',
-                'label' => 'PLUGIN_JSCOMMENTS.ADMIN.BLUEPRINTS.MUUT.FIELDS.LANG.LABEL',
-                'name' => 'plugins.jscomments.providers.muut.lang'
             ],
             'plugins.login' => [
                 'type' => '_parent',
@@ -3571,6 +3425,9 @@ return [
                     'icon_divider_classes' => 'plugins.breadcrumbs.icon_divider_classes',
                     'link_trailing' => 'plugins.breadcrumbs.link_trailing'
                 ],
+                'comments' => [
+                    'enabled' => 'plugins.comments.enabled'
+                ],
                 'data-manager' => [
                     'enabled' => 'plugins.data-manager.enabled'
                 ],
@@ -3593,7 +3450,8 @@ return [
                     'from' => 'plugins.email.from',
                     'from_name' => 'plugins.email.from_name',
                     'to' => 'plugins.email.to',
-                    'to_name' => 'plugins.email.to_name'
+                    'to_name' => 'plugins.email.to_name',
+                    'debug' => 'plugins.email.debug'
                 ],
                 'error' => [
                     'enabled' => 'plugins.error.enabled',
@@ -3614,36 +3472,6 @@ return [
                         'multiple' => 'plugins.form.files.multiple',
                         'destination' => 'plugins.form.files.destination',
                         'accept' => 'plugins.form.files.accept'
-                    ]
-                ],
-                'jscomments' => [
-                    'enabled' => 'plugins.jscomments.enabled',
-                    'providers' => [
-                        'disqus' => [
-                            'shortname' => 'plugins.jscomments.providers.disqus.shortname',
-                            'default_lang' => 'plugins.jscomments.providers.disqus.default_lang'
-                        ],
-                        'intensedebate' => [
-                            'acct' => 'plugins.jscomments.providers.intensedebate.acct'
-                        ],
-                        'facebook' => [
-                            'appId' => 'plugins.jscomments.providers.facebook.appId',
-                            'lang' => 'plugins.jscomments.providers.facebook.lang',
-                            'num_posts' => 'plugins.jscomments.providers.facebook.num_posts',
-                            'colorscheme' => 'plugins.jscomments.providers.facebook.colorscheme',
-                            'order_by' => 'plugins.jscomments.providers.facebook.order_by',
-                            'width' => 'plugins.jscomments.providers.facebook.width'
-                        ],
-                        'muut' => [
-                            'forum' => 'plugins.jscomments.providers.muut.forum',
-                            'channel' => 'plugins.jscomments.providers.muut.channel',
-                            'show_online' => 'plugins.jscomments.providers.muut.show_online',
-                            'show_title' => 'plugins.jscomments.providers.muut.show_title',
-                            'upload' => 'plugins.jscomments.providers.muut.upload',
-                            'share' => 'plugins.jscomments.providers.muut.share',
-                            'widget' => 'plugins.jscomments.providers.muut.widget',
-                            'lang' => 'plugins.jscomments.providers.muut.lang'
-                        ]
                     ]
                 ],
                 'login' => [

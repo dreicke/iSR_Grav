@@ -23,11 +23,18 @@ header_image: user/themes/isrtheme/images/dance.jpg
 
 <div id="endorsement" class="hidden modal">
 
-<p>TBD</p>
+<p>Dance Dance is a playful yet profound project. It takes the lowly accelerometer, nowadays pressed into service to quantify our daily step count, and explores its artistic potential through aesthetic expressions of performative body movements.</p>
+ 
+<p>Dance Dance simultaneously tackles several interesting domains: wearable fashion, motion data, and the challenge of publishing streaming data between different services. It demonstrates that wearable technology can be an effective platform that fuels other creative applications. It is visually captivating in multiple ways -- between abstract data visualization, a brush with functional applications, and the light-emitting sweater itself, it suggests a bright future for wearable technology and its applications.</p>
+ 
+<p>Currently, most experimental work in wearable technology exists in a silo, due to a number of technical constraints, e.g., Wi-Fi tends to have large boards, and publisher/subscriber services can be difficult to implement. By stringing together a collection of services and devices, Dance Dance has created an effective minimum viable product that shows promise for a platform of biosensory data. This approach to data as a platform for operations is important, because this separation of concerns between data collection and data processing/representation allows wearable technology to be much more extensible and subsequently more valuable.</p>
+ 
+<p>The students confess that “the sweater was literally held together by threads…it’s a miracle it worked.” Even though this was their first experience with wearable technology and working with fabrics, the success was readily apparent. The turtle was rather cute; the jellyfish evoked spontaneous expressions of delight; even the long-exposure images of the sweater LEDs that you see here are mesmerizing. Thanks to the lowly accelerometer, Dance Dance has brought the audience and the dancer together in light and motion.
+</p>
 
 </div>
 
-<button class="js-modal" data-modal-prefix-class="simple-animated" data-modal-content-id="endorsement" data-modal-title="Endorsement from Marti Hearst" data-modal-close-text="Close" data-modal-close-title="Close this modal window">Show faculty endorsement</button>
+<button class="js-modal" data-modal-prefix-class="simple-animated" data-modal-content-id="endorsement" data-modal-title="Endorsement from John Chuang" data-modal-close-text="Close" data-modal-close-title="Close this modal window">Show faculty endorsement</button>
 
 ##description
 

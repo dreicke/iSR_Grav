@@ -117,7 +117,7 @@ header_image: user/themes/isrtheme/images/paper2.jpg
 <div id="endorsement" class="hidden modal">
   <p>This paper discusses the key issues around a paperless, global information environment focusing on the idea that a balance between physical and digital formats is not only more realistic but also more appropriate. The discussions consider the issues recognising the imperfections and unreliabilities of electronic media within the context of their affordances of widespread access and importance in the preservation process. The author recognises the impact of market forces on the process of digitisation and discusses quite clearly the tensions arising from these in the perpetuation and sharing of knowledge. The importance of information literacy is clearly identified in relation to the adoption of online materials and the complexity of supporting the development of these literacies within the complex information environment is linked effectively to a consideration role of the library and information professional within this context. Throughout the paper the author draws from relevant current examples from professional and academic literature and makes a very coherent argument that the optimum information environment in today’s context recognises a balance between the physical and the digital.</p>
 
-  <p><em>Dr Charles Inskip, Programme Director, MA Library and Information Studies, University College London</em></p>
+  <p><em>Dr. Charles Inskip, Programme Director, MA Library and Information Studies, University College London</em></p>
   
 </div>
 

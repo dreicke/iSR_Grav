@@ -2,19 +2,13 @@
 return [
     '@class' => 'Grav\\Common\\File\\CompiledYamlFile',
     'filename' => '/Applications/MAMP/htdocs/iSR_Grav/user/config/system.yaml',
-    'modified' => 1456533236,
+    'modified' => 1461617016,
     'data' => [
         'absolute_urls' => false,
-        'timezone' => '',
-        'default_locale' => NULL,
         'param_sep' => ':',
         'wrapped_site' => false,
         'reverse_proxy_setup' => false,
-        'proxy_url' => NULL,
         'languages' => [
-            'supported' => [
-                
-            ],
             'include_default_lang' => true,
             'translations' => true,
             'translations_fallback' => true,
@@ -36,7 +30,6 @@ return [
                 'count' => 20
             ],
             'dateformat' => [
-                'default' => NULL,
                 'short' => 'jS M Y',
                 'long' => 'F jS \\a\\t g:ia'
             ],
@@ -69,13 +62,12 @@ return [
                 5 => 'rss',
                 6 => 'atom'
             ],
-            'append_url_extension' => '',
             'expires' => 604800,
             'last_modified' => false,
             'etag' => false,
             'vary_accept_encoding' => false,
             'redirect_default_route' => false,
-            'redirect_default_code' => 301,
+            'redirect_default_code' => '301',
             'redirect_trailing_slash' => true,
             'ignore_files' => [
                 0 => '.DS_Store'
@@ -138,13 +130,7 @@ return [
         ],
         'media' => [
             'enable_media_timestamp' => false,
-            'upload_limit' => 0,
-            'unsupported_inline_types' => [
-                
-            ],
-            'allowed_fallback_types' => [
-                
-            ]
+            'upload_limit' => 0
         ],
         'session' => [
             'enabled' => true,

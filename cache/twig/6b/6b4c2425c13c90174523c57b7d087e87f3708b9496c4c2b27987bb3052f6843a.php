@@ -24,7 +24,7 @@ class __TwigTemplate_61ab36261361ad1e4e5dfc1407617483b3cc7f72accbf33ff6c838fda49
 
 <div id=\"editors\">
     <h3>From the Editors</h3>
-    <h4><a href=\"/iSR_Grav/entries/editor-letter\">Why We Made This</a></h4>
+    <h4><a href=\"/iSR_Grav/entries/editor-letter\">Behind the Scenes of Issue One</a></h4>
     <span class=\"byline\">By The iSchool Review</span>
     <span class=\"by-org\">University of California, Berkeley</span>
 </div>
@@ -70,7 +70,7 @@ class __TwigTemplate_61ab36261361ad1e4e5dfc1407617483b3cc7f72accbf33ff6c838fda49
 /* */
 /* <div id="editors">*/
 /*     <h3>From the Editors</h3>*/
-/*     <h4><a href="/iSR_Grav/entries/editor-letter">Why We Made This</a></h4>*/
+/*     <h4><a href="/iSR_Grav/entries/editor-letter">Behind the Scenes of Issue One</a></h4>*/
 /*     <span class="byline">By The iSchool Review</span>*/
 /*     <span class="by-org">University of California, Berkeley</span>*/
 /* </div>*/
