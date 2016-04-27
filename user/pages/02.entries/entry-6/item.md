@@ -22,8 +22,8 @@ header_image: user/themes/isrtheme/images/sonnet.jpg
 <script src="http://a11y.nicolas-hoffmann.net/modal/js/jquery-accessible-modal-window-aria.js"></script>
 
 <div id="endorsement" class="hidden modal">
-
-<p>This paper describes an algorithm for automated generation of Shakespearian-style sonnets.  This work presents a novel approach for creating a high-precision rhyme bank, using a combination of a phonological dictionary and a unique algorithm for finding rhyming word pairs from a poetry collection.  I think this will be an interesting contribution to the literature on literary text generation.</p>
+<p style="text-align:center; color:#3E0C46;"><em>from Marti Hearst, Professor, UC Berkeley School of Information</em></p>
+<p>This paper describes an algorithm for automated generation of Shakespearian-style sonnets. This work presents a novel approach for creating a high-precision rhyme bank, using a combination of a phonological dictionary and a unique algorithm for finding rhyming word pairs from a poetry collection. I think this will be an interesting contribution to the literature on literary text generation.</p>
 
 </div>
 

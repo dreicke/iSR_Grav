@@ -98,7 +98,7 @@ class __TwigTemplate_e92e96e45507a22d0b07ad0d3f7aebe60702250f6662fcdeec33e985931
         // line 31
         if ($this->getAttribute($this->getAttribute($this->getAttribute((isset($context["page"]) ? $context["page"] : null), "header", array()), "author", array()), "name", array())) {
             // line 32
-            echo "                <span class=\"byline\"> BY: ";
+            echo "                <span class=\"byline\"> By ";
             echo $this->getAttribute($this->getAttribute($this->getAttribute((isset($context["page"]) ? $context["page"] : null), "header", array()), "author", array()), "name", array());
             echo "</span>
         ";
@@ -273,7 +273,7 @@ class __TwigTemplate_e92e96e45507a22d0b07ad0d3f7aebe60702250f6662fcdeec33e985931
 /*         */
 /*         <div id="author-info">*/
 /*         {% if page.header.author.name %}*/
-/*                 <span class="byline"> BY: {{ page.header.author.name }}</span>*/
+/*                 <span class="byline"> By {{ page.header.author.name }}</span>*/
 /*         {% endif %}*/
 /* */
 /*         {% if page.header.author.org %}*/

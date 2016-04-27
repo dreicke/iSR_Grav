@@ -22,7 +22,7 @@ header_image: user/themes/isrtheme/images/publish1.jpg
 <script src="http://a11y.nicolas-hoffmann.net/modal/js/jquery-accessible-modal-window-aria.js"></script>
 
 <div id="endorsement" class="hidden modal">
-
+<p style="text-align:center; color:#3E0C46;"><em>from Ben Kaden, M.A., Humboldt‐Universität zu Berlin</em></p>
 <p>The concept of Hybrid Publishing appears ambiguous as many of the new concepts in the realm of digital media, communication, and (enhanced) publishing. It is therefore necessary ‐ at least from the viewpoint of Library and Information Science ‐ to discuss and agree upon a definition for the ongoing discourse regarding future structures of publishing. Katharina Leyrer’s paper addresses the issue with the purpose of providing an elaborated and stable understanding of the concept as well as opportunities and challenges of such a publishing approach. She outlines three use cases (hybrid research publications, hybrid OA‐journals, hybrid exhibition catalogues) and exemplifies the case within the context of a real life case. Therefore, the paper combines the questions of definition and application convincingly and provides a valuable contribution to this particular field of LIS research.</p>
 
 </div>

@@ -29,6 +29,10 @@ p{
 	margin-top: 0.7rem;
 }
 
+ul, ol{
+	font-family: 'Lora';
+}
+
 section#body.welcome{
 	background-image: url('../images/bar-bg3.png');
 	background-size: cover;
@@ -336,6 +340,7 @@ div#item > div.list-item{
 #issuehead h1{
 	display: inline-block;
 	margin-left: 20px;
+	margin-right: 20px;
 	margin-bottom: 10px;
 }
 
@@ -476,11 +481,18 @@ header #logo h3 {
 	color: #777777;
 }
 
-
-
 #footer{
 	color: #A1A1A1;
 }
+
+.prev-next > a.button{
+    background: #fff;
+    color: #3E0C46;
+    border: 1px solid #3E0C46;
+    border-radius: 3px;
+    font-family: 'Lato';
+}
+
 
 dialog {
         display: block;
