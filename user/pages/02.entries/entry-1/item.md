@@ -164,41 +164,11 @@ Information environments are not static, and the push towards a paperless librar
 
 Technology's tendency towards access over ownership has the potential to fulfill a truly democratic pedagogy, to deliver social inclusion, lifelong learning, and local access to global collections. A paperless global information environment is desirable as far as it increases access, but infeasible while legal constraints, business dynamics, and political ideology conspire to limit its suitability for the library as an equal-access repository, and for the librarian as facilitator and steward of these ideals. 
 
-<div class="slider"></div>
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script>
-    var width = 500;
 
-    var x = d3.scale.linear()
-        .domain([1, 100])
-        .range([0, width])
-        .clamp(true);
+<script src="http://assets-polarb-com.a.ssl.fastly.net/assets/polar-embedded.js" async="true" data-publisher="Shomik" data-poll-id="238931"></script>
 
-    var dispatch = d3.dispatch("sliderChange");
 
-    var slider = d3.select(".slider")
-        .style("width", width + "px");
+<script src="http://assets-polarb-com.a.ssl.fastly.net/assets/polar-embedded.js" async="true" data-publisher="Shomik" data-poll-id="238932"></script>
 
-    var sliderTray = slider.append("div")
-        .attr("class", "slider-tray");
 
-    var sliderHandle = slider.append("div")
-        .attr("class", "slider-handle");
-
-    sliderHandle.append("div")
-        .attr("class", "slider-handle-icon")
-
-    slider.call(d3.behavior.drag()
-        .on("dragstart", function() {
-          dispatch.sliderChange(x.invert(d3.mouse(sliderTray.node())[0]));
-          d3.event.sourceEvent.preventDefault();
-        })
-        .on("drag", function() {
-          dispatch.sliderChange(x.invert(d3.mouse(sliderTray.node())[0]));
-        }));
-
-    dispatch.on("sliderChange.slider", function(value) {
-      sliderHandle.style("left", x(value) + "px")
-    });
-
-    </script>
+<script src="http://assets-polarb-com.a.ssl.fastly.net/assets/polar-embedded.js" async="true" data-publisher="Shomik" data-poll-id="238933"></script>
