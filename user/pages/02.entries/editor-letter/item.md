@@ -1,5 +1,5 @@
 ---
-title: 'Why We Made This'
+title: 'Behind the Scenes of Issue One'
 summary:
     enabled: '1'
     format: short
