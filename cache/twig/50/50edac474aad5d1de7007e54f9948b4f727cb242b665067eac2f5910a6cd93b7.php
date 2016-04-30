@@ -16,7 +16,7 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
     protected function doDisplay(array $context, array $blocks = array())
     {
         // line 1
-        $this->loadTemplate("blog.html.twig", "blog.html.twig", 1, "333363158")->display($context);
+        $this->loadTemplate("blog.html.twig", "blog.html.twig", 1, "115929760")->display($context);
         // line 97
         echo "
 <script>
@@ -63,7 +63,7 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 
 
 /* blog.html.twig */
-class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b9838b5c_333363158 extends Twig_Template
+class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b9838b5c_115929760 extends Twig_Template
 {
     public function __construct(Twig_Environment $env)
     {
@@ -174,7 +174,7 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
         echo "
             </div>
             <div id=\"lis\">
-\t            <h3>LIS</h3>
+\t            <h3>Library &amp; Information Science (LIS)</h3>
 
 \t\t\t\t\t";
         // line 50
@@ -214,7 +214,7 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 
             </div>
             <div id=\"hci\">
-\t\t\t\t<h3>HCI</h3>
+\t\t\t\t<h3>Human-Computer Interaction (HCI)</h3>
 
 \t\t\t\t\t";
         // line 64
@@ -254,7 +254,7 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 
             </div>
             <div id=\"socio\">
-\t\t\t\t<h3>Business & Society</h3>
+\t\t\t\t<h3>Business &amp; Society</h3>
 
 \t\t\t\t";
         // line 78
@@ -366,7 +366,7 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 /* */
 /*             </div>*/
 /*             <div id="lis">*/
-/* 	            <h3>LIS</h3>*/
+/* 	            <h3>Library &amp; Information Science (LIS)</h3>*/
 /* */
 /* 					{% for post in taxonomy.findTaxonomy({'tag':'is'}) %}*/
 /* 						<div class="articulo featured">*/
@@ -380,7 +380,7 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 /* */
 /*             </div>*/
 /*             <div id="hci">*/
-/* 				<h3>HCI</h3>*/
+/* 				<h3>Human-Computer Interaction (HCI)</h3>*/
 /* */
 /* 					{% for post in taxonomy.findTaxonomy({'tag':'HCI'}) %}*/
 /* 						<div class="articulo">*/
@@ -394,7 +394,7 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 /* */
 /*             </div>*/
 /*             <div id="socio">*/
-/* 				<h3>Business & Society</h3>*/
+/* 				<h3>Business &amp; Society</h3>*/
 /* */
 /* 				{% for post in taxonomy.findTaxonomy({'tag':'social issues'}) %}*/
 /* 					<div class="articulo">*/

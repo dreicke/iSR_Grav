@@ -18,6 +18,7 @@ topojson: true
 header_image: user/themes/isrtheme/images/paper2.jpg
 ---
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
 
 <script src="http://a11y.nicolas-hoffmann.net/modal/js/jquery-accessible-modal-window-aria.js"></script>
@@ -122,7 +123,7 @@ header_image: user/themes/isrtheme/images/paper2.jpg
   
 </div>
 
-<button class="js-modal" data-modal-prefix-class="simple-animated" data-modal-content-id="endorsement" data-modal-title="Faculty Endorsement" data-modal-close-text="Close" data-modal-close-title="Close this modal window">Show faculty endorsement</button>
+<a class="js-modal" data-modal-prefix-class="simple-animated" data-modal-content-id="endorsement" data-modal-title="Faculty Endorsement" data-modal-close-text="Close" data-modal-close-title="Close this modal window">Endorsed by Dr. Charles Inskip, Programme Director <i class="fa fa-external-link-square" aria-hidden="true"></i></a>
 
 
 In the BiblioTech of San Antonio, Texas, books have been replaced with digital collections: the transition towards paperless information environments has already begun. But the pace of change may be too fast for libraries to adapt to and still maintain their commitment to collection preservation and universal access to lifelong learning. While paperless, global information environments are desirable in an idealised form, the feasibility of current models suggests that a compromise – neither fully print nor fully digital – may be the best solution. 

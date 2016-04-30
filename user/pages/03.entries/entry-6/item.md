@@ -17,8 +17,9 @@ author:
 header_image: user/themes/isrtheme/images/sonnet.jpg
 ---
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
-
+<script src="//cdn.jsdelivr.net/jquery.color-animation/1/mainfile"></script>
 <script src="http://a11y.nicolas-hoffmann.net/modal/js/jquery-accessible-modal-window-aria.js"></script>
 
 <div id="endorsement" class="hidden modal">
@@ -27,7 +28,7 @@ header_image: user/themes/isrtheme/images/sonnet.jpg
 
 </div>
 
-<button class="js-modal" data-modal-prefix-class="simple-animated" data-modal-content-id="endorsement" data-modal-title="Endorsement from Marti Hearst" data-modal-close-text="Close" data-modal-close-title="Close this modal window">Show faculty endorsement</button>
+<a class="js-modal" data-modal-prefix-class="simple-animated" data-modal-content-id="endorsement" data-modal-title="Endorsement" data-modal-close-text="Close" data-modal-close-title="Close this modal window">Endorsed by Marti Hearst, Professor <i class="fa fa-external-link-square" aria-hidden="true"></i></a>
 
 ##Overview
 
@@ -206,23 +207,23 @@ Thank you to Kyle Booten, Marti Hearst and David Bamman for their continued guid
 
 <h2>End Notes</h2>
 <p id="endnotes">
-<sup id="fn1">1. A phoneme is a distinct unit of sound. Words are composed of many phonemes.<a href="#ref1" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-<sup id="fn2"><span>2. McCurdy, N., Lein, J., Coles, K., Meyer, M. 2015. Poemage: Visualizing the Sonic Topology of a Poem. IEEE Transactions on Visualization and Computer Graphics.<a href="#ref2" title="Jump back to footnote 2 in the text.">↩</a></sup></span><br>
-<sup id="fn3"><span>3. McCurdy, N., Srikumar, V., Meyer, M. 2015. RhymeDesign: A Tool for Analyzing Sonic Devices in Poetry. Proceedings of NAACL-HLT Fourth Workshop on Computational Linguistics for Literature.<a href="#ref3" title="Jump back to footnote 3 in the text.">↩</a></sup></span><br>
-<sup id="fn4"><span>4. Black, A., Lenzo, K., and Pagel, V. 1998. Issues in Building General Letter to Sound Rules.<a href="#ref4" title="Jump back to footnote 4 in the text.">↩</a></sup></span><br>
-<sup id="fn5"><span>5. Bartlett, S., Kondrak, G., and Cherry, C. 2009. On the Syllabification of Phonemes. Human Language Technologies: The 2009 Annual Conference of the North American Chapter of the ACL.<a href="#ref5" title="Jump back to footnote 5 in the text.">↩</a></sup></span><br>
-<sup id="fn6"><span>6. Sravana, R., Knight, K. 2011. Unsupervised Discovery of Rhyme Schemes. Proceedings of the 49th Annual Meeting of the Association for Computational Linguistics: shortpapers.<a href="#ref6" title="Jump back to footnote 6 in the text.">↩</a></sup></span><br>
-<sup id="fn7"><span>7. Addanki, K. and Wu, D. 2013. Unsupervised Rhyme Scheme Identification in Hip Hop Lyrics Using Hidden Markov Models.<a href="#ref7" title="Jump back to footnote 7 in the text.">↩</a></sup></span><br>
-<sup id="fn8"><span>8. Tobing, B. C. L. and Manurung, R. A Chart Generation System for Topical Metrical Poetry.<a href="#ref8" title="Jump back to footnote 8 in the text.">↩</a></sup></span><br>
-<sup id="fn9"><span>9. Gervás, P. 2013. Computational Modelling of Poetry Generation. Proceedings of the AISB 13 Symposium on AI and Poetry.<a href="#ref9" title="Jump back to footnote 9 in the text.">↩</a></sup></span><br>
-<sup id="fn10"><span>10. Provided by Kevin Knight from the Information Sciences Institute of University of Southern California.<a href="#ref10" title="Jump back to footnote 10 in the text.">↩</a></sup></span><br>
-<sup id="fn11"><span>11. Sourced from sonnets.org.<a href="#ref11" title="Jump back to footnote 11 in the text.">↩</a></sup></span><br>
-<sup id="fn12"><span>12. Carnegie Mellon University Pronunciation Dictionary. http://www.speech.cs.cmu.edu/cgi-bin/cmudict.<a href="#ref12" title="Jump back to footnote 12 in the text.">↩</a></sup></span><br>
-<sup id="fn13"><span>13. Sravana, R., Knight, K. 2011. Unsupervised Discovery of Rhyme Schemes. Proceedings of the 49th Annual Meeting of the Association for Computational Linguistics: shortpapers.<a href="#ref13" title="Jump back to footnote 13 in the text.">↩</a></sup></span><br>
-<sup id="fn14"><span>14. McCurdy, N., et. al. identified 24 different rhyme types (e.g. Identical rhyme, Semirhyme, Syllabic rhyme, etc.) and had to supplement the Prondict with support vector machines, letter to sound rules, and syllable segmentation methods for out of dictionary words. Poets have the liberty to use non-true rhyme types, so we wanted to capture these types of rhymes in our work in hopes of giving a more authentic feel to the poems. <a href="#ref14" title="Jump back to footnote 14 in the text.">↩</a></sup></span><br>
-<sup id="fn15"><span>15. Sravana, R., Knight, K. 2011. Unsupervised Discovery of Rhyme Schemes. Proceedings of the 49th Annual Meeting of the Association for Computational Linguistics: shortpapers. <a href="#ref15" title="Jump back to footnote 15 in the text.">↩</a></sup></span><br>
-<sup id="fn16"><span>16. The code for the language model was adapted from BigFav’s ngram language model code. Code available at https://github.com/BigFav/n-grams.<a href="#ref16" title="Jump back to footnote 16 in the text.">↩</a></sup></span><br>
-<sup id="fn17"><span>17. Syllables are counted by looking up the words in the Prondict.<a href="#ref17" title="Jump back to footnote 17 in the text.">↩</a></sup></span><br>
+<sup id="fn1">1. A phoneme is a distinct unit of sound. Words are composed of many phonemes.<a href="#ref1" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn2"><span>2. McCurdy, N., Lein, J., Coles, K., Meyer, M. 2015. Poemage: Visualizing the Sonic Topology of a Poem. IEEE Transactions on Visualization and Computer Graphics.<a href="#ref2" title="Jump back to footnote 2 in the text."> go back ↩</a></sup></span><br>
+<sup id="fn3"><span>3. McCurdy, N., Srikumar, V., Meyer, M. 2015. RhymeDesign: A Tool for Analyzing Sonic Devices in Poetry. Proceedings of NAACL-HLT Fourth Workshop on Computational Linguistics for Literature.<a href="#ref3" title="Jump back to footnote 3 in the text."> go back ↩</a></sup></span><br>
+<sup id="fn4"><span>4. Black, A., Lenzo, K., and Pagel, V. 1998. Issues in Building General Letter to Sound Rules.<a href="#ref4" title="Jump back to footnote 4 in the text."> go back ↩</a></sup></span><br>
+<sup id="fn5"><span>5. Bartlett, S., Kondrak, G., and Cherry, C. 2009. On the Syllabification of Phonemes. Human Language Technologies: The 2009 Annual Conference of the North American Chapter of the ACL.<a href="#ref5" title="Jump back to footnote 5 in the text."> go back ↩</a></sup></span><br>
+<sup id="fn6"><span>6. Sravana, R., Knight, K. 2011. Unsupervised Discovery of Rhyme Schemes. Proceedings of the 49th Annual Meeting of the Association for Computational Linguistics: shortpapers.<a href="#ref6" title="Jump back to footnote 6 in the text."> go back ↩</a></sup></span><br>
+<sup id="fn7"><span>7. Addanki, K. and Wu, D. 2013. Unsupervised Rhyme Scheme Identification in Hip Hop Lyrics Using Hidden Markov Models.<a href="#ref7" title="Jump back to footnote 7 in the text."> go back ↩</a></sup></span><br>
+<sup id="fn8"><span>8. Tobing, B. C. L. and Manurung, R. A Chart Generation System for Topical Metrical Poetry.<a href="#ref8" title="Jump back to footnote 8 in the text."> go back ↩</a></sup></span><br>
+<sup id="fn9"><span>9. Gervás, P. 2013. Computational Modelling of Poetry Generation. Proceedings of the AISB 13 Symposium on AI and Poetry.<a href="#ref9" title="Jump back to footnote 9 in the text."> go back ↩</a></sup></span><br>
+<sup id="fn10"><span>10. Provided by Kevin Knight from the Information Sciences Institute of University of Southern California.<a href="#ref10" title="Jump back to footnote 10 in the text."> go back ↩</a></sup></span><br>
+<sup id="fn11"><span>11. Sourced from sonnets.org.<a href="#ref11" title="Jump back to footnote 11 in the text."> go back ↩</a></sup></span><br>
+<sup id="fn12"><span>12. Carnegie Mellon University Pronunciation Dictionary. http://www.speech.cs.cmu.edu/cgi-bin/cmudict.<a href="#ref12" title="Jump back to footnote 12 in the text."> go back ↩</a></sup></span><br>
+<sup id="fn13"><span>13. Sravana, R., Knight, K. 2011. Unsupervised Discovery of Rhyme Schemes. Proceedings of the 49th Annual Meeting of the Association for Computational Linguistics: shortpapers.<a href="#ref13" title="Jump back to footnote 13 in the text."> go back ↩</a></sup></span><br>
+<sup id="fn14"><span>14. McCurdy, N., et. al. identified 24 different rhyme types (e.g. Identical rhyme, Semirhyme, Syllabic rhyme, etc.) and had to supplement the Prondict with support vector machines, letter to sound rules, and syllable segmentation methods for out of dictionary words. Poets have the liberty to use non-true rhyme types, so we wanted to capture these types of rhymes in our work in hopes of giving a more authentic feel to the poems. <a href="#ref14" title="Jump back to footnote 14 in the text.">go back ↩</a></sup></span><br>
+<sup id="fn15"><span>15. Sravana, R., Knight, K. 2011. Unsupervised Discovery of Rhyme Schemes. Proceedings of the 49th Annual Meeting of the Association for Computational Linguistics: shortpapers. <a href="#ref15" title="Jump back to footnote 15 in the text.">go back ↩</a></sup></span><br>
+<sup id="fn16"><span>16. The code for the language model was adapted from BigFav’s ngram language model code. Code available at https://github.com/BigFav/n-grams.<a href="#ref16" title="Jump back to footnote 16 in the text."> go back ↩</a></sup></span><br>
+<sup id="fn17"><span>17. Syllables are counted by looking up the words in the Prondict.<a href="#ref17" title="Jump back to footnote 17 in the text."> go back ↩</a></sup></span><br>
 </p>
 
 
@@ -303,6 +304,18 @@ $(document).ready(function () {
         'scrollTop': $target.offset().top-100
     }, 900, 'swing', function () {
     });
+
+       console.log(target);
+
+       $(target).animate({backgroundColor: '#ddd1e7'});
+       $(target).animate({backgroundColor: 'white'}, 4000);
+
+       // $(target).animate({
+       //    fontWeight:400
+       //  }, 8000, function() {
+
+       // });
+
 
         console.log(window.location);
 

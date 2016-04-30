@@ -16,9 +16,9 @@ author:
     org: 'Humboldt-Universität zu Berlin'
 header_image: user/themes/isrtheme/images/publish1.jpg
 ---
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
-
+<script src="//cdn.jsdelivr.net/jquery.color-animation/1/mainfile"></script>
 <script src="http://a11y.nicolas-hoffmann.net/modal/js/jquery-accessible-modal-window-aria.js"></script>
 
 <div id="endorsement" class="hidden modal">
@@ -27,7 +27,7 @@ header_image: user/themes/isrtheme/images/publish1.jpg
 
 </div>
 
-<button class="js-modal" data-modal-prefix-class="simple-animated" data-modal-content-id="endorsement" data-modal-title="Endorsement from Ben Kaden" data-modal-close-text="Close" data-modal-close-title="Close this modal window">Show faculty endorsement</button>
+<a class="js-modal" data-modal-prefix-class="simple-animated" data-modal-content-id="endorsement" data-modal-title="Endorsement from Ben Kaden" data-modal-close-text="Close" data-modal-close-title="Close this modal window">Endorsed by Ben Kaden, M.A. <i class="fa fa-external-link-square" aria-hidden="true"></i></a>
 
 ##Introduction
 
@@ -147,6 +147,9 @@ $(document).ready(function () {
     });
 
         console.log(window.location);
+
+       $(target).animate({backgroundColor: '#ddd1e7'});
+       $(target).animate({backgroundColor: 'white'}, 4000);
 
         return false;
     });

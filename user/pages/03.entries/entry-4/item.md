@@ -16,7 +16,7 @@ author:
 header_image: user/themes/isrtheme/images/meta4.png
 ---
 
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 <script src="http://a11y.nicolas-hoffmann.net/modal/js/jquery-accessible-modal-window-aria.js"></script>
 
 <div id="endorsement" class="hidden modal">
@@ -31,7 +31,7 @@ The accompanying paper is well-written and highlights the novel aspects of the w
   
 </div>
 
-<button class="js-modal" data-modal-prefix-class="simple-animated" data-modal-content-id="endorsement" data-modal-title="Faculty Endorsement" data-modal-close-text="Close" data-modal-close-title="Close this modal window">Show faculty endorsement</button>
+<a class="js-modal" data-modal-prefix-class="simple-animated" data-modal-content-id="endorsement" data-modal-title="Faculty Endorsement" data-modal-close-text="Close" data-modal-close-title="Close this modal window">Endorsed by Marti Hearst, Professor <i class="fa fa-external-link-square" aria-hidden="true"></i></a>
 
 Exploratory Data Analysis (EDA) using visual or statistical methods can often be improved by doing pre-analysis of a given dataset. Getting to know the contents of the dataset, the types of data it contains, the shape of its values, and some of its quality issues will allow analysts to spend more time doing more meaningful analysis instead of wasting time dealing with data quality issues. This early discovery process can also help formulate initial questions or hypotheses that can help guide the analysis. For data creators, providing clear documentation for a dataset increases its value and reusability. MetaReader is a dataset meta-exploration and documentation tool designed to help analysts learn about a dataset. The tool uses simple and effective statistical and visualization techniques to help jump start EDA activities. It also provides insights about the shape and quality of the data. In addition, MetaReader provides documentation features for analysts and data creators to facilitate information retention and sharing.
 

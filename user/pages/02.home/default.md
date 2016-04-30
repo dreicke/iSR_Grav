@@ -1,6 +1,6 @@
 ---
 title: Welcome
-body_classes: "letter"
+body_classes: letter
 ---
 
 <div id="welcome-letter">
@@ -8,7 +8,7 @@ body_classes: "letter"
 	<div id="letter-header">
 		<h1>Welcome</h1>
 		<p class="author">by Hal Varian</p>
-		<p class="bio">Chief Technologist at Google and First Dean of UC Berkeley's School of Information</p>
+		<p class="bio">Chief Economist at Google and First Dean of UC Berkeley's School of Information</p>
 	</div>
 	<p class="letter">Berkeley's School of Information was born in 1995 and it will turn 21 this year.  In the next few years, a number of iSchools will also come of age. They are no longer adolescents: they are now officially grown ups.</p>
 	<p class="letter">The same is true of the Web.  What was once a geeky curiosity has now been firmly established as one of the most important technologies ever created.</p>
@@ -29,6 +29,6 @@ body_classes: "letter"
 		<li>Hybrid Publishing
 		<li>A Tool for Meta-Exploration
 	</uL>
-	<!-- <a class="cta" href="entries">Read the Issue! &#8594;</a> -->
+	<a class="cta" href="entries">Read the Issue! &#8594;</a>
 </aside>
 
