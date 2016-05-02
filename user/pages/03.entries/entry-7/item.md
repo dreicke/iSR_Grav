@@ -36,7 +36,7 @@ header_image: user/themes/isrtheme/images/dance.jpg
 
 </div>
 
-<a class="js-modal" data-modal-prefix-class="simple-animated" data-modal-content-id="endorsement" data-modal-title="Faculty Endorsement" data-modal-close-text="Close" data-modal-close-title="Close this modal window">Endorsed by John Chuang, Professor <i class="fa fa-external-link-square" aria-hidden="true"></i></a>
+<a class="js-modal" data-modal-prefix-class="simple-animated" data-modal-content-id="endorsement" data-modal-title="Faculty Endorsement" data-modal-close-text="Close" data-modal-close-title="Close this modal window">Endorsed by John Chuang, Professor, University of California, Berkeley <i class="fa fa-external-link-square" aria-hidden="true"></i></a>
 
 ##description
 

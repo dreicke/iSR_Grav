@@ -1,5 +1,5 @@
 ---
-title: Submit
+title: 'Submission Guidelines'
 ---
 
 ####Want to submit your work to be published by _The iSchool Review_?
