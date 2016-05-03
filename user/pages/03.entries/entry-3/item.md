@@ -32,7 +32,7 @@ The authors provide an excellent example of data science in action, and this pap
 
 </div>
 
-<a class="js-modal" data-modal-prefix-class="simple-animated" data-modal-content-id="endorsement" data-modal-title="Endorsement from Marti Hearst" data-modal-close-text="Close" data-modal-close-title="Close this modal window">Endorsed by Marti Hearst, Professor, UC Berkeley <i class="fa fa-external-link-square" aria-hidden="true"></i></a>
+<a class="js-modal" data-modal-prefix-class="simple-animated" data-modal-content-id="endorsement" data-modal-title="Endorsement from Marti Hearst" data-modal-close-text="Close" data-modal-close-title="Close this modal window">Endorsed by Marti Hearst, University of California, Berkeley <i class="fa fa-external-link-square" aria-hidden="true"></i></a>
 
 ##Introduction
 

@@ -28,7 +28,7 @@ header_image: user/themes/isrtheme/images/sonnet.jpg
 
 </div>
 
-<a class="js-modal" data-modal-prefix-class="simple-animated" data-modal-content-id="endorsement" data-modal-title="Endorsement" data-modal-close-text="Close" data-modal-close-title="Close this modal window">Endorsed by Marti Hearst, Professor, Unversity of California, Berkeley <i class="fa fa-external-link-square" aria-hidden="true"></i></a>
+<a class="js-modal" data-modal-prefix-class="simple-animated" data-modal-content-id="endorsement" data-modal-title="Endorsement" data-modal-close-text="Close" data-modal-close-title="Close this modal window">Endorsed by Marti Hearst, Unversity of California, Berkeley <i class="fa fa-external-link-square" aria-hidden="true"></i></a>
 
 ##Overview
 

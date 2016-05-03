@@ -20,7 +20,7 @@ header_image: user/themes/isrtheme/images/meta4.png
 <script src="http://a11y.nicolas-hoffmann.net/modal/js/jquery-accessible-modal-window-aria.js"></script>
 
 <div id="endorsement" class="hidden modal">
-<p style="text-align:center; color:#3E0C46;"><em>from Marti Hearst, Professor, UC Berkeley School of Information</em></p>
+<p style="text-align:center; color:#3E0C46;"><em>from Marti Hearst, UC Berkeley School of Information</em></p>
 <p>I am pleased to write a letter in support of publication of the submission: "MetaReader: A Dataset Meta-Exploration and Documentation Tool" by Hassan Jannah in "The I School Review".  
 
 MetaReader is an innovative analysis tool that allows a data scientist to quickly obtain an overview of the variables present in a dataset.  The analyst sees distributions from many different viewpoints at once; the visualization goes beyond standard histograms to show nominal, interval, and boolean data distributions in one compact format, along with information about outliers and patterns.    Using this tool, the analyst can also annotate their data, rename variables, and further prepare data for the next steps of processing.  The implementation is done well, allowing for upload on a single server and processing a wide range of data represented as CVS files. I have demonstrated this tool in class and recommended it to my students to help them prepare for exploratory data analysis.

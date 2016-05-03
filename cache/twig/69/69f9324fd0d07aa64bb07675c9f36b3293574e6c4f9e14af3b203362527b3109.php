@@ -193,37 +193,39 @@ class __TwigTemplate_e92e96e45507a22d0b07ad0d3f7aebe60702250f6662fcdeec33e985931
         if ((isset($context["show_prev_next"]) ? $context["show_prev_next"] : null)) {
             // line 73
             echo "
-        <p class=\"prev-next\">
+        <p class=\"prev-next\">            
+
             ";
-            // line 75
-            if ( !$this->getAttribute((isset($context["page"]) ? $context["page"] : null), "isLast", array())) {
-                // line 76
-                echo "                <a class=\"button\" href=\"";
-                echo $this->getAttribute($this->getAttribute((isset($context["page"]) ? $context["page"] : null), "prevSibling", array()), "url", array());
-                echo "\">Previous Post <i class=\"fa fa-chevron-left\"></i></a>
-            ";
-            }
-            // line 78
-            echo "
-            ";
-            // line 79
+            // line 76
             if ( !$this->getAttribute((isset($context["page"]) ? $context["page"] : null), "isFirst", array())) {
-                // line 80
+                // line 77
                 echo "                <a class=\"button\" href=\"";
                 echo $this->getAttribute($this->getAttribute((isset($context["page"]) ? $context["page"] : null), "nextSibling", array()), "url", array());
-                echo "\"><i class=\"fa fa-chevron-right\"></i> Next Post</a>
+                echo "\"><i class=\"fa fa-chevron-left\"></i> Previous Post</a>
             ";
             }
-            // line 82
+            // line 79
             echo "
+            ";
+            // line 80
+            if ( !$this->getAttribute((isset($context["page"]) ? $context["page"] : null), "isLast", array())) {
+                // line 81
+                echo "                <a class=\"button\" href=\"";
+                echo $this->getAttribute($this->getAttribute((isset($context["page"]) ? $context["page"] : null), "prevSibling", array()), "url", array());
+                echo "\">Next Post <i class=\"fa fa-chevron-right\"></i></a>
+            ";
+            }
+            // line 83
+            echo "
+
             
         </p>
     ";
         }
-        // line 86
+        // line 88
         echo "
  ";
-        // line 88
+        // line 90
         echo "
     </div>
 </div>";
@@ -241,7 +243,7 @@ class __TwigTemplate_e92e96e45507a22d0b07ad0d3f7aebe60702250f6662fcdeec33e985931
 
     public function getDebugInfo()
     {
-        return array (  227 => 88,  224 => 86,  218 => 82,  212 => 80,  210 => 79,  207 => 78,  201 => 76,  199 => 75,  195 => 73,  193 => 72,  188 => 69,  185 => 68,  183 => 67,  178 => 66,  172 => 64,  166 => 62,  160 => 60,  157 => 59,  155 => 58,  151 => 57,  148 => 56,  145 => 55,  142 => 54,  140 => 53,  135 => 52,  133 => 51,  118 => 38,  112 => 36,  110 => 35,  107 => 34,  101 => 32,  99 => 31,  95 => 29,  87 => 27,  78 => 24,  72 => 22,  70 => 21,  67 => 20,  65 => 19,  62 => 18,  56 => 16,  53 => 15,  50 => 14,  47 => 13,  44 => 12,  41 => 11,  39 => 10,  34 => 7,  31 => 6,  28 => 5,  25 => 4,  23 => 3,  19 => 1,);
+        return array (  229 => 90,  226 => 88,  219 => 83,  213 => 81,  211 => 80,  208 => 79,  202 => 77,  200 => 76,  195 => 73,  193 => 72,  188 => 69,  185 => 68,  183 => 67,  178 => 66,  172 => 64,  166 => 62,  160 => 60,  157 => 59,  155 => 58,  151 => 57,  148 => 56,  145 => 55,  142 => 54,  140 => 53,  135 => 52,  133 => 51,  118 => 38,  112 => 36,  110 => 35,  107 => 34,  101 => 32,  99 => 31,  95 => 29,  87 => 27,  78 => 24,  72 => 22,  70 => 21,  67 => 20,  65 => 19,  62 => 18,  56 => 16,  53 => 15,  50 => 14,  47 => 13,  44 => 12,  41 => 11,  39 => 10,  34 => 7,  31 => 6,  28 => 5,  25 => 4,  23 => 3,  19 => 1,);
     }
 }
 /* <div class="list-item">*/
@@ -317,14 +319,16 @@ class __TwigTemplate_e92e96e45507a22d0b07ad0d3f7aebe60702250f6662fcdeec33e985931
 /* */
 /*     {% if show_prev_next %}*/
 /* */
-/*         <p class="prev-next">*/
-/*             {% if not page.isLast %}*/
-/*                 <a class="button" href="{{ page.prevSibling.url }}">Previous Post <i class="fa fa-chevron-left"></i></a>*/
-/*             {% endif %}*/
+/*         <p class="prev-next">            */
 /* */
 /*             {% if not page.isFirst %}*/
-/*                 <a class="button" href="{{ page.nextSibling.url }}"><i class="fa fa-chevron-right"></i> Next Post</a>*/
+/*                 <a class="button" href="{{ page.nextSibling.url }}"><i class="fa fa-chevron-left"></i> Previous Post</a>*/
 /*             {% endif %}*/
+/* */
+/*             {% if not page.isLast %}*/
+/*                 <a class="button" href="{{ page.prevSibling.url }}">Next Post <i class="fa fa-chevron-right"></i></a>*/
+/*             {% endif %}*/
+/* */
 /* */
 /*             */
 /*         </p>*/

@@ -16,7 +16,7 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
     protected function doDisplay(array $context, array $blocks = array())
     {
         // line 1
-        $this->loadTemplate("blog.html.twig", "blog.html.twig", 1, "115929760")->display($context);
+        $this->loadTemplate("blog.html.twig", "blog.html.twig", 1, "1843224704")->display($context);
         // line 97
         echo "
 <script>
@@ -63,7 +63,7 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 
 
 /* blog.html.twig */
-class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b9838b5c_115929760 extends Twig_Template
+class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b9838b5c_1843224704 extends Twig_Template
 {
     public function __construct(Twig_Environment $env)
     {
@@ -135,7 +135,7 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 \t\t<div class=\"content-wrapper blog-content-list grid pure-g\">
 \t\t\t<div id=\"listing\" class=\"block pure-u-2-3\">
 \t\t\t<div id=\"infoviz\">
-\t\t\t\t<h3>info viz</h3>
+\t\t\t\t<h3>information visualization (info viz)</h3>
 
 \t\t\t\t";
         // line 37
@@ -353,7 +353,7 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 /* 		<div class="content-wrapper blog-content-list grid pure-g">*/
 /* 			<div id="listing" class="block pure-u-2-3">*/
 /* 			<div id="infoviz">*/
-/* 				<h3>info viz</h3>*/
+/* 				<h3>information visualization (info viz)</h3>*/
 /* */
 /* 				{% for post in taxonomy.findTaxonomy({'tag':'infoviz'}) %}*/
 /* 						<div class="articulo">*/
