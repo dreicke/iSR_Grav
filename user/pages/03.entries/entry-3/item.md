@@ -68,7 +68,7 @@ We then quickly transition into the “so what?” part of the narrative. In the
 
 The first chart we have on the page shows the percent of female contestants and the percent of female winners from 1984-2014. Looking at Few's chapter on time-series analysis <a href="#fn5" id="ref5">[5]</a>, we see that the height of the chart is important. Making it too short makes the variability difficult to detect. Making it too tall can exaggerate the variation and mislead the readers. Our goal with the height was to balance those extremes to show more females are coming onto the show and winning, but the changes are not drastic. We are also using the Gestalt principle of similarity. The yellow color for female and blue for male matches the human isotypes in the next graphic. And the line type for contestant percentage and win percentage matches across genders. 
 
-Another project from Few that was helpful in making this visualization was the stacked area chart on government spending [<a href="#fn6" id="ref6">[6]</a>. In particular the suggestion to use tooltips to give extra information without cluttering the whole graphic was helpful.
+Another project from Few that was helpful in making this visualization was the stacked area chart on government spending <a href="#fn6" id="ref6">[6]</a>. In particular the suggestion to use tooltips to give extra information without cluttering the whole graphic was helpful.
 
 ![5](images/5.png)
 
@@ -130,7 +130,7 @@ A little research identified the right method to perform an operation of this so
 
 In our case, we were able to identify the top categories by each round of Jeopardy!.
 
-![1]3(images/13.png)
+![13](images/13.png)
 
 
 __Step 2:__ To add to the categories, we found the top answers in each category. 
@@ -269,46 +269,65 @@ We would like to thank Professor Hearst, without whom this work would not have b
 
 ##Bibliography (Only Related Work)
 
-<sup id="fn1">1. Appleman, Gupta, Rajagopal, Shishido, Hearst, Exploring Data For Fun And Profit: Case Study of Jeopardy! Poster, IEEE Infoviz, October, 2015. <a href="#ref1" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn2">2. 200,00+ Jeopardy questions in a JSON post, https://www.reddit.com/r/datasets/comments/1uyd0t/200000_jeopardy_questions_in_a_json_file . <a href="#ref2" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn3">3.	J!Archive, The fan created archive of Jeopardy! Players and games, http://j-archive.com/ . <a href="#ref3" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn4">4.	Cairo, Alberto. The Functional Art: An introduction to information graphics and visualization. New Riders, 2012. p. 51, Visualization Wheel . <a href="#ref5" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn5">5.	Few, Stephen. Now you see it: simple visualization techniques for quantitative analysis. Analytics Press, 2009; visualization Time series analysis (Pg 146) <a href="#ref5" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn6">6.	Few, Stephen. Now you see it: simple visualization techniques for quantitative analysis. Analytics Press, 2009; visualization project on government spending (Pg 305) . <a href="#ref6" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn7">7.	Cairo, Alberto. The Functional Art: An introduction to information graphics and visualization. New Riders, 2012 p. 72 Project by Otto and Marie Meurath about Home and Factory Weaving in England . <a href="#ref7" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn8">8.	Tableau knowledge base on Calculated Fields http://kb.tableau.com/articles/knowledgebase/finding-top-n-within-category . <a href="#ref8" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn9">9.	I'll Take Jeopardy! Trivia for $200, Alex,  Jeremy Singer-Vine, http://www.slate.com/articles/arts/culturebox/2011/02/ill_take_jeopardy_trivia_for_200_alex.html . <a href="#ref9" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn10">10.	Parallel Coordinates D3 http://bl.ocks.org/mbostock/1341021 . <a href="#ref10" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn11">11.	Brushing for ordinal variables http://bl.ocks.org/mbostock/4349509 . <a href="#ref11" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn12">12.	Few, Stephen. Now you see it: simple visualization techniques for quantitative analysis. Analytics Press, 2009; Data on Demand, pg 116 . <a href="#ref12" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn13">13.	Few, Stephen. Now you see it: simple visualization techniques for quantitative analysis. Analytics Press, 2009; Filtering, pg 68 . <a href="#ref13" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn14">14.	onChange vs onInput for Range Sliders, Louis Lazaris, http://www.impressivewebs.com/onchange-vs-oninput-for-range-sliders/ . <a href="#ref14" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn15">15.	Few, Stephen. Now you see it: simple visualization techniques for quantitative analysis. Analytics Press, 2009; - Level of precision in detail [Page 87]. <a href="#ref15" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn16">16.	Few, Stephen. Now you see it: simple visualization techniques for quantitative analysis. Analytics Press, 2009; Details on Demand, pg 116 . <a href="#ref16" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn17">17.	Cairo, Alberto. The Functional Art: An introduction to information graphics and visualization. New Riders, 2012 p. 114 . <a href="#ref17" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn18">18.	Bipartite graph http://bl.ocks.org/NPashaP/9796212 . <a href="#ref18" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn19">19.	Jeopardy facts, Mashable.com, http://mashable.com/2014/03/30/jeopardy-facts/ . <a href="#ref19" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
+<sup id="fn1">1. Appleman, Gupta, Rajagopal, Shishido, Hearst, Exploring Data For Fun And Profit: Case Study of Jeopardy! Poster, IEEE Infoviz, October, 2015. <a href="#ref1" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn2">2. 200,00+ Jeopardy questions in a JSON post, https://www.reddit.com/r/datasets/comments/1uyd0t/200000_jeopardy_questions_in_a_json_file . <a href="#ref2" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn3">3.	J!Archive, The fan created archive of Jeopardy! Players and games, http://j-archive.com/ . <a href="#ref3" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn4">4.	Cairo, Alberto. The Functional Art: An introduction to information graphics and visualization. New Riders, 2012. p. 51, Visualization Wheel . <a href="#ref5" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn5">5.	Few, Stephen. Now you see it: simple visualization techniques for quantitative analysis. Analytics Press, 2009; visualization Time series analysis (Pg 146) <a href="#ref5" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn6">6.	Few, Stephen. Now you see it: simple visualization techniques for quantitative analysis. Analytics Press, 2009; visualization project on government spending (Pg 305) . <a href="#ref6" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn7">7.	Cairo, Alberto. The Functional Art: An introduction to information graphics and visualization. New Riders, 2012 p. 72 Project by Otto and Marie Meurath about Home and Factory Weaving in England . <a href="#ref7" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn8">8.	Tableau knowledge base on Calculated Fields http://kb.tableau.com/articles/knowledgebase/finding-top-n-within-category . <a href="#ref8" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn9">9.	I'll Take Jeopardy! Trivia for $200, Alex,  Jeremy Singer-Vine, http://www.slate.com/articles/arts/culturebox/2011/02/ill_take_jeopardy_trivia_for_200_alex.html . <a href="#ref9" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn10">10.	Parallel Coordinates D3 http://bl.ocks.org/mbostock/1341021 . <a href="#ref10" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn11">11.	Brushing for ordinal variables http://bl.ocks.org/mbostock/4349509 . <a href="#ref11" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn12">12.	Few, Stephen. Now you see it: simple visualization techniques for quantitative analysis. Analytics Press, 2009; Data on Demand, pg 116 . <a href="#ref12" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn13">13.	Few, Stephen. Now you see it: simple visualization techniques for quantitative analysis. Analytics Press, 2009; Filtering, pg 68 . <a href="#ref13" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn14">14.	onChange vs onInput for Range Sliders, Louis Lazaris, http://www.impressivewebs.com/onchange-vs-oninput-for-range-sliders/ . <a href="#ref14" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn15">15.	Few, Stephen. Now you see it: simple visualization techniques for quantitative analysis. Analytics Press, 2009; - Level of precision in detail [Page 87]. <a href="#ref15" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn16">16.	Few, Stephen. Now you see it: simple visualization techniques for quantitative analysis. Analytics Press, 2009; Details on Demand, pg 116 . <a href="#ref16" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn17">17.	Cairo, Alberto. The Functional Art: An introduction to information graphics and visualization. New Riders, 2012 p. 114 . <a href="#ref17" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn18">18.	Bipartite graph http://bl.ocks.org/NPashaP/9796212 . <a href="#ref18" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn19">19.	Jeopardy facts, Mashable.com, http://mashable.com/2014/03/30/jeopardy-facts/ . <a href="#ref19" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
 <sup id="fn20">20.	Jeopardy Trivia, Grandparents.com, http://www.grandparents.com/food-and-leisure/did-you-know/jeopardy-trivia
-Font used in Jeopardy, http://fontsinuse.com/uses/5507/jeopardy-game-show . <a href="#ref20" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
+Font used in Jeopardy, http://fontsinuse.com/uses/5507/jeopardy-game-show . <a href="#ref20" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+
+
+
+
+<script type="text/javascript">
+
+// from http://stackoverflow.com/questions/17534661/make-anchor-link-go-some-pixels-above-where-its-linked-to
+$(document).ready(function () {
+    $('a').on('click', function (e) {
+        // e.preventDefault();
+
+        var target = this.hash,
+            $target = $(target);
+
+       $('html, body').stop().animate({
+        'scrollTop': $target.offset().top-100
+    }, 900, 'swing', function () {
+    });
+
+       console.log(target);
+
+       $(target).animate({backgroundColor: '#ddd1e7'});
+       $(target).animate({backgroundColor: 'white'}, 4000);
+
+       // $(target).animate({
+       //    fontWeight:400
+       //  }, 8000, function() {
+
+       // });
+
+
+        console.log(window.location);
+
+        return false;
+    });
+
+});
+</script>
 
 
 
