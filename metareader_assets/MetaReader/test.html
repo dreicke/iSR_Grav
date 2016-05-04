@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="_js/vendor/jquery/jquery.js" type="text/javascript"></script>
+        <script src="_js/vendor/jquery/jquery.csv-0.71.min.js" type="text/javascript"></script>
+        <script src="_js/vendor/jquery/jquery-ajax-blob-arraybuffer.js" type="text/javascript"></script>
+        <script src="_js/vendor/papaparse.min.js" type="text/javascript"></script>
+        <script src="_js/vendor/lodash.min.js" type="text/javascript"></script>
+        <script src="_js/vendor/twitter-bootstrap/js/bootstrap.js" type="text/javascript"></script>
+        <script src="_js/vendor/d3/d3.js" type="text/javascript"></script>
+        <script src="_js/vendor/shim.js" type="text/javascript"></script>
+        <script src="_js/vendor/jszip.min.js" type="text/javascript"></script>
+        <script src="_js/vendor/xls/xlsx.js" type="text/javascript"></script>
+        <script src="_js/vendor/xls/xls.js" type="text/javascript"></script>
+        <script src="_js/vendor/moment.js"></script>
+        <script src="_js/vendor/moment.parseFormat.js" type="text/javascript"></script>
+        <script src="_js/vendor/readable-range.js" type="text/javascript"></script>
+        <script src="_js/vendor/metricsgraphics/metricsgraphics.min.js" type="text/javascript"></script>
+        <script src="_js/vendor/spin.min.js" type="text/javascript"></script>
+        <script src="_js/mete-reader.suggestions.js" type="text/javascript"></script>
+        <script src="_js/meta-reader.js" type="text/javascript"></script>
+        <script src="_js/meta-reader.charts.js" type="text/javascript"></script>
+        <script src="_js/vendor/FileSaver.min.js" type="text/javascript"></script>
+        <script src="_js/vendor/saveSvgAsPng.js" type="text/javascript"></script>
+        <script src="_js/script.js" type="text/javascript"></script>
+        <link href="_js/vendor/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link href="_js/vendor/twitter-bootstrap/css/sb-admin.css" rel="stylesheet" type="text/css"/>
+        <link href="_css/style.css" rel="stylesheet" type="text/css"/>
+        <link href="_js/vendor/metricsgraphics/metricsgraphics.css" rel="stylesheet" type="text/css"/>
+        <link href="_css/meta-reader-charts.css" rel="stylesheet" type="text/css"/>
+
+        <script type="text/javascript">
+
+
+            window.onload = function() {
+               loadSample("data/test.csv", "data/test.csv_MRSESSION.json")
+               console.log('hello')
+               console.log(data)
+            };
+
+        </script>
+
+    </head>
+
+
+    <body>
+        
+<div id="card-<%=data.id%>" role="tab" data-column='<%=data.columnName%>' data-id='<%=data.id%>' data-type='<%=data.type%>' data-title="<%=data.title%>" class="card mrc-card panel panel-default" >
+    <div class="panel-heading" role='tab' id="card-<%=data.id%>-heading">
+        <h2 class='panel-title'>
+            <label id='<%=data.id%>-title-text' class='card-title-text mr-tooltip' title='Type to rename' contenteditable="true" oninput='renameColumn("<%=data.id%>-title-text", "<%=data.title%>")'><%=data.title%></label>
+            <a class='mr-tooltip' data-title='[Column name] (Data Type)<br><br>Click to collapse/expand' data-toggle="collapse" data-parent="#cards" href="#card-<%=data.id%>-collapse" aria-expanded="true" aria-controls="#card-<%=data.id%>-collapse">
+                [ <%=data.columnName%> ] (<%=data.type%>)
+            </a>
+            <button id='card-<%=data.id%>-render-charts' class='render-btn btn btn-default mr-tooltip hidden-print' title='Show charts about the data'>Show Charts</button>
+             <button id='card-<%=data.id%>-hide-charts' style='display:none' class='hide-btn btn btn-default mr-tooltip hidden-print' title='Hide Charts'>Hide Charts</button>
+        </h2>
+
+    </div>
+    <div id="card-<%=data.id%>-collapse" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="card-<%=data.id%>-heading">
+        <div class='panel-body'>
+            <div class="card-charts">
+                
+
+
+            </div>
+            <div class='cart-stats'>
+            
+            <script>
+
+            var stats = {}
+
+            if(data.type==='integer' || data.type==='float'||data.type==='number')
+            {
+                stats =  {'Count':data.count, 'Unique':data.countUnique, 'Missing':data.invalidValues, 
+                    'Total':data.sum, 'Mean':data.mean, 'Range':data.range, 'Zeros': data.zeros}
+            }
+            else if(data.type==='string')
+            { 
+               stats = {
+                    'Total': data.count,
+                    'Unique': data.countUnique,
+                    'Missing':data.invalidValues,
+                    'Avg Word Count':data.average_word_count,
+                    'Avg Char Count':data.average_char_count
+    
+                };
+            }
+            else
+            {
+                stats = {
+                        'Count': data.count,
+                        'Unique': data.countUnique,
+                        'Missing':data.invalidValues,
+                        'Range':data.range,
+                        'Start': data.min.format(data.format),
+                        'End': data.max.format(data.format),
+                        'Format': data.format
+                    };
+                  
+            }
+
+            var titles = {'Count':'Number of Records', 
+                'Unique':'Number of unique records', 
+                'Total':'Sum of all records', 
+                'Mean':'Average value for all valid records', 
+                'Range':'Range of Values',
+                'Zeros': 'Number of records with value 0',
+                'Missing':'Missing or Invalid numerical values:e.g. Null,None,NaN..etc.',
+                'Avg Word Count':'Average # of words per entry',
+                'Avg Char Count':'Average # of characters per entry',
+                'Start':'Start Date',
+                'End': 'End Date',
+                'Format':'Date format in Dataset'}
+                </script>
+                <div id="<%=data.title%>-stats" class="card-stats">
+
+                    <table>
+                        <tr>
+                            <%_.each(stats, function(value, key){%>
+                            <td class='card-item mr-tooltip' data-toggle="tooltip" data-placement="top" title='<%=titles[key]%>'>
+                                            <label class="card-key"><%=key%></label>
+                            <label class="card-value"><%=value%></label>
+                            </td>
+
+                            <%});%>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            </div>
+
+            <script>
+                $('#<%=data.id%>-tabs li a').click(function(e) {
+                    e.preventDefault()
+                    $(this).tab('show')
+                })
+            </script>
+
+        </div>
+    </div>
+</div>
+
+
+    </body>
+</html>

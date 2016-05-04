@@ -1,0 +1,20 @@
+{
+	"title": "MetaReader Demo",
+	"description": "This is a demo file for the different features of MetaReader",
+	"columns": {
+		"number1": {
+			"title": "Random Numbers 1",
+			"description": "",
+			"suggestions": [{
+				"show": true,
+				"text": "The data contains 51 unique values out of 1000. This column might contain categorical data.",
+				"importance": 2,
+				"scope": "General",
+				"class": "tip",
+				"category": "categorical-values"
+			}],
+			"notes": "",
+			"questions": []
+		}
+	}
+}
