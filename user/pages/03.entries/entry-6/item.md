@@ -14,6 +14,7 @@ taxonomy:
 author:
     name: 'Emily Paul and Andrea Gagliano'
     org: 'University of California, Berkeley'
+    oneline: 'Can computers write like Shakespeare?'
 header_image: user/themes/isrtheme/images/sonnet.jpg
 ---
 

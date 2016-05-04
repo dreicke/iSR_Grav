@@ -13,6 +13,7 @@ taxonomy:
 author:
     name: 'Eve Lacey'
     org: 'University College London'
+    oneline: 'Can we (finally) stop using paper?'
 visualization:
 topojson: true
 header_image: user/themes/isrtheme/images/paper2.jpg

@@ -10,8 +10,8 @@ taxonomy:
     tag:
         - 'Careers'
 author:
-    name: 'Rebecca Andersen'
-    org: 'University of California, Berkeley'
+    name: 'Rebecca Andersen, Director of Career Services'
+    org: 'School of Information at the University of California, Berkeley'
 ---
 
 How is it that such a simple question provokes such complicated and varied answers? Much like trying to define an “iSchool”, agreeing on concrete characteristics of a Product Manager (PM) can feel impossible as the position is inherently fluid, multi-disciplinary, and adaptable. In many technical paths, such as engineering, for example, one can point to direct, tangible outputs to form a characterization. In contrast, the definition of a PM is found at the intersections. Luckily, that’s also where many students of information management are found.

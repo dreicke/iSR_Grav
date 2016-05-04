@@ -16,8 +16,8 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
     protected function doDisplay(array $context, array $blocks = array())
     {
         // line 1
-        $this->loadTemplate("blog.html.twig", "blog.html.twig", 1, "1843224704")->display($context);
-        // line 97
+        $this->loadTemplate("blog.html.twig", "blog.html.twig", 1, "1575928253")->display($context);
+        // line 98
         echo "
 <script>
 // from http://stackoverflow.com/questions/17534661/make-anchor-link-go-some-pixels-above-where-its-linked-to
@@ -57,13 +57,13 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 
     public function getDebugInfo()
     {
-        return array (  21 => 97,  19 => 1,);
+        return array (  21 => 98,  19 => 1,);
     }
 }
 
 
 /* blog.html.twig */
-class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b9838b5c_1843224704 extends Twig_Template
+class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b9838b5c_1575928253 extends Twig_Template
 {
     public function __construct(Twig_Environment $env)
     {
@@ -134,35 +134,36 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 
 \t\t<div class=\"content-wrapper blog-content-list grid pure-g\">
 \t\t\t<div id=\"listing\" class=\"block pure-u-2-3\">
+\t\t\t<h2 id=\"column-label\">Featured Work</h2>
 \t\t\t<div id=\"infoviz\">
 \t\t\t\t<h3>information visualization (info viz)</h3>
 
 \t\t\t\t";
-        // line 37
+        // line 38
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable($this->getAttribute((isset($context["taxonomy"]) ? $context["taxonomy"] : null), "findTaxonomy", array(0 => array("tag" => "infoviz")), "method"));
         foreach ($context['_seq'] as $context["_key"] => $context["post"]) {
-            // line 38
+            // line 39
             echo "\t\t\t\t\t\t<div class=\"articulo\">
 \t\t\t\t\t\t    <a href=\"";
-            // line 39
+            // line 40
             echo $this->getAttribute($context["post"], "url", array());
             echo "\"><img class=\"indexthumb\" src=\"";
             echo $this->getAttribute($this->getAttribute($context["post"], "header", array()), "header_image", array());
             echo "\"></a>
 \t\t\t\t\t\t    <a href=\"";
-            // line 40
+            // line 41
             echo $this->getAttribute($context["post"], "url", array());
             echo "\"><h4>";
             echo $this->getAttribute($context["post"], "title", array());
             echo "</h4></a>
-\t\t\t\t\t\t    <span class=\"byline\">";
-            // line 41
-            echo $this->getAttribute($this->getAttribute($this->getAttribute($context["post"], "header", array()), "author", array()), "name", array());
-            echo "</span>
-\t\t\t\t\t\t    <span class=\"by-org\">";
+\t\t\t\t\t\t    <span class=\"short-desc\">";
             // line 42
-            echo $this->getAttribute($this->getAttribute($this->getAttribute($context["post"], "header", array()), "author", array()), "org", array());
+            echo $this->getAttribute($this->getAttribute($this->getAttribute($context["post"], "header", array()), "author", array()), "oneline", array());
+            echo "</span>
+\t\t\t\t\t\t    <span class=\"byline\">By ";
+            // line 43
+            echo $this->getAttribute($this->getAttribute($this->getAttribute($context["post"], "header", array()), "author", array()), "name", array());
             echo "</span>
 \t\t\t\t\t    </div>
 \t\t\t\t";
@@ -170,38 +171,38 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['post'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 45
+        // line 46
         echo "
             </div>
             <div id=\"lis\">
 \t            <h3>Library &amp; Information Science (LIS)</h3>
 
 \t\t\t\t\t";
-        // line 50
+        // line 51
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable($this->getAttribute((isset($context["taxonomy"]) ? $context["taxonomy"] : null), "findTaxonomy", array(0 => array("tag" => "is")), "method"));
         foreach ($context['_seq'] as $context["_key"] => $context["post"]) {
-            // line 51
+            // line 52
             echo "\t\t\t\t\t\t<div class=\"articulo featured\">
 \t\t\t\t\t\t    <a href=\"";
-            // line 52
+            // line 53
             echo $this->getAttribute($context["post"], "url", array());
             echo "\"><img class=\"indexthumb\" src=\"";
             echo $this->getAttribute($this->getAttribute($context["post"], "header", array()), "header_image", array());
             echo "\"></a>
 \t\t\t\t\t\t    <a href=\"";
-            // line 53
+            // line 54
             echo $this->getAttribute($context["post"], "url", array());
             echo "\"><h4>";
             echo $this->getAttribute($context["post"], "title", array());
             echo "</h4></a>
-\t\t\t\t\t\t    <span class=\"byline\">";
-            // line 54
-            echo $this->getAttribute($this->getAttribute($this->getAttribute($context["post"], "header", array()), "author", array()), "name", array());
-            echo "</span>
-\t\t\t\t\t\t    <span class=\"by-org\">";
+\t\t\t\t\t\t    <span class=\"short-desc\">";
             // line 55
-            echo $this->getAttribute($this->getAttribute($this->getAttribute($context["post"], "header", array()), "author", array()), "org", array());
+            echo $this->getAttribute($this->getAttribute($this->getAttribute($context["post"], "header", array()), "author", array()), "oneline", array());
+            echo "</span>
+\t\t\t\t\t\t    <span class=\"byline\">By ";
+            // line 56
+            echo $this->getAttribute($this->getAttribute($this->getAttribute($context["post"], "header", array()), "author", array()), "name", array());
             echo "</span>
 \t\t\t\t\t    </div>
 \t\t\t\t\t";
@@ -209,7 +210,7 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['post'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 58
+        // line 59
         echo "
 
             </div>
@@ -217,31 +218,31 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 \t\t\t\t<h3>Human-Computer Interaction (HCI)</h3>
 
 \t\t\t\t\t";
-        // line 64
+        // line 65
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable($this->getAttribute((isset($context["taxonomy"]) ? $context["taxonomy"] : null), "findTaxonomy", array(0 => array("tag" => "HCI")), "method"));
         foreach ($context['_seq'] as $context["_key"] => $context["post"]) {
-            // line 65
+            // line 66
             echo "\t\t\t\t\t\t<div class=\"articulo\">
 \t\t\t\t\t\t    <a href=\"";
-            // line 66
+            // line 67
             echo $this->getAttribute($context["post"], "url", array());
             echo "\"><img class=\"indexthumb\" src=\"";
             echo $this->getAttribute($this->getAttribute($context["post"], "header", array()), "header_image", array());
             echo "\"></a>
 \t\t\t\t\t\t    <a href=\"";
-            // line 67
+            // line 68
             echo $this->getAttribute($context["post"], "url", array());
             echo "\"><h4>";
             echo $this->getAttribute($context["post"], "title", array());
             echo "</h4></a>
-\t\t\t\t\t\t    <span class=\"byline\">";
-            // line 68
-            echo $this->getAttribute($this->getAttribute($this->getAttribute($context["post"], "header", array()), "author", array()), "name", array());
-            echo "</span>
-\t\t\t\t\t\t    <span class=\"by-org\">";
+\t\t\t\t\t\t    <span class=\"short-desc\">";
             // line 69
-            echo $this->getAttribute($this->getAttribute($this->getAttribute($context["post"], "header", array()), "author", array()), "org", array());
+            echo $this->getAttribute($this->getAttribute($this->getAttribute($context["post"], "header", array()), "author", array()), "oneline", array());
+            echo "</span>
+\t\t\t\t\t\t    <span class=\"byline\">By ";
+            // line 70
+            echo $this->getAttribute($this->getAttribute($this->getAttribute($context["post"], "header", array()), "author", array()), "name", array());
             echo "</span>
 \t\t\t\t\t    </div>
 \t\t\t\t\t";
@@ -249,7 +250,7 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['post'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 72
+        // line 73
         echo "\t\t\t\t
 
             </div>
@@ -257,31 +258,31 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 \t\t\t\t<h3>Business &amp; Society</h3>
 
 \t\t\t\t";
-        // line 78
+        // line 79
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable($this->getAttribute((isset($context["taxonomy"]) ? $context["taxonomy"] : null), "findTaxonomy", array(0 => array("tag" => "social issues")), "method"));
         foreach ($context['_seq'] as $context["_key"] => $context["post"]) {
-            // line 79
+            // line 80
             echo "\t\t\t\t\t<div class=\"articulo\">
 \t\t\t\t\t    <a href=\"";
-            // line 80
+            // line 81
             echo $this->getAttribute($context["post"], "url", array());
             echo "\"><img class=\"indexthumb\" src=\"";
             echo $this->getAttribute($this->getAttribute($context["post"], "header", array()), "header_image", array());
             echo "\"></a>
 \t\t\t\t\t    <a href=\"";
-            // line 81
+            // line 82
             echo $this->getAttribute($context["post"], "url", array());
             echo "\"><h4>";
             echo $this->getAttribute($context["post"], "title", array());
             echo "</h4></a>
-\t\t\t\t\t    <span class=\"byline\">";
-            // line 82
-            echo $this->getAttribute($this->getAttribute($this->getAttribute($context["post"], "header", array()), "author", array()), "name", array());
-            echo "</span>
-\t\t\t\t\t    <span class=\"by-org\">";
+\t\t\t\t\t    <span class=\"short-desc\">";
             // line 83
-            echo $this->getAttribute($this->getAttribute($this->getAttribute($context["post"], "header", array()), "author", array()), "org", array());
+            echo $this->getAttribute($this->getAttribute($this->getAttribute($context["post"], "header", array()), "author", array()), "oneline", array());
+            echo "</span>
+\t\t\t\t\t    <span class=\"byline\">By ";
+            // line 84
+            echo $this->getAttribute($this->getAttribute($this->getAttribute($context["post"], "header", array()), "author", array()), "name", array());
             echo "</span>
 \t\t\t\t    </div>
 \t\t\t\t";
@@ -289,16 +290,16 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['post'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 86
+        // line 87
         echo "\t\t\t\t
 
             </div>
 \t\t\t</div>
 \t\t\t<div id=\"sidebar\" class=\"block size-1-3 pure-u-1-3\">
 \t\t\t\t";
-        // line 91
-        $this->loadTemplate("partials/sidebar.html.twig", "blog.html.twig", 91)->display(array_merge($context, array("blog" => (isset($context["page"]) ? $context["page"] : null))));
         // line 92
+        $this->loadTemplate("partials/sidebar.html.twig", "blog.html.twig", 92)->display(array_merge($context, array("blog" => (isset($context["page"]) ? $context["page"] : null))));
+        // line 93
         echo "\t\t\t</div>
 \t\t</div>
 \t";
@@ -316,7 +317,7 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 
     public function getDebugInfo()
     {
-        return array (  302 => 92,  300 => 91,  293 => 86,  284 => 83,  280 => 82,  274 => 81,  268 => 80,  265 => 79,  261 => 78,  253 => 72,  244 => 69,  240 => 68,  234 => 67,  228 => 66,  225 => 65,  221 => 64,  213 => 58,  204 => 55,  200 => 54,  194 => 53,  188 => 52,  185 => 51,  181 => 50,  174 => 45,  165 => 42,  161 => 41,  155 => 40,  149 => 39,  146 => 38,  142 => 37,  114 => 13,  110 => 11,  104 => 9,  102 => 8,  99 => 7,  96 => 6,  93 => 5,  89 => 1,  87 => 3,  73 => 1,  21 => 97,  19 => 1,);
+        return array (  303 => 93,  301 => 92,  294 => 87,  285 => 84,  281 => 83,  275 => 82,  269 => 81,  266 => 80,  262 => 79,  254 => 73,  245 => 70,  241 => 69,  235 => 68,  229 => 67,  226 => 66,  222 => 65,  214 => 59,  205 => 56,  201 => 55,  195 => 54,  189 => 53,  186 => 52,  182 => 51,  175 => 46,  166 => 43,  162 => 42,  156 => 41,  150 => 40,  147 => 39,  143 => 38,  114 => 13,  110 => 11,  104 => 9,  102 => 8,  99 => 7,  96 => 6,  93 => 5,  89 => 1,  87 => 3,  73 => 1,  21 => 98,  19 => 1,);
     }
 }
 /* {% embed 'partials/base.html.twig' %}*/
@@ -352,6 +353,7 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 /* */
 /* 		<div class="content-wrapper blog-content-list grid pure-g">*/
 /* 			<div id="listing" class="block pure-u-2-3">*/
+/* 			<h2 id="column-label">Featured Work</h2>*/
 /* 			<div id="infoviz">*/
 /* 				<h3>information visualization (info viz)</h3>*/
 /* */
@@ -359,8 +361,8 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 /* 						<div class="articulo">*/
 /* 						    <a href="{{ post.url }}"><img class="indexthumb" src="{{ post.header.header_image }}"></a>*/
 /* 						    <a href="{{ post.url }}"><h4>{{ post.title }}</h4></a>*/
-/* 						    <span class="byline">{{ post.header.author.name }}</span>*/
-/* 						    <span class="by-org">{{ post.header.author.org }}</span>*/
+/* 						    <span class="short-desc">{{ post.header.author.oneline }}</span>*/
+/* 						    <span class="byline">By {{ post.header.author.name }}</span>*/
 /* 					    </div>*/
 /* 				{% endfor %}*/
 /* */
@@ -372,8 +374,8 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 /* 						<div class="articulo featured">*/
 /* 						    <a href="{{ post.url }}"><img class="indexthumb" src="{{ post.header.header_image }}"></a>*/
 /* 						    <a href="{{ post.url }}"><h4>{{ post.title }}</h4></a>*/
-/* 						    <span class="byline">{{ post.header.author.name }}</span>*/
-/* 						    <span class="by-org">{{ post.header.author.org }}</span>*/
+/* 						    <span class="short-desc">{{ post.header.author.oneline }}</span>*/
+/* 						    <span class="byline">By {{ post.header.author.name }}</span>*/
 /* 					    </div>*/
 /* 					{% endfor %}*/
 /* */
@@ -386,8 +388,8 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 /* 						<div class="articulo">*/
 /* 						    <a href="{{ post.url }}"><img class="indexthumb" src="{{ post.header.header_image }}"></a>*/
 /* 						    <a href="{{ post.url }}"><h4>{{ post.title }}</h4></a>*/
-/* 						    <span class="byline">{{ post.header.author.name }}</span>*/
-/* 						    <span class="by-org">{{ post.header.author.org }}</span>*/
+/* 						    <span class="short-desc">{{ post.header.author.oneline }}</span>*/
+/* 						    <span class="byline">By {{ post.header.author.name }}</span>*/
 /* 					    </div>*/
 /* 					{% endfor %}*/
 /* 				*/
@@ -400,8 +402,8 @@ class __TwigTemplate_4992cea23d6e3585bbe88cbcc760161118370cb24e57bd618a1a59b9b98
 /* 					<div class="articulo">*/
 /* 					    <a href="{{ post.url }}"><img class="indexthumb" src="{{ post.header.header_image }}"></a>*/
 /* 					    <a href="{{ post.url }}"><h4>{{ post.title }}</h4></a>*/
-/* 					    <span class="byline">{{ post.header.author.name }}</span>*/
-/* 					    <span class="by-org">{{ post.header.author.org }}</span>*/
+/* 					    <span class="short-desc">{{ post.header.author.oneline }}</span>*/
+/* 					    <span class="byline">By {{ post.header.author.name }}</span>*/
 /* 				    </div>*/
 /* 				{% endfor %}*/
 /* 				*/

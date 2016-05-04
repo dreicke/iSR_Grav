@@ -33,11 +33,6 @@ ul, ol{
 	font-family: 'Lora';
 }
 
-section#body.welcome{
-	background-image: url('../images/bar-bg3.png');
-	background-size: cover;
-	padding-top: 10rem;
-}
 
 /* ----------------------------------------------------------------hal varian page */
 
@@ -105,7 +100,6 @@ aside > ul > li{
 }
 
 
-
 a.cta{
 	padding: 15px; 
 	font-size: 1rem;
@@ -132,6 +126,12 @@ a.cta:hover{
 
 #header #logo h3 {
 	top: 55%;
+}
+
+h2#column-label{
+	color: #A1A1A1;
+	border: none;
+	margin-bottom: 0px;
 }
 
 h4{
@@ -190,6 +190,10 @@ h6{
 #sidebar h6{
 	margin-bottom: 1rem;
 	border-bottom: 0px;
+}
+
+#sidebar .byline {
+	padding-top: 0px;
 }
 
 
@@ -398,7 +402,7 @@ div#item > div.list-item{
 	border-left: 4px solid #EAEAEA;
 }
 
-.byline, .by-org{
+.byline, .short-desc{
 	font-size: 1rem;
 	display: block;
 	line-height: 120%;
@@ -407,8 +411,17 @@ div#item > div.list-item{
 	font-family: 'Lato'
 }
 
-.by-org{
+.short-desc{
+	color: #3E0C46;
 	font-style: italic;
+}
+
+.byline{
+	padding-top: 10px;
+}
+
+#author-info > .byline{
+	padding-top: 0px;
 }
 
 #categories{

@@ -11,7 +11,7 @@ taxonomy:
 topojson: true
 author:
     name: 'Joshua Appleman, Anand Rajagopal, Anubhav Gupta & Juan Shishido'
-    org: 'University of California, Berkeley'
+    oneline: 'An infographic visualization of the Jeopardy! game show'
 header_image: user/themes/isrtheme/images/jeopardy.png
 ---
 

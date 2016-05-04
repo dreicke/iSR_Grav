@@ -12,8 +12,9 @@ taxonomy:
     category:
         - blog
 author:
-    name: 'Ricky Holtz, Bryan Morgan, Ellen Van Wyk'
-    org: 'University of California, Berkeley'
+    name: 'Ricky Holtz, Bryan Morgan, Ellen Van Wyk & Vincent van den Goor'
+    org: 'University of California, Berkeley & Eindhoven University of Technology'
+    oneline: 'A sweater that captures dance data'
 header_image: user/themes/isrtheme/images/dance.jpg
 ---
 

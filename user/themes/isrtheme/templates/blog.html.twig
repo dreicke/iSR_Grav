@@ -31,6 +31,7 @@
 
 		<div class="content-wrapper blog-content-list grid pure-g">
 			<div id="listing" class="block pure-u-2-3">
+			<h2 id="column-label">Featured Work</h2>
 			<div id="infoviz">
 				<h3>information visualization (info viz)</h3>
 
@@ -38,8 +39,8 @@
 						<div class="articulo">
 						    <a href="{{ post.url }}"><img class="indexthumb" src="{{ post.header.header_image }}"></a>
 						    <a href="{{ post.url }}"><h4>{{ post.title }}</h4></a>
-						    <span class="byline">{{ post.header.author.name }}</span>
-						    <span class="by-org">{{ post.header.author.org }}</span>
+						    <span class="short-desc">{{ post.header.author.oneline }}</span>
+						    <span class="byline">By {{ post.header.author.name }}</span>
 					    </div>
 				{% endfor %}
 
@@ -51,8 +52,8 @@
 						<div class="articulo featured">
 						    <a href="{{ post.url }}"><img class="indexthumb" src="{{ post.header.header_image }}"></a>
 						    <a href="{{ post.url }}"><h4>{{ post.title }}</h4></a>
-						    <span class="byline">{{ post.header.author.name }}</span>
-						    <span class="by-org">{{ post.header.author.org }}</span>
+						    <span class="short-desc">{{ post.header.author.oneline }}</span>
+						    <span class="byline">By {{ post.header.author.name }}</span>
 					    </div>
 					{% endfor %}
 
@@ -65,8 +66,8 @@
 						<div class="articulo">
 						    <a href="{{ post.url }}"><img class="indexthumb" src="{{ post.header.header_image }}"></a>
 						    <a href="{{ post.url }}"><h4>{{ post.title }}</h4></a>
-						    <span class="byline">{{ post.header.author.name }}</span>
-						    <span class="by-org">{{ post.header.author.org }}</span>
+						    <span class="short-desc">{{ post.header.author.oneline }}</span>
+						    <span class="byline">By {{ post.header.author.name }}</span>
 					    </div>
 					{% endfor %}
 				
@@ -79,8 +80,8 @@
 					<div class="articulo">
 					    <a href="{{ post.url }}"><img class="indexthumb" src="{{ post.header.header_image }}"></a>
 					    <a href="{{ post.url }}"><h4>{{ post.title }}</h4></a>
-					    <span class="byline">{{ post.header.author.name }}</span>
-					    <span class="by-org">{{ post.header.author.org }}</span>
+					    <span class="short-desc">{{ post.header.author.oneline }}</span>
+					    <span class="byline">By {{ post.header.author.name }}</span>
 				    </div>
 				{% endfor %}
 				

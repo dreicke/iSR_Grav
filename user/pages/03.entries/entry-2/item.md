@@ -14,6 +14,7 @@ jscomments:
 author:
     name: 'Kali Braden, Alex Herd, Brian Lau, Magdalene Schifferer & My Anh Troung'
     org: 'University of Toronto'
+    oneline: 'Imagining a future library for political Tweets'
 header_image: user/themes/isrtheme/images/parc2.jpg
 ---
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">

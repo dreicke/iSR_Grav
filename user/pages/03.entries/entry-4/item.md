@@ -12,7 +12,8 @@ taxonomy:
         - 'infoviz'
 author:
     name: 'Hassan M. Jannah'
-    org: 'University of California Berkeley, School of Information'
+    org: 'University of California, Berkeley'
+    oneline: 'A meta-exploration and documentation tool to help users learn about datasets'
 header_image: user/themes/isrtheme/images/meta4.png
 ---
 
@@ -29,7 +30,7 @@ The accompanying paper is well-written and highlights the novel aspects of the w
   
 </div>
 
-<a class="js-modal" data-modal-prefix-class="simple-animated" data-modal-content-id="endorsement" data-modal-title="Faculty Endorsement" data-modal-close-text="Close" data-modal-close-title="Close this modal window">Endorsed by Marti Hearst, Professor, University of California, Berkeley <i class="fa fa-external-link-square" aria-hidden="true"></i></a>
+<a class="js-modal" data-modal-prefix-class="simple-animated" data-modal-content-id="endorsement" data-modal-title="Faculty Endorsement" data-modal-close-text="Close" data-modal-close-title="Close this modal window">Endorsed by Marti Hearst, University of California, Berkeley <i class="fa fa-external-link-square" aria-hidden="true"></i></a>
 
 Exploratory Data Analysis (EDA) using visual or statistical methods can often be improved by doing pre-analysis of a given dataset. Getting to know the contents of the dataset, the types of data it contains, the shape of its values, and some of its quality issues will allow analysts to spend more time doing more meaningful analysis instead of wasting time dealing with data quality issues. This early discovery process can also help formulate initial questions or hypotheses that can help guide the analysis. For data creators, providing clear documentation for a dataset increases its value and reusability. MetaReader is a dataset meta-exploration and documentation tool designed to help analysts learn about a dataset. The tool uses simple and effective statistical and visualization techniques to help jump start EDA activities. It also provides insights about the shape and quality of the data. In addition, MetaReader provides documentation features for analysts and data creators to facilitate information retention and sharing.
 
