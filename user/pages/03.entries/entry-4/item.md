@@ -18,6 +18,8 @@ header_image: user/themes/isrtheme/images/meta4.png
 ---
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="//cdn.jsdelivr.net/jquery.color-animation/1/mainfile"></script>
 <script src="http://a11y.nicolas-hoffmann.net/modal/js/jquery-accessible-modal-window-aria.js"></script>
 
 <div id="endorsement" class="hidden modal">
@@ -144,9 +146,9 @@ There were several open-source libraries used to provide the full functionality 
 |__*Data Processing*__||
 |PapaParse.js <a href="#fn8" id="ref8">[8]</a>|Load CSV Files|
 |jquery.csv-0.71.js <a href="#fn9" id="ref9">[9]</a>|Load CSV Files (for testing)|
-|moment.js [<a href="#fn10" id="ref10">[10]</a>|Date object parsing and operations|
+|moment.js <a href="#fn10" id="ref10">[10]</a>|Date object parsing and operations|
 |moment.parseFormat.js <a href="#fn11" id="ref11">[11]</a>|Extract date format from moment.js objects|
-|readable-range.js [<a href="#fn12" id="ref12">[12]</a>|Exact humanized data range|
+|readable-range.js <a href="#fn12" id="ref12">[12]</a>|Exact humanized data range|
 |__*Visualization*__||
 |D3 <a href="#fn13" id="ref13">[13]</a>|Data visualization|
 |MetricGraphics.js <a href="#fn14" id="ref14">[14]</a>|Time series charts|
@@ -408,47 +410,57 @@ Many thanks to Professor Marti Hearst from the UC Berekely School of Information
 
 ##References
 
-<sup id="fn1">1. S. Few, "Exploratory Vistas: Ways to Become Acquainted with a Data Set for the First Time," Visual Business Intelligence Newsletter, vol. July/August/September, 2011. <a href="#ref1" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn1">2. S. Kandel, R. Parikh, A. Paepcke, J. Hellerstein and J. Heer, "Profiler: Integrated Statistical Analysis and Visualization for Data Quality Assessment," in Advance Visual Interfaces, 2012. <a href="#ref2" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn1">3. The jQuery Foundation, "jQuery," [Online]. Available: https://jquery.org/. <a href="#ref3" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn1">4. J.-D. Dalton, B. Bublitz, K. Cambridge and M. Bynens, "Lo-Dash: A utility library delivering consistency, customization, performance, & extras.," [Online]. Available: https://lodash.com/ <a href="#ref4" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn1">5. "Bootstrap," [Online]. Available: http://getbootstrap.com/. <a href="#ref5" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn1">6. Start Bootstrap, "SB Admin: A Bootstrap 3 admin theme featuring powerful jQuery plugins to extend the functionality of the Bootstrap framework," [Online]. Available: http://startbootstrap.com/template-overviews/sb-admin/. <a href="#ref6" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn1">7. F. Gnass, "spin.js," [Online]. Available: https://github.com/fgnass/spin.js. <a href="#ref7" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn1">8. M. Holt, "PapaParse: A powerful, in-browser CSV parser," [Online]. Available: http://papaparse.com/. <a href="#ref8" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn1">9. E. Plaice, "jquery-csv: Parse CSV (Comma Separated Values) to Javascript arrays or dictionaries," [Online]. Available: https://code.google.com/p/jquery-csv/. <a href="#ref9" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn1">10. I. Cambron, M. Johnson and T. Wood, "Moment.js: Parse, validate, manipulate, and display dates in JavaScript.," [Online]. Available: http://momentjs.com/. <a href="#ref10" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn1">11. Hoodie, "moment.parseFormat," [Online]. Available: http://gr2m.github.io/moment.parseFormat/. <a href="#ref11" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn1">12. R. Dawson, "moment-precise-range," [Online]. Available: https://github.com/codebox/moment-precise-range. <a href="#ref13" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn1">13. M. Bostock, V. Ogievetsky and J. Heer, "D3: Data-Driven Documents," in IEEE Trans. Visualization & Comp. Graphics (Proc. InfoVis), 2011. <a href="#ref14" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn1">14.  Mozilla, "Metrics-Graphics: A library optimized for concise, principled data graphics and layouts," [Online]. Available: http://metricsgraphicsjs.org/. <a href="#ref15" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn1">15. E. Shull, "saveSvgAsPng: Save SVGs as PNGs from the browser," [Online]. Available: https://github.com/exupero/saveSvgAsPng. <a href="#ref15" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn1">16. R. Scheaffer, M. Mulekar and J. McClave, Probability and Statistics for Engineers, Cengage Learning, 2010. <a href="#ref16" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn1">17. J. Gruber, "Markdown," [Online]. Available: http://daringfireball.net/projects/markdown/. <a href="#ref17" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn1">18. R. Sedgewick and K. Wayne, Introduction to Programming in Java: An Interdisciplinary Approach - (Booksite Datasets), Addison-Wesley, 2007. <a href="#ref18" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn1">19. V. Arel-Bundock, "Rdatasets Github Repository," [Online]. Available: https://github.com/vincentarelbundock/Rdatasets. <a href="#ref19" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-
-<sup id="fn1">20. C. Keefer, "jquery-ajax-blob-arraybuffer.js," [Online]. Available: https://gist.github.com/SaneMethod/7548768. <a href="#ref20" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
+<sup id="fn1">1. S. Few, "Exploratory Vistas: Ways to Become Acquainted with a Data Set for the First Time," Visual Business Intelligence Newsletter, vol. July/August/September, 2011. <a href="#ref1" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn2">2. S. Kandel, R. Parikh, A. Paepcke, J. Hellerstein and J. Heer, "Profiler: Integrated Statistical Analysis and Visualization for Data Quality Assessment," in Advance Visual Interfaces, 2012. <a href="#ref2" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn3">3. The jQuery Foundation, "jQuery," [Online]. Available: https://jquery.org/. <a href="#ref3" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn4">4. J.-D. Dalton, B. Bublitz, K. Cambridge and M. Bynens, "Lo-Dash: A utility library delivering consistency, customization, performance, & extras.," [Online]. Available: https://lodash.com/ <a href="#ref4" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn5">5. "Bootstrap," [Online]. Available: http://getbootstrap.com/. <a href="#ref5" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn6">6. Start Bootstrap, "SB Admin: A Bootstrap 3 admin theme featuring powerful jQuery plugins to extend the functionality of the Bootstrap framework," [Online]. Available: http://startbootstrap.com/template-overviews/sb-admin/. <a href="#ref6" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn7">7. F. Gnass, "spin.js," [Online]. Available: https://github.com/fgnass/spin.js. <a href="#ref7" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn8">8. M. Holt, "PapaParse: A powerful, in-browser CSV parser," [Online]. Available: http://papaparse.com/. <a href="#ref8" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn9">9. E. Plaice, "jquery-csv: Parse CSV (Comma Separated Values) to Javascript arrays or dictionaries," [Online]. Available: https://code.google.com/p/jquery-csv/. <a href="#ref9" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn10">10. I. Cambron, M. Johnson and T. Wood, "Moment.js: Parse, validate, manipulate, and display dates in JavaScript.," [Online]. Available: http://momentjs.com/. <a href="#ref10" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn11">11. Hoodie, "moment.parseFormat," [Online]. Available: http://gr2m.github.io/moment.parseFormat/. <a href="#ref11" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn12">12. R. Dawson, "moment-precise-range," [Online]. Available: https://github.com/codebox/moment-precise-range. <a href="#ref13" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn13">13. M. Bostock, V. Ogievetsky and J. Heer, "D3: Data-Driven Documents," in IEEE Trans. Visualization & Comp. Graphics (Proc. InfoVis), 2011. <a href="#ref14" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn14">14.  Mozilla, "Metrics-Graphics: A library optimized for concise, principled data graphics and layouts," [Online]. Available: http://metricsgraphicsjs.org/. <a href="#ref15" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn15">15. E. Shull, "saveSvgAsPng: Save SVGs as PNGs from the browser," [Online]. Available: https://github.com/exupero/saveSvgAsPng. <a href="#ref15" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn16">16. R. Scheaffer, M. Mulekar and J. McClave, Probability and Statistics for Engineers, Cengage Learning, 2010. <a href="#ref16" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn17">17. J. Gruber, "Markdown," [Online]. Available: http://daringfireball.net/projects/markdown/. <a href="#ref17" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn18">18. R. Sedgewick and K. Wayne, Introduction to Programming in Java: An Interdisciplinary Approach - (Booksite Datasets), Addison-Wesley, 2007. <a href="#ref18" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn19">19. V. Arel-Bundock, "Rdatasets Github Repository," [Online]. Available: https://github.com/vincentarelbundock/Rdatasets. <a href="#ref19" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
+<sup id="fn20">20. C. Keefer, "jquery-ajax-blob-arraybuffer.js," [Online]. Available: https://gist.github.com/SaneMethod/7548768. <a href="#ref20" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
 
 
+
+
+<script type="text/javascript">
+
+$(document).ready(function () {
+    $('a').on('click', function (e) {
+        // e.preventDefault();
+
+        var target = this.hash,
+            $target = $(target);
+
+       $('html, body').stop().animate({
+        'scrollTop': $target.offset().top-100
+    }, 900, 'swing', function () {
+    });
+
+       console.log(target);
+
+       $(target).animate({backgroundColor: '#ddd1e7'});
+       $(target).animate({backgroundColor: 'white'}, 4000);
+
+        console.log(window.location);
+
+        return false;
+    });
+
+});
+
+</script>
 
 
 
