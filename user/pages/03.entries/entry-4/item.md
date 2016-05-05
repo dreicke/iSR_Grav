@@ -4,17 +4,18 @@ summary:
     enabled: '1'
     size: 1
     format: short
+taxonomy:
+    tag:
+        - infoviz
+    category:
+        - blog
 jscomments:
     provider: facebook
-taxonomy:
-    category: blog
-    tag:
-        - 'infoviz'
 author:
     name: 'Hassan M. Jannah'
     org: 'University of California, Berkeley'
     oneline: 'A meta-exploration and documentation tool to help users learn about datasets'
-header_image: user/themes/isrtheme/images/meta4.png
+header_image: 'user/themes/isrtheme/images/meta4.png'
 ---
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">

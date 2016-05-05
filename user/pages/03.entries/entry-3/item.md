@@ -1,5 +1,5 @@
 ---
-title: 'This... Is... Jeopardy! '
+title: 'This... Is... <em>Jeopardy!</em> '
 published: true
 summary:
     enabled: '1'
