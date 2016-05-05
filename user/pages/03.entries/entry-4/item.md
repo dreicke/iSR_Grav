@@ -295,7 +295,7 @@ __Equal Intervals:__ A tip indicating that the data values in this column increa
 __Contiguous Values:__ A tip indicating that the values in this column are contiguous (i.e. the interval between values is 1).
 
 
-![Hassan-19](images/Hassan-19.png)
+<iframe id="meta_frame" src ="/iSR_Grav/metareader_assets/MetaReader/index.html" frameborder="0" scrolling="no" height=1320 width=100%></iframe>
 
 ####Statistical Suggestions
 

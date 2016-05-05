@@ -67,7 +67,7 @@ var data = [];
 
 function initMetaReader() {
 
-    TEAMPLATES = loadTemplates(TEMPLATES, '/MetaReader');
+    TEAMPLATES = loadTemplates(TEMPLATES, '/iSR_Grav/metareader_assets/MetaReader');
     //loadUploadForm();
     loadSamples();
     loadIntro();

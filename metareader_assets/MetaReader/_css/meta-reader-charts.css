@@ -147,6 +147,7 @@ and open the template in the editor.
 .card-description, .card-notes {} .card-stats {} .card-stats table {
     width: 100%;
     text-align: center;
+    font-size: 0.8em;
     border-spacing: 6px;
     border-collapse: separate;
 }
