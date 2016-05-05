@@ -17,13 +17,13 @@ body{
     background-attachment: fixed;
     background-position: 0;
     font-family: Verdana, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue",Helvetica; 
-
+    margin-top: 10px;
     font-weight: 400;
     font: "Helvetica Neue";
 }
 #wrapper{
-    padding-left: 10%;
-    padding-right: 10%;
+    padding-left: 2%;
+    padding-right: 2%;
 
 }
 #page-content-wrapper{
@@ -484,7 +484,7 @@ ul.affix-bottom {
     .card-key{
 
         background-color: #eee !important;
-        font-size:12pt !important;
+        font-size:1.3em !important;
 
     }
     .card-value{
