@@ -141,7 +141,7 @@ and open the template in the editor.
 .panel-body {
     margin-right: auto;
     margin-left: auto;
-    width: 75%;
+    width: 85%;
 }
 
 .card-description, .card-notes {} .card-stats {} .card-stats table {
