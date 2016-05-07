@@ -17,7 +17,7 @@ header_image: user/themes/isrtheme/images/jeopardy.png
 
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+<!-- <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script> -->
 <script src="//cdn.jsdelivr.net/jquery.color-animation/1/mainfile"></script>
 <script src="http://a11y.nicolas-hoffmann.net/modal/js/jquery-accessible-modal-window-aria.js"></script>
 
@@ -264,7 +264,6 @@ We would like to thank Professor Hearst, without whom this work would not have b
 
 ##Interactive Visualization
 [http://people.ischool.berkeley.edu/~japple/jeopardy/](http://people.ischool.berkeley.edu/~japple/jeopardy/ "http://people.ischool.berkeley.edu/~japple/jeopardy/")
-
 
 
 ##Bibliography (Only Related Work)

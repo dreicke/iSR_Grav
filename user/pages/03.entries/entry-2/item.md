@@ -18,7 +18,6 @@ author:
 header_image: user/themes/isrtheme/images/parc2.jpg
 ---
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
 
 <script src="http://a11y.nicolas-hoffmann.net/modal/js/jquery-accessible-modal-window-aria.js"></script>
 

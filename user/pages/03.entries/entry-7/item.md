@@ -19,11 +19,10 @@ header_image: user/themes/isrtheme/images/dance.jpg
 ---
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
 
 <script src="http://a11y.nicolas-hoffmann.net/modal/js/jquery-accessible-modal-window-aria.js"></script>
 
-<div id="endorsement" class="hidden modal">
+<div id="endorsement" class="hidden modal"> 
 
 <p style="text-align:center; color:#3E0C46;"><em>from John Chuang, Professor, UC Berkeley School of Information</em></p>
 <p>dance dance is a playful yet profound project. It takes the lowly accelerometer, nowadays pressed into service to quantify our daily step count, and explores its artistic potential through aesthetic expressions of performative body movements.</p>

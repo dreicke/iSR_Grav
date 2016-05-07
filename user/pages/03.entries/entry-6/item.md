@@ -19,7 +19,7 @@ header_image: user/themes/isrtheme/images/sonnet.jpg
 ---
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+<!-- <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script> -->
 <script src="//cdn.jsdelivr.net/jquery.color-animation/1/mainfile"></script>
 <script src="http://a11y.nicolas-hoffmann.net/modal/js/jquery-accessible-modal-window-aria.js"></script>
 
@@ -182,20 +182,7 @@ Thank you to Kyle Booten, Marti Hearst and David Bamman for their continued guid
           <option value="python">Python Poet</option>
         </select>
     </div>
-    <div class="pregunta">
-        <select name="author">
-          <option value="null">Choose...</option>
-          <option value="shakes">Shakespeare</option>
-          <option value="python">Pythonic Poet</option>
-        </select>
-    </div>
-    <div class="pregunta">
-        <select name="author">
-          <option value="null">Choose...</option>
-          <option value="shakes">Shakespeare</option>
-          <option value="python">Pythonic Poet</option>
-        </select>
-    </div>
+
     <div class="pregunta">
         <select name="author">
           <option value="null">Choose...</option>
