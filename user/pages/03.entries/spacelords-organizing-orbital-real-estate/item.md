@@ -12,7 +12,7 @@ taxonomy:
         - 'Case Study'
 author:
     name: 'Daniel Brenners'
-    org: 'UC Berkeley'
+    org: 'University of California, Berkeley'
 ---
 <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
 
