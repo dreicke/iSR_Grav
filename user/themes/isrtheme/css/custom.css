@@ -33,6 +33,22 @@ ul, ol{
 	font-family: 'Lora';
 }
 
+table{
+	margin-bottom: 2rem;
+}
+
+pre{
+	padding:1rem;
+}
+
+.tab a{
+	font-family: Lato;
+}
+
+.etabs .tab a:hover{
+	text-decoration: none;
+}
+
 
 /* ----------------------------------------------------------------hal varian page */
 
@@ -164,6 +180,7 @@ h4{
 	display: inline-block;
 	margin-right: 4%;
 	vertical-align: top;
+	padding-bottom: 30px;
 }
 
 .featured{
@@ -230,7 +247,7 @@ h3{
 	padding-top: 10px;
 	padding-bottom: 10px;
 	border-bottom: 1px solid #EAEAEA;
-	line-height: 1;
+	line-height: 1.3;
 	color: #3E0C46;
 }
 

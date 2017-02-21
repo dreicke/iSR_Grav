@@ -1,279 +1,2508 @@
 ---
-title: 'Political Tweets Librarianship and the Political ARChive'
+title: 'A Comprehensive Guide to the Total Order Sort Design Pattern in MapReduce'
+header_image: 'user/themes/isrtheme/images/mapper2.jpg'
 summary:
     enabled: '1'
-    size: 1
     format: short
 taxonomy:
     tag:
-        - is
+        - issue2
     category:
         - blog
-jscomments:
-    provider: facebook
+topojson: true
 author:
-    name: 'Kali Braden, Alex Herd, Brian Lau, Magdalene Schifferer & My Anh Troung'
-    org: 'University of Toronto'
-    oneline: 'Imagining a future library for political Tweets'
-header_image: user/themes/isrtheme/images/parc2.jpg
+    name: 'James G. Shanahan, Kyle Hamilton, Yiran Sheng'
+    org: 'University of California, Berkeley'
 ---
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 
-<script src="http://a11y.nicolas-hoffmann.net/modal/js/jquery-accessible-modal-window-aria.js"></script>
+<style>
+.etabs { margin: 0; padding: 0; }
+.tab { display: inline-block; zoom:1; *display:inline; background: #eee; border: solid 1px #999; border-bottom: none; -moz-border-radius: 4px 4px 0 0; -webkit-border-radius: 4px 4px 0 0; }
+.tab a { font-size: 14px; line-height: 2em; display: block; padding: 0 10px; outline: none; }
+.tab a:hover { text-decoration: underline; }
+.tab.active { background: #fff; padding-top: 6px; position: relative; top: 1px; border-color: #666; }
+.tab a.active { font-weight: bold; }
+.tab-container .panel-container { background: #fff; border: solid #666 1px; padding: 10px; -moz-border-radius: 0 4px 4px 4px; -webkit-border-radius: 0 4px 4px 4px; }
+</style>
 
-<a class="js-modal" data-modal-prefix-class="simple-animated" data-modal-content-id="endorsement" data-modal-title="Faculty Endorsement" data-modal-close-text="Close" data-modal-close-title="Close this modal window">Endorsed by Bobby Glushko, University of Toronto <i class="fa fa-external-link-square" aria-hidden="true"></i></a>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.easytabs/3.2.0/jquery.easytabs.min.js"></script>
 
-<div id="endorsement" class="hidden modal">
-<p style="text-align:center; color:#3E0C46;"><em>from Bobby Glushko, Head of Scholarly Communications and Copyright,<br /> University of Toronto Libraries</em></p>
-<p>I’m proud to endorse this paper for The iSchool Review.  I think that this work makes a significant contribution to an emerging area of librarianship and is relevant to the iSchool movement.  Having seen this effort evolve since its conception, I am impressed with the direction in which the authors have undertaken their research and I think that their methods, framework, and conclusions are solid.  Web archiving is an active and expanding practice in libraries, and much of it is being done without the proper policy analysis set in place.  In the CHI and CSCW literature, there has been an increased focus on policy, and this paper resonates with this emerging disciplinary trend.</p>
+
+<script type="text/javascript">
+    $(document).ready( function() {
+      $('.tab-container').easytabs();
+    });
+  </script>
+
+
+##Introduction
+
+In this notebook we are going to demonstrate how to achieve Total Order Sort via three MapReduce frameworks: hadoop streaming, MRJob, and Spark. Hadoop streaming and MrJob borrow heavily in terms of syntax and semantics from the Unix sort and cut commands, whereby they treat the output of the mapper as series of records, where each record can be interpreted as a collection of fields/tokens that are tab delimited by default. In this way, fields can be specified for the purposes of partitioning (routing), sometimes referred to as the primary key. The primary key is used for partitioning, and the combination of the primary and secondary keys (also specified by the programmer) is used for sorting.
+
+We'll start by describing the Linux/Unix sort command (syntax and semantics) and build on that understanding to explain Total Order Sort in hadoop streaming and MRJob. Partitioning is not just matter of specifying the fields to be used for routing the records to the reducers. We also need to consider how best to partition the data that has skewed distributions. To that end, we'll demonstrate how to partition the data via sampling and assigning custom keys.
+
+Lastly, we'll provide a Spark version of Total Order Sort.
+
+At each step we are going to build on the previous steps, so it's important to view this notebook in order. For example, we'll cover key points for sorting with a single reducer in the Hadoop Streaming implementation, and these concepts will apply to the subsequent MRJob implementation.
+
+##Anatomy of a MapReduce Job
+
+When tackling large scale data problems with modern computing frameworks such as MapReduce (Hadoop), one generally uses a divide-and-conquer strategy to divide these large problems into chunks of key-value records that can be processed by individual compute nodes (via mapper/reducer procedures). Upon importing the data into the HDFS, it is chunked in the following way: typically, there is a chunk for each input file. If the input file is too big (bigger than the HDFS block size) then we have two or more map chunks/splits associated to the same input file. (Please refer to the method getSplits() of the FileInputFormat class in Hadoop for more details.)
+
+Once the data has been uploaded to HDFS, MapReduce jobs can be run on the data. First we’ll focus on a basic MapReduce/Hadoop job. The programmer provides map and reduce functions and, subsequently, the Application Master will launch one MapTask for each map split/chunk.
+
+<code>map(key1, value1) → list(key2, value2)</code>
+
+<code>reduce(key2, list(value2)) → list(key3, value3)</code>
+
+First, the map() function receives a key-value pair input, (key1, value1). Then it outputs any number of key-value pairs, (key2, value2). Next, the reduce() function receives as input another key-value pair, (key2, list(value2)), and outputs any number of (key3, value3) pairs.
+
+Now consider the following key-value pair, (key2, list(value2)), as an input for a reducer:
+list(value2) = (V1, V2, ..., Vn)
+
+where there is no ordering between reducer values (V1, V2, ..., Vn).
+
+The MapReduce framework performs the important tasks of routing, collating records with the same key, and transporting these records from the mapper to the reducer. These tasks are commonly referred to as the shuffle phase of a MapReduce job and are typically run in default mode (whereby the programmer does not customize the phase).
+
+So, for completeness, a typical MapReduce job consists of three phases (that are similar in style for all MapReduce frameworks):
+
+**def MapReduceJob(Mapper, Shuffler, Reducer):**
+* Mapper (programmer writes)
+    * Mapper Init (setups a state for the mapper if required)
+    * map(key1, value1) → list(key2, value2)
+    * Mapper Final phase (tears down the map and outputs the mapper state to the stream if required)
+* Shuffle Phase(Partitioner=Key, Sort=(Key, alphanumeric increasing), Combiner=None)
+    * Where the default behaviors for the shuffle are as follows:
+        * Partitioner=Key,
+        * Sort=(Key, alphanumeric increasing),
+        * Combiner=None
+    * Partitioner: specify key (or subset of fields) used for routing each record to the reducer
+    * Sort specification: set of fields that make up the keys and the order required
+    * Combiner: DEFAULT: no combiner
+* Write the Reducer (programmer writes)
+    * Reducer Init phase (setups a state for the reducer if required)
+    * reduce(key2, list(value2)) → list(key3, value3)
+    * Reducer Final phase (tears down the reduce task and outputs the reduce state to HDFS if required)
+
+To perform a total order sort, one needs to override the default shuffle behavior by providing a custom partitioner, a custom sort specification (e.g., numeric/alphanumeric increasing decreasing, and a combiner (note: a combiner is not required for a total order sort but make the MapReduce job more efficient).
+
+![Total Order Sort, Step 1](images/anatomyMR.png)
+
+__Figure 1: Anatomy of a Map-Reduce Job from input data to output data via map, shuffle, and reduce steps.__
+
+##Terminology
+
+Apache Hadoop is a framework for running applications on large clusters built of commodity hardware. The Hadoop framework transparently provides applications both reliability and data motion. Hadoop implements a computational paradigm named Map/Reduce, where the application is divided into many small fragments of work, each of which may be executed or re-executed on any node in the cluster. In addition, it provides a distributed file system (HDFS) that stores data on the compute nodes, providing very high aggregate bandwidth across the cluster. Both MapReduce and the Hadoop Distributed File System are designed so that node failures are automatically handled by the Hadoop framework. ([http://wiki.apache.org/hadoop/](http://wiki.apache.org/hadoop/))
+
+MRJob is a Python library developed by Yelp to simplify writing Map/Reduce programs. It allows developers to test their code locally without installing Hadoop or run it on a cluster of choice. It also has extensive integration with Amazon Elastic Map Reduce. More information is available at [http://mrjob.readthedocs.io/en/latest/index.html](http://mrjob.readthedocs.io/en/latest/index.html). 
+
+Partial Sort - The reducer output will be lot of (partition) files, each of which contains key-value records that are sorted within each partition file based on the key. This is the default behaviour for MapReduce frameworks such as Hadoop, Hadoop Streaming and MrJob.
+
+Total Sort (Unordered Partitions) - Total sort refers to an ordering of all key-value pairs based upon a specified key. This total ordering will run across all output partition files unlike the partial sort described above. One caveat here is that partition files will need to be re-stacked to generate a total ordering (a small post-processing step that is required after the map-reduce job finishes).
+Total Sort (Ordered Partitions) - Total sort where the partition file names are also assigned in order.
+
+Secondary Sort - Secondary sorting refers to controlling the ordering of records based on the key and also using the values (or part of the value). That is, sorting can be done on two or more field values.
+
+####Hadoop Streaming
+
+Hadoop streaming is a utility that comes with the Hadoop distribution. The utility allows a user to create and run Map-Reduce jobs with any executable or script as the mapper and/or the reducer.
+
+~~~~
+$HADOOP_HOME/bin/hadoop  jar $HADOOP_HOME/hadoop-streaming.jar \
+    -input myInputDirs \
+    -output myOutputDir \
+    -mapper /bin/cat \
+    -reducer /bin/wc
+~~~~
+
+In the above example, both the mapper and the reducer are executables that read the input from stdin (line by line) and emit the output to stdout. The utility will create a Map-Reduce job, submit the job to an appropriate cluster, and monitor the progress of the job until it completes. When an executable is specified for mappers, each mapper task will launch the executable as a separate process when the mapper is initialized.
+
+As the mapper task runs, it converts its inputs into lines and feeds the lines to the stdin of the process. In the meantime, the mapper collects the line oriented outputs from the stdout of the process and converts each line into a key/value pair, which is collected as the output of the mapper. By default, the prefix of a line up to the first tab character is the key and the rest of the line (excluding the tab character) is the value. If there is no tab character in the line, then the entire line is considered the key and the value is null. However, this can be customized, as discussed later.
+
+When an executable is specified for reducers, each reducer task launches the executable as a separate process, and then the reducer is initialized. As the reducer task runs, it converts its input key/values pairs into lines and feeds the lines to the stdin of the process. In the meantime, the reducer collects the line-oriented outputs from the stdout of the process, converts each line into a key/value pair, which is collected as the output of the reducer. By default, the prefix of a line up to the first tab character is the key and the rest of the line (excluding the tab character) is the value. However, this can be customized, as discussed later.
+
+This is the basis for the communication protocol between the Map/Reduce framework and the streaming mapper/reducer.
+
+##Examples of Different Sort Types (in context of Hadoop and HDFS)
+
+Below is an example dataset in text format on HDFS. It includes three partitions in an HDFS directory. Each partition stores records in the format of {Integer} [TAB] {English Word}.
+
+<pre>
+files in hdfs directory
+2016-07-20 22:04:56          0 _SUCCESS
+2016-07-20 22:04:45    2392650 part-00000
+2016-07-20 22:04:44    2368850 part-00001
+2016-07-20 22:04:45    2304038 part-00002
+</pre>
+
+
+
+<div id="tab-container" class="tab-container">
+  <ul class='etabs'>
+    <li class='tab'><a href="#tabs1-html">Partial Sort</a></li>
+    <li class='tab'><a href="#tabs1-js">Total Sort (Unordered Partitions)</a></li>
+    <li class='tab'><a href="#tabs1-css">Total Sort (Ordered Partitions)</a></li>
+  </ul>
+  <div id="tabs1-html">
+<table>
+<tr>
+<td><pre>file: part-00000</pre></td>
+<td><pre>file: part-00001</pre></td>
+<td><pre>file: part-00002</pre></td>
+</tr>
+<tr>
+<td>
+<pre>
+<span style="color:red">27</span>   driver
+<span style="color:red">27</span>   creating
+<span style="color:red">27</span>   experiements
+<span style="color:red">19</span>   consists
+<span style="color:red">19</span>   evaluate
+<span style="color:red">17</span>   drivers
+<span style="color:red">10</span>   clustering
+ <span style="color:red">9</span>   during
+ <span style="color:red">9</span>   change
+ <span style="color:red">7</span>   contour
+</pre>
+</td>
+<td>
+<pre>
+<span style="color:red">30</span>   do
+<span style="color:red">28</span>   dataset
+<span style="color:red">15</span>   computing
+<span style="color:red">15</span>   document
+<span style="color:red">15</span>   computational
+<span style="color:red">14</span>   center
+ <span style="color:red">5</span>   distributed
+ <span style="color:red">4</span>   develop
+ <span style="color:red">3</span>   different
+ <span style="color:red">2</span>   cluster
+</pre>
+</td>
+<td>
+<pre>
+<span style="color:red">26</span>   descent
+<span style="color:red">26</span>   def
+<span style="color:red">25</span>   compute
+<span style="color:red">24</span>   done
+<span style="color:red">24</span>   code
+<span style="color:red">23</span>   descent
+<span style="color:red">22</span>   corresponding
+<span style="color:red">13</span>   efficient
+ <span style="color:red">1</span>   cell
+ <span style="color:red">0</span>   current
+</pre>
+</td>
+</tr>
+<caption align='bottom'>Keys are assigned to buckets without any ordering. Keys are sorted within each bucket (the key is the the number in the first column rendered in red).</caption>
+</table>
+  </div>
+  <div id="tabs1-js">
+<table>
+<tr>
+<td><pre>file: part-00000</pre></td>
+<td><pre>file: part-00001</pre></td>
+<td><pre>file: part-00002</pre></td>
+</tr>
+<tr>
+<td>
+<pre>
+<span style="color:red">19</span>   consists
+<span style="color:red">19</span>   evaluate
+<span style="color:red">17</span>   drivers
+<span style="color:red">15</span>   computing
+<span style="color:red">15</span>   document
+<span style="color:red">15</span>   computational
+<span style="color:red">14</span>   center
+<span style="color:red">13</span>   efficient
+</pre>
+</td>
+<td>
+<pre>
+<span style="color:red">10</span>  clustering
+<span style="color:red">9</span>   during
+<span style="color:red">9</span>   change
+<span style="color:red">7</span>   contour
+<span style="color:red">5</span>   distributed
+<span style="color:red">4</span>   develop
+<span style="color:red">3</span>   different
+<span style="color:red">2</span>   cluster
+<span style="color:red">1</span>   cell
+<span style="color:red">0</span>   current
+</pre>
+</td>
+<td>
+<pre>
+<span style="color:red">30</span>   do
+<span style="color:red">28</span>   dataset
+<span style="color:red">27</span>   driver
+<span style="color:red">27</span>   creating
+<span style="color:red">27</span>   experiements
+<span style="color:red">26</span>   descent
+<span style="color:red">26</span>   def
+<span style="color:red">25</span>   compute
+<span style="color:red">24</span>   done
+<span style="color:red">24</span>   code
+<span style="color:red">23</span>   descent
+<span style="color:red">22</span>   corresponding
+</pre>
+</td>
+</tr>
+<caption align='bottom'>Keys are assigned to buckets according to their numeric value. The result is that all keys between 20-30 end up in one bucket, keys between 10-20 end up in another bucket, and keys 0-10 end up in another bucket. Keys are sorted within each bucket. Partitions are not assigned in sorted order.</caption>
+</table>
+  </div>
+  <div id="tabs1-css">
+<table>
+<tr>
+<td><pre>file: part-00000</pre></td>
+<td><pre>file: part-00001</pre></td>
+<td><pre>file: part-00002</pre></td>
+</tr>
+<tr>
+<td>
+<pre>
+<span style="color:red">30</span>   do
+<span style="color:red">28</span>   dataset
+<span style="color:red">27</span>   creating
+<span style="color:red">27</span>   driver
+<span style="color:red">27</span>   experiements
+<span style="color:red">26</span>   def
+<span style="color:red">26</span>   descent
+<span style="color:red">25</span>   compute
+<span style="color:red">24</span>   code
+<span style="color:red">24</span>   done
+<span style="color:red">23</span>   descent
+<span style="color:red">22</span>   corresponding
+</pre>
+</td>
+<td>
+<pre>
+<span style="color:red">19</span>   evaluate
+<span style="color:red">19</span>   consists
+<span style="color:red">17</span>   drivers
+<span style="color:red">15</span>   document
+<span style="color:red">15</span>   computing
+<span style="color:red">15</span>   computational
+<span style="color:red">14</span>   center
+<span style="color:red">13</span>   efficient
+<span style="color:red">10</span>   clustering
+</pre>
+</td>
+<td>
+<pre>
+<span style="color:red">9</span>    during
+<span style="color:red">9</span>    change
+<span style="color:red">7</span>    contour
+<span style="color:red">5</span>    distributed
+<span style="color:red">4</span>    develop
+<span style="color:red">3</span>    different
+<span style="color:red">2</span>    cluster
+<span style="color:red">1</span>    cell
+<span style="color:red">0</span>    current
+</pre>
+</td>
+</tr>
+<caption align='bottom'>Keys are assigned to buckets according to their numeric value. The result is that all keys between 20-30 end up in one bucket, keys between 10-20 end up in another bucket, and keys 0-10 end up in another bucket. Keys are sorted within each bucket. Here, partitions are assigned in sorted order, such that keys between 20-30 end up in the first bucket, keys between 10-20 end up in the second bucket, and keys 0-10 end up in the third bucket. We use the term buckets and partitions interchageably.</caption>
+</table>
+  </div>
 </div>
 
-In the past half-decade, various individuals and groups have begun to record social media data from a variety of public events across the world, in particular political occurrences that have engaged a wide spectrum of insiders and outsiders. Contemporary information specialists are among those who seek to preserve this data, recognizing its importance for the historical record as representative of how early-21st century humans communicate and associated cultural norms, dialogue, trends and events (Scola, 2015). Moreover, collected data can serve numerous educational uses, now and in the future. There is no single method for this emerging task in the information field. This article suggests one approach, encompassed in a series of instructional guidelines (Figure 1.1 and Figure 1.2) aimed at assisting those archivists, librarians, and other information specialists tasked with harvesting and curating one form of social media data - Tweets - from international political events. These guidelines address the copyright, ethical, and task-related issues involved in the harvesting and curation of political Tweets.
 
-__Figure 1.1__
+Keys are assigned to buckets according to their numeric value. The result is that all keys between 20-30 end up in one bucket, keys between 10-20 end up in another bucket, and keys 0-10 end up yet in another bucket. Keys are sorted within each bucket. Here, partitions are assigned in sorted order, such that keys between 20-30 end up in the first bucket, keys between 10-20 end up in the second bucket, and keys 0-10 end up in the third bucket. We use the term buckets and partitions interchangeably.
 
-![Architectural concept of giant wall skinned with solar panels](images/parc-pamplet.jpg)
+##Prepare Dataset
 
-__Figure 1.2__
-
-![Architectural concept of giant wall skinned with solar panels](images/parc-pamplet-int.jpg)
+Here we generate the data which we will use throughout the rest of this notebook. This is a toy dataset with 30 records, and consists of two fields in each record, separated by a tab character. The first field contains random integers between 1 and 30 (a hypothetical word count), and the second field contains English words. The goal is to sort the data by word count from highest to lowest.
 
 
-The role of the Political Tweets Librarian is also proposed. As the primary employer of the guidelines, this individual is envisioned as an academic librarian; but, the guidelines’ principles are applicable to other information specialists working at public libraries and nonprofit organizations. This article also conceptualizes the related Political ARChive (PARC), an institution devoted to recording the “political voices” reflected in Tweets. At the PARC, Political Tweets Librarians collect, record, and preserve Tweets and hashtags from political events all over the world.
+```python
+%%writefile generate_numbers.py
+#!/usr/bin/python
+words = ["cell","center","change","cluster","clustering","code","computational","compute","computing","consists",\
+         "contour","corresponding","creating","current","dataset","def","descent","descent","develop","different",\
+         "distributed","do","document","done","driver","drivers","during","efficient","evaluate","experiements"]
+import random
+N = 30
+for n in range(N):
+    print random.randint(0,N),"\t",words[n]
+```
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/GRfn8buN75o" frameborder="0" allowfullscreen></iframe>
+Overwriting generate_numbers.py
 
-##Twitter and International Political Events
 
-Tweets are the products of the online social media platform Twitter, the “expression of a moment or idea” that “can contain text, photos, and videos.” Users assign topics to Tweets by adding hashtags; these hashtags represent a form of organization of Tweets, by which other users can locate Tweets on the assigned topic. As stated on Twitter.com, “Tweets that contain #WorldCup are about just that. Click on a hashtag to see Tweets related to a topic” (Twitter, Inc., 2015c). One major result of this social media platform’s widespread use is that “Twitter has become the Internet’s de facto public forum” (Zimmer, 2015). The choice to focus on Twitter/Tweets, rather than other social media platforms such as Facebook, Instagram, or Snapchat (arguably just as efficient means to transmit event-related data as Tweets), is rooted in the virtual ubiquity of Tweets during public and politically charged events, and the resultant widespread creation of hashtags related to these happenings. Two recent examples are the Ukraine-Russia conflict and the aftermath of journalist shootings in France in January 2015.
 
-The role of the Political Tweets Librarian and the associated instructional guidelines derive from information specialists’ efforts to capture social media data as part of the historical record of these international events and others, because such data is ephemeral in nature, due to its digital status and political dimensions. Arguably, the collection of social media data after the 2011 Arab Spring set the stage for the importance of contemporary efforts to preserve Tweets, which otherwise could be deleted by authorities because of political sensitivities (Dougherty, 2011). Another example is the pro-democracy protests in Hong Kong in late 2014, which began after the Chinese government ruled against fully open elections in 2017 (BBC News, 2014). Librarians at the University of Toronto have previously harvested social media data from the Hong Kong protests, and the guidelines were initially designed to assist their efforts in which they used the online archiving service Archive-It.
+```python
+# give the python file exacutable permissions, write the file, and inspect number of lines
+!chmod +x generate_numbers.py;
+!./generate_numbers.py > generate_numbers.output
+!wc -l generate_numbers.output
+```
 
-##Archive-It
+30 generate_numbers.output
 
-Librarians’ recent recognition of the increasing importance of harvesting and curating social media data is linked to general efforts to archive websites.  This is because digital documentation is easily lost, if not properly preserved and maintained. Many librarians prefer using the Internet Archive’s subscription service Archive-It (Archive-It, 2015), which captures seed URLs, crawls these sites on periodic bases (set by the user), and provides users the ability to curate and quality control their own content (Antracoli, Duckworth, Silva, & Yarmey, 2014, pp. 159-160). Archived websites are publicly available through the Wayback Machine (Internet Archive, 2015). Additionally, librarians attest to Archive-It staff’s excellent customer service and willingness to meet user needs (Antracoli et al., 2014; S. Li & N. Worby, personal communication, January 29, 2015; Luyk & Sherbaniuk, 2015). For the purposes of Tweet archiving, Archive-It enables users to block personal Twitter profile pages.  This means that users can isolate Tweets related thematically and via hashtags without encroaching on their authors’ privacy. The Political Tweets Librarian guidelines reflect two main assumptions: first, that the Political Tweets Librarian has the necessary institutional funds to pay for Archive-It’s subscription; and secondly, that this librarian knows how to use Archive-It to archive conventional websites through the institutional account. The guidelines’ steps to use Archive-It to harvest and curate Tweets are based on the instructions written by Bragg and Rollason-Cass (2014).
 
-##Copyright Issues
 
-Important issues of copyright are involved in the harvesting and curation of political Tweets, which can ensure that valuable information and perspectives on political events endure. The issues of copyright and ownership are related to the push by libraries to archive publicly available web content to prevent its easy loss, an initiative recommended by a U.S. Library of Congress study group (Antracoli et al., 2014). Elements regarding the copyright and ownership of Tweets are integrated into the guidelines for the Political Tweets Librarian. These elements represent recommendations and, in the creation of policies for the harvesting and curation of political Tweets, different librarians and institutions can modify them according to local needs. However, the harvesting, archiving, and curation of social media, particularly Tweets, is a new issue and their copyright and ownership dimensions have yet to be tested in court (Small, Kasianovitz, Blanford, & Celaya, 2012).
+```python
+# view the raw dataset
+!cat generate_numbers.output
+```
 
-Scholars debate the copyright and ownership issues related to Twitter and Tweets. Some contend that users who choose to make their Twitter accounts public cannot object to the reuse or collection of their Tweets, because users have the option to privatize their account.  At the same time, if a Twitter user’s content is indeed utilized – for example, for a research project or media report – the user may view Tweets as a means for personal expression and therefore may wish to be credited for this expression (Small et al., 2012). Meanwhile, there are three arguments against Tweets as copyrighted material applicable both in Canada and the United States: small size, the content they contain, and the similarities between them (Reinberg, 2009).
+    1   cell
+    14  center
+    9   change
+    2   cluster
+    10  clustering
+    24  code
+    15  computational
+    25  compute
+    15  computing
+    19  consists
+    7   contour
+    22  corresponding
+    27  creating
+    0   current
+    28  dataset
+    26  def
+    26  descent
+    23  descent
+    4   develop
+    3   different
+    5   distributed
+    30  do
+    15  document
+    24  done
+    27  driver
+    17  drivers
+    9   during
+    13  efficient
+    19  evaluate
+    27  experiements
 
-First, the short length of one hundred and forty characters makes Tweets possibly ineligible for copyright protection (Reinberg, 2009; Small et al., 2012). In addition, much of what is posted on Twitter is the statement of common-knowledge facts or the impression of these facts, which are not copyrightable. Furthermore, for example, when a hundred individuals Tweet on a similar situation, many comments are written in a similar manner, making copyright difficult to discern. Scholars who argue for Tweets as copyrightable believe that some Tweets represent originality, as defined under copyright, or that a collection of Tweets as a whole potentially meets the minimum necessary for copyright protection (Reinberg, 2009).
 
-Regardless of the views on copyright and ownership, both are circumventable by the Twitter Terms of Service and/or the Fair Dealing exemption of copyright law in Canada. According to Twitter’s Terms of Service, posting Tweets grants Twitter “a worldwide, non-exclusive, royalty-free license (with the right to sublicense) to use, copy, reproduce, process, adapt, modify, publish, transmit, display and distribute such Content in any and all media or distribution methods (now known or later developed)” (Twitter, Inc., 2016b). By this standard, Twitter owns every Tweet, but public Tweets are also useable for educational means. Canada’s Copyright Act (1985) states, “For greater certainty, the exceptions to infringement of copyright provided for under sections 29.4 to 30.3 and 45 also apply in respect of a library, archive or museum that forms part of an educational institution.” According to Taylor (2014), “Fair dealing is a user’s right in copyright law permitting use of, or ‘dealing’ with, a copyright protected work without permission or payment of copyright royalties.” Under Canada’s Copyright Act’s Fair Dealing exception, an individual is able to use copyrighted material for research, private study, education, satire, parody, criticism, review, or news reporting. Through the Political Tweets Librarian, academic libraries can harvest publicly available Tweets and their use for research, study, and other educational purposes falls clearly under the Fair Dealing exception of Canadian copyright law. 
+##Section I - Understanding Unix Sort
 
-For Political Tweets Librarians to ensure fair dealing, careful steps are recommended in the development of a Tweets curation policy. Antracoli et al. (2014) recommend that institutional policy clearly outline who, when, and what level of access is granted to researchers (pp. 163). One legitimate possibility is keeping the Tweets in a “dark archive” accessible only to specific faculty, students, and other researchers after they have signed a user agreement. The institution thereby avoids the common copyright issues that accompany regular public access. The user agreement would emphasize that the use of archive information is only for research, study, and other educational purposes, and restricted to onsite access. Many libraries, such as the National Library of France, have dark Web archives with access restricted to onsite only (S. Li & N. Worby, personal communication, January 29, 2015). In addition, the Finnish Web Archive, the Web Archive of Norway, and the Web Archive of Switzerland are also kept dark with onsite access only (Jinfang, 2012). In order to account for the multitude of Tweet authors composing a curated Tweet collection, it is recommended that these Tweets are maintained in a dark archive for a minimum of seventy-five years, which is the same length that copyright protection is afforded to anonymous Canadian authors from the date of creation (Copyright Act, 1985).
+###Importance of Unix Sort
 
-##Privacy and Ethical Guidelines
+Sort is a simple and very useful command found in unix systems. It rearranges lines of text numerically and/or alphabetically. Hadoop Streaming's KeyBasedComparator is modeled after unix sort, and accepts and same configurations from command line arguments.
 
-For the Political Tweets Librarian, one of the biggest questions is how to address the ethical concerns surrounding Twitter author data, and the capture and storage of Tweets. Included in the Political Tweets Librarian guidelines are a subset of privacy and ethical recommendations to assist with the daily dealings associated with the harvesting and curation of Tweets. For this subset of guidelines, resources of the American Anthropological Association (AAA) were consulted, with the organization’s Statement of Ethics chosen as the primary set of standards to create an ethical framework for Political Tweets Librarians to assist them in their duties. The AAA Statement of Ethics provides a set of “core principles that are expressed as concise statements”, all of which are simple, easy to remember, and can be put into practice in everyday life (AAA, 2012d). The intent of these privacy and ethical guidelines is to provide Political Tweets Librarians  (and anthropologists) with a foundation for the entire lifespan of their projects, making it clear that they must “deliberately weigh the consequences and ethical dimensions of the choices they make” (AAA, 2012d).
+###Unix Sort Overview
 
-As in any profession guided by ethical standards, and because Tweet harvesting and curation is an emerging field, the four broad privacy and ethical guidelines in the Political Tweets Librarian guidelines are,,subject to continuous revisiting and likely revision. The privacy and ethical guidelines are not designed as a precise set of instructions to follow, but rather as a tool to provoke thought about potential harm to Twitter authors, the process of Tweet curation, and how Twitter data is stored; the guidelines also build on the aforementioned discussion of who can access the archived data and the length of time for data storage. The full details of the privacy and ethical guidelines are explained below.
+~~~~
+# sort syntax
+sort [OPTION]... [FILE]...
+~~~~
+
+Sort treats a single line of text as a single datum to be sorted. It operates on fields (by default, the whole line is considered a field). It uses tabs as the delimiter by default (which can be configured with -t option), and splits a (non-empty) line into one or more parts, whereby each part is considered a field. Each field is identified by its index (POS).
+
+The most important configuration option is perhaps -k or --key. Start a key at POS1 (origin 1), end it at POS2 (default end of line):
+'-k, --key=POS1[,POS2]'
+
+For example, -k1 (without ending POS), produces a key that is the whole line, and -k1,1 produces a key that is the first field. Multiple -k options can be supplied, and applied left to right. Sort keys can be tricky sometimes, and should be treated with care. For example:
+
+~~~~
+sort –k1 –k2,2n
+# Will not work properly, as -k1 uses the whole line as key, and trumps -k2,2n.
+# Another example:
+sort -k2 -k3
+# This is redundant: it's equivalent to sort -k2.
+~~~~
+
+A good practice for supplying multiple sort keys is to make sure they are non-overlapping.
+
+Other commonly used flags/options are: -n, which sorts the keys numerically, and -r which reverses the sort order.
+
+###sort examples
+
+<pre><span class="o">%%</span><span class="k">writefile</span> unix-sort-example.txt
+Unix,30
+Solaris,10
+Linux,25
+Linux,20
+HPUX,100
+AIX,25
+</pre>
+
+(Source: [http://www.theunixschool.com/2012/08/linux-sort-command-examples.html](http://www.theunixschool.com/2012/08/linux-sort-command-examples.html))
+
+
+```python
+%%writefile unix-sort-example.txt
+Unix,30
+Solaris,10
+Linux,25
+Linux,20
+HPUX,100
+AIX,25
+```
+
+Overwriting unix-sort-example.txt
+
+
+<div id="tab-container" class="tab-container">
+  <ul class='etabs'>
+    <li class='tab'><a href="#tabs1-html">HTML Markup</a></li>
+    <li class='tab'><a href="#tabs1-js">Required JS</a></li>
+    <li class='tab'><a href="#tabs1-css">Example CSS</a></li>
+  </ul>
+  <div id="tabs1-html">
+    Sort by field 1 (default alphabetically), deliminator ","    
+    <table>
+    <tr>
+    <td><pre>cat unix-sort-example.txt</pre></td>
+    <td><pre>sort -t"," -k1,1 unix-sort-example.txt</pre></td>
+    </tr>
+    <tr>
+    <td><pre>
+    Unix,30
+    Solaris,10
+    Linux,25
+    Linux,20
+    HPUX,100
+    AIX,25
+    </pre></td>
+    <td><pre>
+    AIX,25
+    HPUX,100
+    Linux,20
+    Linux,25
+    Solaris,10
+    Unix,30
+    </pre></td>
+    </tr>
+    </table>
+  </div>
+  <div id="tabs1-js">
+    Sort by field 2 numerically reverse, deliminator ","   
+    <table>
+    <tr>
+    <td><pre>cat unix-sort-example.txt</pre></td>
+    <td><pre>sort -t"," -k2,2nr  unix-sort-example.txt</pre></td>
+    </tr>
+    <tr>
+    <td><pre>
+    Unix,30
+    Solaris,10
+    Linux,25
+    Linux,20
+    HPUX,100
+    AIX,25
+    </pre></td>
+    <td><pre>
+    HPUX,100
+    Unix,30
+    AIX,25
+    Linux,25
+    Linux,20
+    Solaris,10
+    </pre></td>
+    </tr>
+    </table>
+  </div>
+  <div id="tabs1-css">
+    Sort by field 1 alphabetically first, then by field 2 numeric reverse   
+    <table>
+    <tr>
+    <td><pre>cat unix-sort-example.txt</pre></td>
+    <td><pre>sort -t"," -k1,1 -k2,2nr  unix-sort-example.txt</pre></td>
+    </tr>
+    <tr>
+    <td><pre>
+    Unix,30
+    Solaris,10
+    Linux,25
+    Linux,20
+    HPUX,100
+    AIX,25
+    </pre></td>
+    <td><pre>
+    AIX,25
+    HPUX,100
+    Linux,25
+    Linux,20
+    Solaris,10
+    Unix,30
+    </pre></td>
+    </tr>
+    </table>
+  </div>
+</div>
+
+##Section II - Hadoop Streaming
+
+###II.A. Hadoop's Default Sorting Behavior
+
+Key points:
+* By default, hadoop performs a partial sort on mapper output keys, i.e. within each partition keys are sorted.
+* By default, keys are sorted as strings.
+    * When processing a mapper output record, first the partitioner decides which partition the record should be sent to.
+    * In shuffle and sort stage, keys within a partition are sorted.
+* If there is only one partition, mapper output keys will be sorted in total order.
+* The partition index of a given key from mapper outputs is determined by the partitioner, the  default partitioner is `HashPartitioner` which relies on `java`'s `hashCode` function to compute an integer hash for the key. The partition index is derived next by hash modulo number of reducers.
+
+###II.B. Hadoop Streaming parameters
+
+Hadoop streaming can be further fine-grain controlled through the command line options below. Through these, we can fine-tune the hadoop framework to better understand line-oriented record structure, and achieve the versatility of single-machine unix sort, but in a distributed and efficient manner.
+
+~~~~
+stream.num.map.output.key.fields
+stream.map.output.field.separator
+mapreduce.partition.keypartitioner.options
+KeyFieldBasedComparator
+keycomparator.options
+partitioner org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner
+~~~~
+
+In a sorting task, hadoop streaming provides the same interface as unix sort. Both consume a stream of lines of text, and produce a permutation of input records, based on one or more sort keys extracted from each line of input. Without customizing its sorting and partitioning, hadoop streaming treats implicitly each input line as a record consisting of a single key and value, separated by a "tab" character.
+
+Just like the various options unix sort offers, hadoop streaming can be customized to use multiple fields for sorting, sort records by numeric order or keys and sort in reverse order.
+
+The following table provides an overview of relationships between hadoop stream sorting and unix sort:
+
+<table>
+<tr>
+    <th></th>
+    <th>Unix `sort`   </th>
+    <th>Hadoop streaming</th>
+</tr>
+<tr>
+    <td>Key Field Separator</td>
+    <td>`-t`</td>
+    <td>`-D stream.map.output.field.separator`</td>
+</tr>
+<tr>
+    <td>Number of Key Fields</td>
+    <td>Not Required</td>
+    <td>`-D stream.num.map.output.key.fields`</td>
+</tr>
+<tr>
+    <td>Key Range</td>
+    <td>`-k, --key=POS1[,POS2]`</td>
+    <td>`-D mapreduce.partition.keycomparator.options`   (same syntax as unix sort)</td>
+</tr>
+<tr>
+    <td>Numeric Sort</td>
+    <td>`-n, --numeric-sort`</td>
+    <td>`-D mapreduce.partition.keycomparator.options`   (same syntax as unix sort)</td>
+</tr>
+<tr>
+    <td>Reverse Order</td>
+    <td>`-r --reverse`</td>
+    <td>`-D mapreduce.partition.keycomparator.options`   (same syntax as unix sort)</td>
+</tr>
+<tr>
+    <td>Partitioner Class</td>
+    <td>Not Applicable</td>
+    <td>`-partitioner org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner`</td>
+</tr>
+<tr>
+    <td>Comparator Class</td>
+    <td>Not Applicable</td>
+    <td>`-D mapreduce.job.output.key.comparator.class`</td>
+</tr>
+<tr>
+    <td>Partition Key Fields</td>
+    <td>Not Applicable</td>
+    <td>`-D mapreduce.partition.keypartitioner.options`</td>
+</tr>
+</table>
+
+Therefore, given a distributed sorting problem, it is always helpful to start with a non-scalable solution that can be provided by unix sort and work out the required hadoop streaming configurations from there.
+
+####Configure Hadoop Streaming: Prerequisites
+
+~~~~
+-D mapreduce.job.output.key.comparator.class=org.apache.hadoop.mapreduce.lib.partition.KeyFieldBasedComparator \
+-partitioner org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner
+~~~~
+
+These two options instruct hadoop streaming to use two specific hadoop java library classes: `KeyFieldBasedComparator` and `KeyFieldBasedPartitioner`. They come in standard hadoop distribution, and provide the required machinery.
+
+####Configure Hadoop Streaming: Step 1
+
+Specify number of key fields and key field seperator:
+
+~~~~
+ -D stream.num.map.output.key.fields=4 \
+ -D mapreduce.map.output.key.field.separator=.
+~~~~
+
+In unix sort when input lines use a non-tab delimiter, we need to supply the -t _separator_ option. Similarly in hadoop streaming, we need to specify the character to use as key separators. Common options include: comma",", period ".", and space " ".
+
+One additional hint to hadoop is the number of key fields, which is not required for unix sort. This helps hadoop streaming to only parse the relevant parts of input lines, as in the end only keys are sorted (not values) – therefore, hadoop can avoid performing expensive parsing and sorting on value parts of input line records.
+
+####Configure Hadoop Streaming: Step 2
+
+~~~~
+# Specify sorting options
+-D mapreduce.partition.keycomparator.options=-k2,2nr
+~~~~
+
+This part is very straightforward. Whatever one would do with unix sort (eg. -k1,1 -k3,4nr), just mirror it for hadoop streaming. However it is crucial to remember that hadoop only uses `KeyFieldBasedComparator` to sort records within partitions. Therefore, this step only helps achieve partial sort.
+
+####Configure Hadoop Streaming: Step 3
+
+~~~~
+# Specify partition key field
+-D mapreduce.partition.keypartitioner.options=-k1,1
+~~~~
+
+In this step, we need to specify which key field to use for partitioning. There's no equivalent in unix sort. One critical detail to keep in mind is that, even though hadoop streaming uses unix sort --key option's syntax for mapreduce.partition.keypartitioner.options., no sorting will actually be performed. It only uses expressions such as -k2,2nr for key extraction; the nr flags will be ignored.
+
+In later sections (Partitioning in MRJob), we will discuss in detail how to incorporate sorting into the partitioner by custom partition key construction.
+
+####Summary of Common Practices for Sorting Related Configuration
+
+<div style="background: #ffffff; overflow:auto;width:auto;border:0;border-width:.0;padding:.0;"><pre style="margin: 0; line-height: 125%">  -partitioner org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner
+  -D mapreduce.job.output.key.comparator.class=org.apache.hadoop.mapreduce.lib.partition.KeyFieldBasedComparator \
+  -D stream.num.map.output.key.fields=<span style="color: #0000FF">4</span> \
+  -D map.output.key.field.separator=. \
+  -D mapreduce.partition.keypartitioner.options=<span style="color: #0000FF">-k1,2</span> \
+  -D mapreduce.job.reduces=<span style="color: #0000FF">12</span> \
+</pre></div>
+
+At bare minimum, we typically need to specify:
+
+1. Use KeyFieldBasedPartitioner
+2. Use KeyFieldBasedComparator
+3. Key field separator (can be omitted if TAB is used as separator)
+4. Number of key fields
+5. Key field separator again for mapper (under a different config option)
+6. Partitioner options (unix sort syntax)
+7. Number of reducer jobs
+
+(See hadoop streaming official documentation for more information (hadoop version = 2.7.2.)
+Side-by-side Examples: unix sort vs. hadoop streaming:
+
+
+<table>
+<tbody>
+<tr>
+<td>Unix sort</td>
+<td>Hadoop Streaming</td>
+</tr>
+<tr>
+<td>
+<code>sort -t"," -k1,1</code>
+</td>
+<td>
+<code>
+-D mapreduce.job.output.key.comparator.class=\
+  org.apache.hadoop.mapreduce.lib.partition.KeyFieldBasedComparator \
+-D stream.num.map.output.key.fields=2 \
+-D stream.map.output.field.separator="," \
+-D mapreduce.partition.keypartitioner.options=-k1,1\
+-partitioner org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner\
+</code>
+</td>
+</tr>
+
+<tr>
+<td>
+<code>
+sort -k1,1 -k2,3nr
+</code>
+</td>
+<td>
+<code>
+-D mapreduce.job.output.key.comparator.class=\
+  org.apache.hadoop.mapreduce.lib.partition.KeyFieldBasedComparator \
+-D stream.num.map.output.key.fields=3 \
+-D mapreduce.partition.keypartitioner.options="-k1,1 -k2,3nr"\
+-partitioner org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner\
+-D mapreduce.job.reduces=1
+</code>
+</td>
+</tr>
+</tbody>
+</table>
+
+
+###II.C. Hadoop Streaming Implementation
+
+You will need to install, configure, and start hadoop. Brief instructions follow, but detailed instructions are beyond the scope of this notebook.
+
+####Start Hadoop
+
+To run the examples in this notebook you must download and configure hadoop on your local computer. Go to http://hadoop.apache.org/ for the latest downloads. 
+
+Everything you need to get up and running can be found on this page: [https://hadoop.apache.org/docs/r2.7.2/hadoop-project-dist/hadoop-common/SingleCluster.html](https://hadoop.apache.org/docs/r2.7.2/hadoop-project-dist/hadoop-common/SingleCluster.html). There are also many websites with specialized instructions.
+
+Once all components have been downloaded and istalled, you can check that everything is running by running the `jps` command in your terminal. You should see output like this:
+```
+localhost:~ $ jps
+83360 NodeManager
+82724 DataNode
+82488 NameNode
+82984 SecondaryNameNode
+83651 Jps
+83118 ResourceManager
+83420 JobHistoryServer
+```
+
+This notebook runs on the following setup:
+```
+Mac OX Yosemite 10.10.5
+java version "1.7.0_51"
+Hadoop version 2.7.2
+```
+
+
+
+```python
+# should you need to regenerate the file and put it in hdfs a second time, make sure to delete the existing file first:
+!hdfs dfs -rm -r /user/koza/sort
+```
+
+    16/08/20 19:24:29 INFO fs.TrashPolicyDefault: Namenode trash configuration: Deletion interval = 0 minutes, Emptier interval = 0 minutes.
+    Deleted /user/koza/sort
+
+
+
+```python
+# put the file in hdfs:
+!hdfs dfs -mkdir /user/koza/sort
+!hdfs dfs -mkdir /user/koza/sort/output
+!hdfs dfs -put generate_numbers.output /user/koza/sort
+```
+
+
+```python
+# make sure it's really there:
+!hdfs dfs -ls /user/koza/sort/generate_numbers.output
+```
+
+    -rw-r--r--   1 koza supergroup        486 2016-08-20 19:17 /user/koza/sort/generate_numbers.output
+
+####II.C.1. Hadoop Streaming Implementation - single reducer
+
+Keypoints:
+* Single reducer guarantees a single partition
+* Partial sort becomes total sort
+* No need for secondary sorting
+* Single Reducer becomes scalability bottleneck
+
+####Steps
+
+In the mapper shuffle sort phase, the data is sorted by the primary key, and sent to a single reducer. By specifying /bin/cat/ for the mapper and reducer, we are telling hadoop streaming to use the identity mapper and reducer which simply output the input (Key,Value) pairs.
+
+####Setup
+
+```
+-D stream.num.map.output.key.fields=2 
+-D stream.map.output.field.separator="\t" 
+-D mapreduce.partition.keycomparator.options="-k1,1nr -k2,2" 
+```
+
+First we'll specify the number of keys, in our case, 2. The count and the word are primary and secondary keys, respectively. Next we'll tell hadoop streaming that our field separator is a tab character. Lastly we'll use the keycompartor options to specify which keys to use for sorting. Here, -n specifies that the sorting is numerical for the primary key, and -r specifies that the result should be reversed, followed by k2 which will sort the words alphabetically to break ties. Refer to the unix sort section above.
+
+<span style="color:red"><strong>IMPORTANT:</strong></span> Hadoop streaming is particular about the order in which options are specified.  
+
+(For more information, see the docs here: [https://hadoop.apache.org/docs/r1.2.1/streaming.html#Hadoop+Comparator+Class](https://hadoop.apache.org/docs/r1.2.1/streaming.html#Hadoop+Comparator+Class).)
+
+```python
+!hdfs dfs -rm -r /user/koza/sort/output
+!hadoop jar /usr/local/Cellar/hadoop/2.7.2/libexec/share/hadoop/tools/lib/hadoop-streaming-2.7.2.jar \
+-D mapred.output.key.comparator.class=org.apache.hadoop.mapred.lib.KeyFieldBasedComparator \
+-D stream.num.map.output.key.fields=2 \
+-D stream.map.output.field.separator="\t" \
+-D mapreduce.partition.keycomparator.options="-k1,1nr -k2,2" \
+-mapper /bin/cat \
+-reducer /bin/cat \
+-input /user/koza/sort/generate_numbers.output -output /user/koza/sort/output \
+
+```
+
+
+```python
+# Check to see that we have indeed generated a single output file
+!hdfs dfs -ls /user/koza/sort/output
+```
+
+    Found 2 items
+    -rw-r--r--   1 koza supergroup          0 2016-08-20 19:18 /user/koza/sort/output/_SUCCESS
+    -rw-r--r--   1 koza supergroup        516 2016-08-20 19:18 /user/koza/sort/output/part-00000
+
+
+
+```python
+# Print the results
+print "="*100
+print "Single Reducer Sorted Output - Hadoop Streaming"
+print "="*100
+!hdfs dfs -cat /user/koza/sort/output/part-00000
+```
+
+    ====================================================================================================
+    Single Reducer Sorted Output - Hadoop Streaming
+    ====================================================================================================
+    30      do  
+    28      dataset 
+    27      driver  
+    27      creating    
+    27      experiements    
+    26      def 
+    26      descent 
+    25      compute 
+    24      done    
+    24      code    
+    23      descent 
+    22      corresponding   
+    19      evaluate    
+    19      consists    
+    17      drivers 
+    15      computing   
+    15      document    
+    15      computational   
+    14      center  
+    13      efficient   
+    10      clustering  
+    9       during  
+    9       change  
+    7       contour 
+    5       distributed 
+    4       develop 
+    3       different   
+    2       cluster 
+    1   cell    
+    0       current 
+
+
+
+###II.C.2. Hadoop Streaming Implementation - multiple reducers
+
+####Keypoints:
+
+* Need to guarantee that every key in a single reducer is to be "pre-sorted" against all other reducers.
+* Requires knowledge of the distribution of values to be sorted - more about this later in the sampling section.
+* Uses secondary sort to order keys within each partition.
+
+####What's new:
+
+Now the mapper needs to emit an additional key for each record by which to partition. We partition by this new 'primary' key and sort by secondary and tertiary keys to break ties. Here, the partition key is the primary key.
+
+The following diagram illustrates the steps required to perform total sort in a multi-reducer setting:
  
-###1. Protect Twitter Authors From Any (Direct and Indirect) Potential Harm
+![Total Order Sort, Step 1](images/02ts-steps2.png)
 
-The first ethical guideline is highly important in guiding the Political Tweets Librarian’s practice of Tweet harvesting and curation. Drawing from the AAA Statement of Ethics, the “primary ethical obligation” of librarians curating social media is to “do no harm” to Tweet authors and to “weigh carefully the potential consequences and inadvertent impacts of their work” (AAA, 2012a). As a direct or indirect result of the inclusion of the author’s Tweet and/or personal data (e.g. profile data, Tweet ID, location data, viewing history) in the library database, Political Tweets Librarians must weigh their library’s social media curation needs against any potential harm to a Twitter author (Small et al., 2012). Although there is a push within the social media archiving community to collect as much Twitter data as possible while a political protest or uprising occurs, in an attempt to ensure that the data is not lost (SalahEldeen & Nelson, 2012; S. Li & N. Worby, personal communication, January 29, 2015), Political Tweets Librarians should feel empowered to stop the curation process at any point if they are concerned that the needs of the library and potential harm to the Twitter author are in conflict.
+Figure 2. Total Order sort with multiple reducers
 
-The AAA guidelines suggest giving special consideration to the protection of “vulnerable populations” (AAA, 2012f). Political Tweets Librarians are trained to pay extra attention when harvesting and curating political protesters’ Tweets, because it is important that these Tweet authors’ opposition does not use their account data as a means for identification and oppression. However, there may be exceptions in legal cases. One example of Twitter data used to prosecute a Tweet author was the conviction of Occupy Wall Street protester Malcolm Harris. In September 2012, Judge Matthew A. Sciarrino, Jr. ordered Twitter to hand over Mr. Harris’ archived Tweets from the 2011 protests. This resulted in a “disorderly conduct” conviction in December 2012 (Buettner, 2012; Zetter, 2012). Although in this example a library was not asked to release Tweet data, the Political Tweets Librarian should always consider the possibility that they will be asked to release such information under court order.
 
-In addition, it is also important to take into consideration any harm that might arise from the cultural appropriation of Twitter data by the library. Harm may be caused to the author if the Tweet is not displayed in an appropriate cultural context. The same is true if the display is inauthentic or “distorted”, which would potentially result in the discrimination and harm of group members (Young & Brunk, 2009, pp. 9).
+###Multiple Reducer Overview
+
+After the Map phase and before the beginning of the Reduce phase there is a handoff process, known as shuffle and sort. Output from the mapper tasks is prepared and moved to the nodes where the reducer tasks will be run. To improve overall efficiency, records from mapper output are sent to the physical node a reducer will be running on while they are being produced - to avoid flooding the network when all mapper tasks are complete.
+
+What this means is that when we have more than one reducer in a mapreduce job, hadoop no longer sorts the keys globally (total sort). Instead mapper outputs are partitioned while they're being produced, and before the reduce phase starts, records are sorted by the key within each partition. In other words, hadoop's architecture only guarantees partial sort.
+
+Therefore, to achieve total sort, a programmer needs to incorporate additional steps and supply the hadoop framework additional aid during the shuffle and sort phase. Particularly, a partition file or partition function is required.
+
+####Modification 1: Include a partition file or partition function inside mappers
+
+Recall that we can use an identity mapper in single-reducer step up, which just echos back the (key, value) pair from input data. In a multi-reducer setup, we will need to add an additional "partition key" to instruct hadoop how to partition records, and pass through the original (key, value) pair.
+The partition key is derived from the input key, with the help of either a partition file (more on this in the sampling section) or a user-specified partition function, which takes a key as input, and produces a partition key. Different input keys can result in same partition key.
+
+####Modification 2: Drop internal partition key inside reducers
+
+Now we have two keys (as opposed to just one), and one is used for partitioning, the other is used for sorting. The reducer needs to drop the partition key which is used internally to aid total sort, and recover the original (key, value) pairs.
+
+####Modification 3: Post-processing step to order partitions
+
+The Mapreduce job output is written to HDFS, with the output from each partition in a separate file (usually named something such as: part-00000). These file names are indexed and ordered. However, hadoop makes no attempt to sort partition keys – the mapping between partition key and partition index is not order-preserving. Therefore, while partition keys key_1, key_2 and key_1 < key_2, it's possible that the output of partition with key_1 could be written to file part-00006 and the output of partition with key_2 written to file part-00003.
+Therefore, a post-processing step is required to finish total sort. We will need to take one record from every (non-empty) partition output, sort them, and construct the appropriate ordering among partitions.
+
+####Introductory Example
+
+Consider the task of sorting English words alphabetically, for example, four words from our example dataset:
+
+<code>
+experiments    
+def    
+descent    
+compute 
+</code>  
+
+The expected sorted output is:
+
+<code>
+compute    
+def    
+descent    
+experiments    
+</code>
+
+We can use the first character from each word as a partition key. The input data could potentially have billions of words, but we will never have more than 26 unique partition keys (assuming all words are lowercase). In addition, a word starting with "a" will always have a lower alphabetical ordering compared to a word which starts with "z". Therefore, all words belonging to partition "a" will be "pre-sorted" against all words from partition "z". The technique described here is equivalent to the following partition function:
+
+<code>
+def partition_function(word):
+    assert len(word) > 0
+    return word[0]
+</code>
+
+It is important to note that a partition function must preserve sort order, i.e. all partitions need to be sorted against each other. For instance, the following partition function is not valid (in sorting words in alphabetical order):
+
+<code>
+def partition_function(word):
+    assert len(word) > 0
+    return word[-1]
+</code>
+
+The mapper output or the four words with this partition scheme is:
+
+~~~~
+e    experiments    
+d    def    
+d    descent    
+c    compute
+~~~~
+
+The following diagram outlines the flow of data with this example:
+
+![Total Order Sort, Step 1](images/03-partition.png) 
+
+Figure 3. Partial Order Sort
+
+Note that partition key "e" maps to partition 0, even if it is "greater than" key "d" and "c". This illustrates that the mapping between partition key and partition indices are not order preserving. In addition, sorting within partitions is based on the original key (word itself).
+
+###Implementation Walkthrough
+
+Coming back to our original dataset, here we will sort and print the output in two steps. Step one will partition and sort the data, and step two will arrange the partitions in the appropriate order. In the MRJob implementation that follows, we'll build on this and demonstrate how to ensure that the partitions are created in the appropriate order to begin with.
+
+1. Run the hadoop command that prepends an alphabetic key to each row such that they end up in the appropriate partition, shuffle, and sort.
+2. Combine the secondary sort output files in the appropriate order
+
+####Setup
+
+Hadoop streaming configuration for the sort job. Notice the addition of the keypartitioner option, which tells hadoop streaming to partition by the primary key. Remember that the order of the options is important.
+
+~~~~
+-D stream.num.map.output.key.fields=3 \
+-D stream.map.output.field.separator="\t" \
+-D mapreduce.partition.keypartitioner.options=-k1,1 \
+-D mapreduce.job.output.key.comparator.class=org.apache.hadoop.mapred.lib.KeyFieldBasedComparator \
+-D mapreduce.partition.keycomparator.options="-k1,1 -k2,2nr -k3,3" \
+~~~~
+
+Here, "-k1,1 -k2,2nr -k3,3" performs secondary sorting. Our three key fields are:
+* -k1,1: partition key, one of {A,B,C}{A,B,C} (this part is optional, since each partition will contain the same partition key).
+* -k2,2nr: input key (number/count), and we specify nr flags to sort them numerically reverse.
+* -k3,3 : input value (word), if two records have same count, we break the tie by comparing the words alphabetically.
+
+The following mapper is an identity mapper with a partition function included; it prepends an alphabetic key as partition key to input records.
+
+### Function to prepend an alphabetic key to each row such that they end up in the appropriate partition
+
+The following mapper is an identity mapper with a partition function included, it prepends an alphabetic key as partition key to input records.
+
+
+```python
+%%writefile prependPartitionKeyMapper.py
+#!/usr/bin/env python
+import sys
+for line in sys.stdin:
+    line = line.strip()
+    key, value = line.split("\t")
+    if int(key) < 10:
+        print "%s\t%s\t%s" % ("A", key, value)   
+    elif int(key) < 20:
+        print "%s\t%s\t%s" % ("B", key, value)   
+    else:
+        print "%s\t%s\t%s" % ("C", key, value)    
+```
+
+    Overwriting prependPartitionKeyMapper.py
+
+
+### __Step 1 - run the hadoop command specifying 3 reducers, the partition key, and the sort keys__
+
+
+```python
+!hdfs dfs -rm -r /user/koza/sort/secondary_sort_output
+!hadoop jar /usr/local/Cellar/hadoop/2.7.2/libexec/share/hadoop/tools/lib/hadoop-streaming-2.7.2.jar \
+    -D stream.num.map.output.key.fields=3 \
+    -D stream.map.output.field.separator="\t" \
+    -D mapreduce.partition.keypartitioner.options=-k1,1 \
+    -D mapreduce.job.output.key.comparator.class=org.apache.hadoop.mapred.lib.KeyFieldBasedComparator \
+    -D mapreduce.partition.keycomparator.options="-k1,1 -k2,2nr -k3,3" \
+    -mapper prependPartitionKeyMapper.py \
+    -reducer /bin/cat \
+    -file prependPartitionKeyMapper.py -input /user/koza/sort/generate_numbers.output \
+    -output /user/koza/sort/secondary_sort_output \
+    -numReduceTasks 3 \
+    -partitioner org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner 
+```
+
+<h3> Check the output </h3>
+
+
+```python
+!hdfs dfs -ls /user/koza/sort/secondary_sort_output
+print "="*100
+print "/part-00000"
+print "="*100
+!hdfs dfs -cat /user/koza/sort/secondary_sort_output/part-00000
+print "="*100
+print "/part-00001"
+print "="*100
+!hdfs dfs -cat /user/koza/sort/secondary_sort_output/part-00001
+print "="*100
+print "/part-00002"
+print "="*100
+!hdfs dfs -cat /user/koza/sort/secondary_sort_output/part-00002
+```
+
+    Found 4 items
+    -rw-r--r--   1 koza supergroup          0 2016-08-20 19:25 /user/koza/sort/secondary_sort_output/_SUCCESS
+    -rw-r--r--   1 koza supergroup        141 2016-08-20 19:25 /user/koza/sort/secondary_sort_output/part-00000
+    -rw-r--r--   1 koza supergroup        164 2016-08-20 19:25 /user/koza/sort/secondary_sort_output/part-00001
+    -rw-r--r--   1 koza supergroup        118 2016-08-20 19:25 /user/koza/sort/secondary_sort_output/part-00002
+    ====================================================================================================
+    /part-00000
+    ====================================================================================================
+    B   19  consists    
+    B   19  evaluate    
+    B   17  drivers 
+    B   15  computational   
+    B   15  computing   
+    B   15  document    
+    B   14  center  
+    B   13  efficient   
+    B   10  clustering  
+    ====================================================================================================
+    /part-00001
+    ====================================================================================================
+    C   30  do  
+    C   28  dataset 
+    C   27  creating    
+    C   27  driver  
+    C   27  experiements    
+    C   26  def 
+    C   26  descent 
+    C   25  compute 
+    C   24  code    
+    C   24  done    
+    C   23  descent 
+    C   22  corresponding   
+    ====================================================================================================
+    /part-00002
+    ====================================================================================================
+    A   9   change  
+    A   9   during  
+    A   7   contour 
+    A   5   distributed 
+    A   4   develop 
+    A   3   different   
+    A   2   cluster 
+    A   1   cell    
+    A   0   current 
+
+
+### Step 2 - Combine the sorted output files in the appropriate order
+The following code block peaks at the first line of each partition file to determine order of partitions, and prints the contents of each partition in order of largest to smallest.  Notice that while the files are arranged in total order, the partition file names are not ordered. In the MRJob implementation, we'll tackle this issue.
+
+
+```python
+# The subprocess module allows you to spawn new (system) processes, connect to their input/output/error pipes, 
+# and obtain their return codes. Ref: https://docs.python.org/2/library/subprocess.html
+import subprocess 
+import re
+
+
+
+'''
+subprocess.Popen()
+Opens a new subprocess and executes the unix command in the args array, passing the output to STDOUT.
+This is the equivalent of typing: 
+hdfs dfs -ls /user/koza/sort/secondary_sort_output/part-*
+in the unix shell prompt
+Even though we cannot see this output it would look like this:
+-rw-r--r--   1 koza supergroup        141 2016-08-20 19:25 /user/koza/sort/secondary_sort_output/part-00000
+-rw-r--r--   1 koza supergroup        164 2016-08-20 19:25 /user/koza/sort/secondary_sort_output/part-00001
+-rw-r--r--   1 koza supergroup        118 2016-08-20 19:25 /user/koza/sort/secondary_sort_output/part-00002
+'''
+
+p = subprocess.Popen(["hdfs", "dfs", "-ls", "/user/koza/sort/secondary_sort_output/part-*" ],  
+                     stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
+
+'''
+Save the output of the above command to the 'lines' string variable by reading each line and appending it to the 'lines' string.
+The resulting lines string should look like this:
+
+'-rw-r--r--   1 koza supergroup        141 2016-08-20 19:25 /user/koza/sort/secondary_sort_output/part-00000\n-rw-r--r--   1 koza supergroup        164 2016-08-20 19:25 /user/koza/sort/secondary_sort_output/part-00001\n-rw-r--r--   1 koza supergroup        118 2016-08-20 19:25 /user/koza/sort/secondary_sort_output/part-00002\n'
+
+'''
+lines=""
+for line in p.stdout.readlines():
+    lines = lines + line
+
+    
+'''
+The following regular expresion extracts the paths from 'lines', and appends each path to the outputPARTFiles list.
+The resulting outputPARTFiles list should look like this:
+
+['/user/koza/sort/secondary_sort_output/part-00000',
+ '/user/koza/sort/secondary_sort_output/part-00001',
+ '/user/koza/sort/secondary_sort_output/part-00002']
+
+'''    
+regex = re.compile('(\/user\/koza\/sort\/secondary_sort_output\/part-\d*)')
+it = re.finditer(regex, lines)
+
+outputPARTFiles=[]
+for match in it:
+    outputPARTFiles.append(match.group(0))
+
+'''
+Next is where we peek at the first line of each file and extract the key. The resulting partKeys list should look like this:
+[19, 30, 9]
+
+For each file f in outputPARTFiles
+    int(...)                            <-- this will convert the key returned by the commands that follow to an integer
+    ["hdfs", "dfs", "-cat", f]          <-- cat the file 
+    stdout=subprocess.PIPE              <-- to STDOUT
+    stdout.read()                       <-- read the STDOUT into memory
+    splitlines()[0]                     <-- split that output into lines, and return the first line (at index 0)
+    split('\t')[1]                      <-- split that first line by tab character, and return the item at index 1 - this is the 'key'
+    strip()                             <-- remove trailing and leading spaces so output is clean
+
+'''    
+partKeys=[]
+for f in outputPARTFiles:
+    partKeys.append(int(subprocess.Popen(["hdfs", "dfs", "-cat", f], 
+                             stdout=subprocess.PIPE).stdout.read().splitlines()[0].split('\t')[1].strip()))
+
+    
+'''
+create a dict d assoicating each key with its corresponding file path. The resulting d dict should look like this:
+
+{9: '/user/koza/sort/secondary_sort_output/part-00002',
+ 19: '/user/koza/sort/secondary_sort_output/part-00000',
+ 30: '/user/koza/sort/secondary_sort_output/part-00001'}
  
-###2. Ensure to the Best of Your Knowledge the Author has Granted Consent to Capture and Curate Twitter Data
+ ^^ we now know that the largest key lives in part-00001, and we will display that file content first
 
-It is important that Political Tweets Librarians have, to the best of their knowledge, the Tweet author’s consent to harvest, capture, and curate their data for potential research purposes. Similar to copyright issues, there is an ongoing debate over whether Tweets and/or the author’s personal data are considered private or public information. As a result, Tweets’ capture and curation remain a grey area in terms of consent.
+'''    
+d={}
+for i in range(len(outputPARTFiles)):
+    print "part is %d, key is %d, %s" %(i, partKeys[i], outputPARTFiles[i])
+    d[partKeys[i]] = outputPARTFiles[i]
 
-If Twitter’s Terms of Service (2016b) are used as a guideline, a Tweet author potentially grants “informed consent” for the capture and curation of publicly available data at the time of account activation.  This is because the Terms state that Tweets are “public by default” and will be “viewed by other users, through third party organizations, and websites” (AAA, 2012c; Twitter, Inc., 2016b). Although the Twitter Terms of Service do not mention the capture and curation of Twitter data for archival purposes, Twitter’s gift of its entire Tweet collection from 2006 to April 2010 to the U.S. Library of Congress indirectly suggests the acceptability of the practice (Allen, 2013; Twitter, Inc., 2010). On the other hand, although the content is likely to be publicly available, concern surrounds the capture and use of Tweets outside the “private” social context of the controlled access network of user “followers” in which they were created (Small et al., 2012). The Political Tweets Librarian must then consider the “quality of consent” and the intended audience of published Tweets.  Moreover, the Librarian should keep in mind that for both Twitter, Inc. and Tweet authors what constitutes consent is continuously changing (AAA, 2012c).
+'''
+Print the contents of each file in total sorted order, by sorting the d dict by key in reverse:
+
+    sorted(d.items(), key=lambda x: x[0], reverse=True)   <-- sorts d dict by key x[0], in reverse
+    print "%d:%s"%(k[0], k[1])                            <-- print the key k[0] and the path k[1]
+    
+    use a subprocess to read the contents of each file listed in d (k[1]) (see explanation above for subprocess)
+    and print each line omitting leading and trailing spaces
+'''
+    
+#TOTAL Sort in decreasing order
+for k in sorted(d.items(), key=lambda x: x[0], reverse=True):
+    print "="*100
+    print "%d:%s"%(k[0], k[1])
+    print "="*100
+    p = subprocess.Popen(["hdfs", "dfs", "-cat", k[1]],  stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    for line in p.stdout.readlines():
+        print line.strip()
+
+```
+
+    part is 0, key is 19, /user/koza/sort/secondary_sort_output/part-00000
+    part is 1, key is 30, /user/koza/sort/secondary_sort_output/part-00001
+    part is 2, key is 9, /user/koza/sort/secondary_sort_output/part-00002
+    ====================================================================================================
+    30:/user/koza/sort/secondary_sort_output/part-00001
+    ====================================================================================================
+    C   30  do
+    C   28  dataset
+    C   27  creating
+    C   27  driver
+    C   27  experiements
+    C   26  def
+    C   26  descent
+    C   25  compute
+    C   24  code
+    C   24  done
+    C   23  descent
+    C   22  corresponding
+    ====================================================================================================
+    19:/user/koza/sort/secondary_sort_output/part-00000
+    ====================================================================================================
+    B   19  consists
+    B   19  evaluate
+    B   17  drivers
+    B   15  computational
+    B   15  computing
+    B   15  document
+    B   14  center
+    B   13  efficient
+    B   10  clustering
+    ====================================================================================================
+    9:/user/koza/sort/secondary_sort_output/part-00002
+    ====================================================================================================
+    A   9   change
+    A   9   during
+    A   7   contour
+    A   5   distributed
+    A   4   develop
+    A   3   different
+    A   2   cluster
+    A   1   cell
+    A   0   current
+
+
+##Section III - MRJob
+
+For this section you will need the MRJob python library. For installation instructions, go to: https://github.com/Yelp/mrjob
+
+We'll first discuss a couple of key aspects of MRJob such as modes, protocols, and partitioning, before diving into the implementation. We'll also provide an illustrated example of partitioning.
+
+###III.A. MRJob Modes
+
+MRJob has three modes that correspond to different hadoop environments.
+
+####Local mode
+Local mode simulates hadoop streaming, but does not require an actual hadoop installation. This is great for testing out small jobs. However, local mode does not suport `'-k2,2nr'` type of sorting, i.e. sorting by numeric value, as it is not capable of hadoop .jar library files (such as `KeyBasedComparator`). A workaround is to make sure numbers are converted to strings with a fixed length, and sorted by reverse order of their values. For positive integers, this can be done by: ``` sys.maxint - value ``` We include Local Mode implementation for completeness (see below).
+
+####Hadoop mode
+MRJob is capable of dispatching runners in a environment where hadoop is installed. User-authored MRJob python files are treated as shell scripts, and submitted to hadoop streaming as mapreduce jobs. MRJob allows users to specify configurations supported by hadoop streaming via the jobconf dictionary, either as part of MRStep or MRJob itself (which will be applied to all steps). The python dictionary is serialized into command line arguments, and passed to the hadoop streaming jar file. (See https://pythonhosted.org/mrjob/guides/configs-hadoopy-runners.html for further documentation of hadoop mode).
+
+####EMR/Dataproc mode
+In addition, MRJob supports running mapreduce jobs on a vendor-provided hadoop runtime environment such as AWS Elastic MapReduce or Google Dataproc. The configuration and setup is very similar to hadoop mode (-r hadoop) with the following key differences:
+* Vendor-specific credentials (such as AWS key and secret).
+* Vendor-specific bootstrap process (for instance, configure python version, and install third party libraries upon initialization).
+* Use platform's native "step" management process (eg. AWS Steps).
+* Use vendor-provided data storage and transportation (eg. use S3 for input/output on EMR).
+
+The api surface for -r emr and -r hadoop are almost identical, but the performance profiles can be drastically different.
+
+###III.B. MRJob Protocols
+
+At a high level, a `Protocol` is a gateway between the hadoop streaming world, and the MRJob/Python world. It translates raw bytes (text) into (key, value) pairs as some python data structure, and vice versa. An MRJob protocol has the following interface: it is a class with a pair of functions `read` (which converts raw bytes to (key, value) pairs) and `write` which converts (key, value) pairs back to bytes/text:    
+
+<!-- HTML generated using hilite.me --><div style="margin:20px 0; background: #f8f8f8; overflow:auto;width:auto;border:0;border-width:.0;padding:.0;"><pre style="margin: 0; line-height: 125%"><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Protocol</span>(<span style="color: #008000">object</span>):
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">read</span>(<span style="color: #008000">self</span>, line):
+        <span style="color: #008000; font-weight: bold">pass</span>
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">write</span>(<span style="color: #008000">self</span>, key, value):
+        <span style="color: #008000; font-weight: bold">pass</span>
+</pre></div>
+   
+In addition, MRJob further abastracts away the differences between Python 2 and Python 3 (primarily in areas such as unicode handling), and provides a unified interface across most hadoop versions and python versions.
+
+
+When data enters MRJob components (mapper, reducer, combiner), the Protocol's (specified in MRJob class) read method is invoked, and supplies the (key, value) pair to the component. When data exits MRJob components, its Protocol's write method is invoked, converting (key, value) pair output from the component to raw bytes / text.
+
+Consider a most generic MRJob job, consisting of one maper step and one reduce step:
+
+<!-- HTML generated using hilite.me -->
+<div style="margin:20px 0; background: #f8f8f8; overflow:auto;width:auto;border:0;border-width:.0;padding:.0;"><pre style="margin: 0; line-height: 125%"><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">GenericMRJob</span>(MRJob):
+
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">mapper</span>(<span style="color: #008000">self</span>, key, value):
+        <span style="color: #408080; font-style: italic"># mapper logic</span>
+        <span style="color: #008000; font-weight: bold">yield</span> key, value
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">reducer</span>(<span style="color: #008000">self</span>, key, values):
+        <span style="color: #408080; font-style: italic"># reducer logic</span>
+        <span style="color: #008000; font-weight: bold">yield</span> key, value
+</pre></div>
+
+There are four contact points between Python scripts and hadoop streaming, which require three Protocols to be specified, as illustrated below.
+
+![Total Order Sort, Step 1](images/04protocols.png)
+
+Figure 4. Protocols diagram
+
+####III.B.1 Types of Built-in Protocols
+
+MRJob provides a number of built-in protocols, all of which can all be used for INPUT_PROTOCOL, INTERNAL_PROTOCOL or OUTPUT_PROTOCOL. By default, MRJob uses RawValueProtocol for INPUT_PROTOCOL, and JSONProtocol for INTERNAL_PROTOCOL and OUTPUT_PROTOCOL.
+
+The table below lists four commonly used Protocols and their signature. Some key observations are:
+
+* RawProtocol and RawValueProtocol do not attempt to serialize and deserialize text data.
+* JSONProtocol and JSONValueProtocol use the JSON encoder and decoder to convert between text (stdin/stdout) and python data structures (python runtime).
+* Value Protocols always treat key as None and do not auto insert a tab character in their write method.
+
+
+<div id="protocol-tabs" class="tab-container">
+  <ul class='etabs'>
+    <li class='tab'><a href="#tabs1-rp">RawProtocol</a></li>
+    <li class='tab'><a href="#tabs1-rvp">RawValueProtocol</a></li>
+    <li class='tab'><a href="#tabs1-jp">JSONProtocol</a></li>
+    <li class='tab'><a href="#tabs1-jvp">JSONValueProtocol</a></li>
+  </ul>
+  <div id="tabs1-rp">
+    <table class="padded-table">
+      <tr>
+        <td colspan="4" style="background:#fff; vertical-align:middle;" width="50%">read</td>
+        <td colspan="4" style="background:#fff; vertical-align:middle;" width="50%">write</td>
+      </tr>
+      <tr>
+        <td colspan="2" class="color-start" width="25%"><strong>Source:</strong>  stdin</td>
+        <td colspan="2" class="color-middle" width="25%"><strong>Target:</strong> python</td>
+        <td colspan="2" class="color-middle" width="25%"><strong>Source:</strong> python</td>
+        <td colspan="2" class="color-end" width="25%"><strong>Target:</strong> stdout</td>
+      </tr>
+      <tr>
+        <td colspan="2" ><strong>Type:</strong> Text</td>
+        <td colspan="2" ><strong>Type:</strong> <span style="color: #008000">tuple</span>( <span style="color: #008000">str</span>, <span style="color: #008000">str</span> )</td>
+        <td colspan="2" ><strong>Type:</strong> <span style="color: #008000">tuple</span>( <span style="color: #008000">str</span>, <span style="color: #008000">str</span> )</td>
+        <td colspan="2" ><strong>Type:</strong> Text</td>
+      </tr>
+      <tr>
+        <td colspan="2"><strong>Shape:</strong> { Key }  [TAB]  { Value }</td>
+        <td colspan="2"><strong>Shape:</strong> ( { Key }, { Value } )</td>
+        <td colspan="2"><strong>Shape:</strong> ( { Key }, { Value } )</td>
+        <td colspan="2"><strong>Shape:</strong> { Key }  [TAB]  { Value }</td>
+      </tr>
+      <tr>
+        <td colspan="8" style="height:40px;vertical-align:bottom;"><strong>EXAMPLES</strong></td>
+      </tr>
+      <tr>
+        <td colspan="4">word    <span style="color: #666666">12</span>  <span style="border: 1px solid #FF0000">⟶</span>  ( <span style="color: #BA2121">&quot;word&quot;</span>, <span style="color: #BA2121">&quot;12&quot;</span> )</td>
+        <td colspan="4"><span style="color: #008000; font-weight: bold">yield</span> ( <span style="color: #BA2121">&quot;word&quot;</span>, <span style="color: #BA2121">&quot;12&quot;</span> )  <span style="border: 1px solid #FF0000">⟶</span>  word    <span style="color: #666666">12</span></td>
+      </tr>
+      <tr>
+        <td colspan="4">line_with_no_tab  <span style="border: 1px solid #FF0000">⟶</span>  <span style="color:red">raise ValueError</span></td>
+        <td colspan="4"><span style="color: #008000; font-weight: bold">yield</span> ( <span style="color: #BA2121">&quot;a</span><span style="color: #BB6622; font-weight: bold">\t</span><span style="color: #BA2121">b&quot;</span>, <span style="color: #BA2121">&quot;value&quot;</span> )  <span style="border: 1px solid #FF0000">⟶</span>  a     b    value</td>
+      </tr>
+      
+      </table>
+
+  </div>
+
+  <div id="tabs1-rvp">
+        <table class="padded-table">
+      
+      <tr>
+        <td colspan="4" style="background:#fff; vertical-align:middle;"width="50%">read</td>
+        <td colspan="4" style="background:#fff; vertical-align:middle;"width="50%">write</td>
+      </tr>
+
+      <tr>
+        <td colspan="2" class="color-start" width="25%"><strong>Source:</strong> stdin</td>
+        <td colspan="2" class="color-middle" width="25%"><strong>Target:</strong> python</td>
+        <td colspan="2" class="color-middle" width="25%"><strong>Source:</strong> python</td>
+        <td colspan="2" class="color-end" width="25%"><strong>Target:</strong> stdout</td>
+      </tr>
+      <tr>
+        <td colspan="2"><strong>Type:</strong> Text</td>
+        <td colspan="2"><strong>Type:</strong> <span style="color: #008000">tuple</span>( <span style="color: #008000">None</span>, <span style="color: #008000">str</span> )</td>
+        <td colspan="2"><strong>Type:</strong> <span style="color: #008000">tuple</span>( <span style="color: #666666">\*</span>, <span style="color: #008000">str</span> )
+</td>
+        <td colspan="2"><strong>Type:</strong> Text</td>
+      </tr>
+      <tr>
+        <td colspan="2"><strong>Shape:</strong> { Value }</td>
+        <td colspan="2"><strong>Shape:</strong> ( None, { Value } )</td>
+        <td colspan="2"><strong>Shape:</strong> ( { }, { Value } )</td>
+        <td colspan="2"><strong>Shape:</strong> { Value }</td>
+      </tr>
+      <tr>
+        <td colspan="8" style="height:40px;vertical-align:bottom;"><strong>EXAMPLES</strong></td>
+      </tr>
+      <tr>
+        <td colspan="4">word    <span style="color: #666666">12</span>  <span style="border: 1px solid #FF0000">⟶</span>  ( <span style="color: #008000">None</span>, <span style="color: #BA2121">&quot;word</span><span style="color: #BB6622; font-weight: bold">\t</span><span style="color: #BA2121">12&quot;</span> )</td>
+        <td colspan="4"><span style="color: #008000; font-weight: bold">yield</span> ( <span style="color: #BA2121">&quot;word&quot;</span>, <span style="color: #BA2121">&quot;12&quot;</span> )  <span style="border: 1px solid #FF0000">⟶</span>  <span style="color: #666666">12</span> <span style="color:#ff0055;padding-left:20px;">\*</span><span style="color:#777777;">(*see footnote*)</span></td>
+      </tr>
+      <tr>
+        <td colspan="4">line_with_no_tab  <span style="border: 1px solid #FF0000">⟶</span>  ( <span style="color: #008000">None</span>, <span style="color: #BA2121">&quot;line_with_no_tab&quot;</span> )</td>
+        <td colspan="4"><span style="color: #008000; font-weight: bold">yield</span> ( <span style="color: #008000">None</span>, <span style="color: #BA2121">&quot;a</span><span style="color: #BB6622; font-weight: bold">\t</span><span style="color: #BA2121">b&quot;</span> )  <span style="border: 1px solid #FF0000">⟶</span>  a    b</td>
+      </tr>
+      <caption align="bottom"><span style="color:#ff0055;">\*</span> "word" will be ommitted</caption>
+      </table>
+  </div>
+  <div id="tabs1-jp">
+        <table class="padded-table">
+          <tr>
+            <td colspan="4" style="background:#fff; vertical-align:middle;" width="50%">read</td>
+            <td colspan="4" style="background:#fff; vertical-align:middle;" width="50%">write</td>
+          </tr>
+          <tr>
+            <td colspan="2" class="color-start" width="25%"><strong>Source:</strong> stdin</td>
+            <td colspan="2" class="color-middle" width="25%"><strong>Target:</strong> python</td>
+            <td colspan="2" class="color-middle" width="25%"><strong>Source:</strong> python</td>
+            <td colspan="2" class="color-end" width="25%"><strong>Target:</strong> stdout</td>
+          </tr>
+          <tr>
+            <td colspan="2"><strong>Type:</strong> Text</td>
+            <td colspan="2"><strong>Type:</strong> <span style="color: #008000">tuple</span>( <span style="color: #666666">\*</span>, <span style="color: #666666">\*</span> )</td>
+            <td colspan="2"><strong>Type:</strong> <span style="color: #008000">tuple</span>( <span style="color: #666666">\*</span>, <span style="color: #666666">\*</span> )</td>
+            <td colspan="2"><strong>Type:</strong> Text</td>
+          </tr>
+          <tr>
+            <td colspan="2"><strong>Shape:</strong> { Key } [TAB] { Value }</td>
+            <td colspan="2"><strong>Shape:</strong> ( { Key }, { Value } )</td>
+            <td colspan="2"><strong>Shape:</strong> ( { Key }, { Value } )</td>
+            <td colspan="2"><strong>Shape:</strong> { Key }  [TAB]  { Value }</td>
+          </tr>
+          <tr>
+            <td colspan="8" style="height:40px;vertical-align:bottom;"><strong>EXAMPLES</strong></td>
+          </tr>
+          <tr>
+            <td colspan="4"><span style="color: #666666">10</span>    [ <span style="color: #666666">1</span>, true, null, <span style="color: #BA2121">&quot;abc&quot;</span> ]    <span style="border: 1px solid #FF0000">⟶</span>    (<span style="color: #666666">10</span>, [ <span style="color: #666666">1</span>, <span style="color: #008000">True</span>, <span style="color: #008000">None</span>, <span style="color: #BA2121">&quot;abc&quot;</span> ] )</td>
+            <td colspan="4"><span style="color: #008000; font-weight: bold">yield</span> ( [ <span style="color: #666666">1</span>, <span style="color: #666666">2</span> ], [ [ <span style="color: #666666">1</span>, <span style="color: #BA2121">&quot;3&quot;</span> ] ] )  <span style="border: 1px solid #FF0000">⟶</span> [ <span style="color: #666666">1</span>, <span style="color: #666666">2</span> ]    [ [<span style="color: #666666">1</span>, <span style="color: #BA2121">&quot;3&quot;</span>] ]</td>
+          </tr>
+          <tr>
+            <td colspan="4">line_with_no_tab    <span style="border: 1px solid #FF0000">⟶</span>    <span style="color:red">raise ValueError</span></td>
+            <td colspan="4"><span style="color: #008000; font-weight: bold">yield</span> <span style="color: #666666">1</span>, <span style="color: #666666">2</span>  <span style="border: 1px solid #FF0000">⟶</span>  <span style="color: #666666">1</span>    <span style="color: #666666">2</span></td>
+          </tr>
+      </table>
+  </div>
+    <div id="tabs1-jvp">
+        <table class="padded-table">
+          <tr>
+            <td colspan="4" style="background:#fff; vertical-align:middle;" width="50%">read</td>
+            <td colspan="4" style="background:#fff; vertical-align:middle;"width="50%">write</td>
+          </tr>
+          <tr>
+            <td colspan="2" class="color-start" width="25%"><strong>Source:</strong> stdin</td>
+            <td colspan="2" class="color-middle" width="25%"><strong>Target:</strong> python</td>
+            <td colspan="2" class="color-middle" width="25%"><strong>Source:</strong> python</td>
+            <td colspan="2" class="color-end" width="25%"><strong>Target:</strong> stdout</td>
+          </tr>
+          <tr>
+            <td colspan="2"><strong>Type:</strong> Text</td>
+            <td colspan="2"><strong>Type:</strong> <span style="color: #008000">tuple</span>( <span style="color: #666666">\*</span>, <span style="color: #666666">\*</span> )</td>
+            <td colspan="2"><strong>Type:</strong> <span style="color: #008000">tuple</span>( <span style="color: #666666">\*</span>, <span style="color: #666666">\*</span> )
+            </td>
+            <td colspan="2"><strong>Type:</strong> Text</td>
+          </tr>
+          <tr>
+            <td colspan="2"><strong>Shape:</strong> { Value }</td>
+            <td colspan="2"><strong>Shape:</strong> ( <span style="color: #008000">None</span>, { Value } )
+            </td>
+            <td colspan="2"><strong>Shape:</strong> ( { }, { Value } )</td>
+            <td colspan="2"><strong>Shape:</strong> { Value }
+            </td>
+          </tr>
+          <tr>
+            <td colspan="8" style="height:40px;vertical-align:bottom;"><strong>EXAMPLES</strong></td>
+          </tr>
+          <tr>
+            <td colspan="4"><span style="color: #666666">10</span>    [ <span style="color: #666666">1</span>, true, null, <span style="color: #BA2121">&quot;abc&quot;</span> ] <span style="border: 1px solid #FF0000">⟶</span> <span style="color:red">raise ValueError</span></td>
+            <td colspan="4"><!-- HTML generated using hilite.me --><span style="color: #008000; font-weight: bold">yield</span> ( <span style="color: #666666">1</span>, { <span style="color: #666666">2</span> : <span style="color: #666666">3</span> } )  <span style="border: 1px solid #FF0000">⟶</span>  { <span style="color: #BA2121">&quot;2&quot;</span> : <span style="color: #666666">3</span> }
+</td>
+          </tr>
+          <tr>
+            <td colspan="4">
+            <!-- HTML generated using hilite.me -->{ <span style="color: #BA2121">&quot;value&quot;</span>: { <span style="color: #BA2121">&quot;nested&quot;</span>: [ <span style="color: #666666">1</span> ] } } <span style="border: 1px solid #FF0000">⟶</span> ( <span style="color: #008000">None</span>, { <span style="color: #BA2121">&quot;value&quot;</span>: { <span style="color: #BA2121">&quot;nested&quot;</span>: [ <span style="color: #666666">1</span> ] } } )
+            </td>
+            <td colspan="4"><!-- HTML generated using hilite.me --><span style="color: #008000; font-weight: bold">yield</span> ( [<span style="color: #666666">1</span>, <span style="color: #666666">2</span>, <span style="color: #666666">3</span> ], { <span style="color: #BA2121">&quot;value&quot;</span> : <span style="color: #666666">10</span> } ) <span style="border: 1px solid #FF0000">⟶</span>  { <span style="color: #BA2121">&quot;value&quot;</span> : <span style="color: #666666">10</span> }
+
+            </td>
+          </tr>
+      </table>
+  </div>
+</div>
+
+
+The following example further illustrates the behaviors of these protocols: a single line or text input (single line text file containing: 1001 {"value":10}) is fed to four different single step mapreduce jobs. Each uses one of the four Protocols discussed above as INPUT_PROTOCOL, INTERNAL_PROTOCOL and OUTPUT_PROTOCOL.
+
+![Total Order Sort, Step 1](images/05recordlife.png)
  
-###3. Consider the Implications of Keeping Your Archives “Dark” and Unavailable to Public Scrutiny
+Figure 5. Lifecycle of a single record.
 
-In addition to Tweet copyright issues, as mentioned, libraries can create “dark archives” and they can serve to manage concerns surrounding the “do no harm” principle. The concern with dark archives is that it is possible that no one outside of select librarians, researchers, technical specialists and other designated users will have the opportunity to view and scrutinize archival content, which could make it difficult to determine the ethical dimensions of the archive’s creation, use, data organization methods, and stored content. An example of an archive that is not open to public scrutiny (because of security concerns) and that presents ethical challenges is the Human Terrain System database of Human Terrain Team field data collected from local Iraqi and Afghan populations for use by the United States military. Although the data is purported to only assist the military in gaining “socio-cultural” knowledge of the area, there is no proof that the information is stored securely within the database and not used for the “lethal targeting” of suspected insurgent groups (CEAUSSIC, 2009, pp. 4-32). There are genuine reasons for establishing a dark archive in terms of the “do no harm” principle, but opening them to internal and external critique can potentially ensure that curation practices are ethically sound (AAA, 2012b).
+Corresponding protocols code examples:
+
+<div id="protocol-tabs" class="tab-container">
+  <ul class='etabs'>
+    <li class='tab'><a href="#tabs1-rp">RawProtocol</a></li>
+    <li class='tab'><a href="#tabs1-rvp">RawValueProtocol</a></li>
+    <li class='tab'><a href="#tabs1-jp">JSONProtocol</a></li>
+    <li class='tab'><a href="#tabs1-jvp">JSONValueProtocol</a></li>
+  </ul>
+
+  <div id="tabs1-rp">
+    <pre>
+# raw_protocol.py
+
+from mrjob.job import MRJob
+from mrjob.protocol import RawProtocol
+
+class RawProtocolExample(MRJob):
+
+    INPUT_PROTOCOL = RawProtocol
+    OUTPUT_PROTOCOL = RawProtocol
+    INTERNAL_PROTOCOL = RawProtocol
+
+    def mapper(self, key, value):
+        assert key == "1001"
+        assert value == "{\"value\":10}"
+        yield "1001", "{\"value\":10}"
+    def reducer(self, key, values):
+        for value in values:
+            assert key == "1001"
+            assert value == "{\"value\":10}"
+            yield "1001", "{\"value\":10}"
+
+if __name__ == '__main__':
+    RawProtocolExample.run()
+    </pre>
+  </div>
+
+  <div id="tabs1-rvp">
+        <pre>
+# raw_value_protocol.py
+
+from mrjob.job import MRJob
+from mrjob.protocol import RawValueProtocol
+
+class RawValueProtocolExample(MRJob):
+
+    INPUT_PROTOCOL = RawValueProtocol
+    OUTPUT_PROTOCOL = RawValueProtocol
+    INTERNAL_PROTOCOL = RawValueProtocol
+
+    def mapper(self, key, value):
+        assert key == None
+        assert value == "1001\t{\"value\":10}"
+        yield "1001", "{\"value\":10}"
+    def reducer(self, key, values):
+        for value in values:
+            assert key == None
+            assert value == "{\"value\":10}"
+            yield None, "{\"value\":10}"
+
+if __name__ == '__main__':
+    RawValueProtocolExample.run()
+        </pre>
+  </div>
+
+  <div id="tabs1-jp">
+        <pre>
+# json_protocol.py
+
+from mrjob.job import MRJob
+from mrjob.protocol import JSONProtocol
+
+class JSONProtocolExample(MRJob):
+
+    INPUT_PROTOCOL = JSONProtocol
+    OUTPUT_PROTOCOL = JSONProtocol
+    INTERNAL_PROTOCOL = JSONProtocol
+
+    def mapper(self, key, value):
+        assert key == 1001
+        assert value == {"value":10}
+        assert isinstance(value, dict)
+        yield key, value
+    def reducer(self, key, values):
+        for value in values:
+            assert key == 1001
+            assert value == {"value":10}
+            yield key, value
+
+if __name__ == '__main__':
+    JSONProtocolExample.run()
+        </pre>
+  </div>
+    <div id="tabs1-jvp">
+        <pre>
+# json_value_protocol.py
+
+from mrjob.job import MRJob
+from mrjob.protocol import JSONValueProtocol
+
+class JSONValueProtocolExample(MRJob):
+
+    INPUT_PROTOCOL = JSONValueProtocol
+    OUTPUT_PROTOCOL = JSONValueProtocol
+    INTERNAL_PROTOCOL = JSONValueProtocol
+
+    def mapper(self, key, value):
+        pass
+    def reducer(self, key, values):
+        pass
+
+if __name__ == '__main__':
+    JSONValueProtocolExample.run()
+        </pre>
+  </div>
+</div>
+
+####III.B.2 Importance of RawProtocols in Context of Total Sorting
+
+While working with MRJob, it is critical to understand that MRJob is an abstraction layer above hadoop streaming, and does not extend or modify hadoop streaming's normal behaviors. Hadoop streaming works through unix piping, and uses stdout and stderr as communication channels. In unix environments, the protocol of data transfer is text streams – mappers, reducers and hadoop libraries exchange data through text.
+
+Therefore, data structures common in programming languages (eg. dictionary in python) have to be serialized to text for hadoop streaming to understand and consume. The implication of this on total sorting is this: since hadoop only sees text, custom data structures (as keys) will be sorted as strings in their serialized forms.
+
+MRJob abstracts away the data serialization and deserialization process by the concept of protocols. For instance, JSONProtocol is capable of serializing complex data structures, and is used by default as INTERNAL_PROTOCOL. This frees the user from messy string manipulation and processing, but it does come with a cost.
+
+One example is python tuples:
+
+```
+# mapper
+yield 1, ("value", "as", "tuple", True)
+
+```
+
+Inside the reducer however, when values are deserialized into python objects, the (key, value) pair above will become:
+
+```
+1, ["value", "as", "tuple", True]
+
+```
+
+Namely, tuples become lists, due to the fact JSON does not support tuples.
+Another example related to sorting: suppose mappers emit custom data structures as composite keys, such as:
+
+```
+# mapper
+yield [12, 1, 2016]
+```
+
+Assuming we want to use hadoop streaming's KeyFieldBasedComparator, when hadoop streaming sees the JSON string [2016, 12, 1], it is very difficult to instruct hadoop to understand the key consists of three fields (month, day, year), and sort them accordingly (eg. we want sort by year, month, day).
+
+Notice if we yield a date as [2016, 12, 01] instead, the string comparison coincidentally produces the same sort order as the underlying data (dates). However, to achieve this requires intimate knowledge of JSON (or other transportation formats); therefore, we recommend using RawProtocol or RawValueProtocol when advanced sorting is desired, which offers maximum flexibility to control key sorting and key hashing performed by hadoop streaming.
+
+###III.C. Partitioning in MRJob
+
+__Keypoints:__
+* Challenge: which partition contains the largest/smallest values seems arbitrary.
+* Hadoop streaming `KeyFieldBasedPartitioner` does not sort partition keys, even though it seemingly accepts unix `sort` compatible configurations.
+* MRJob uses Hadoop Streaming under the hood, therefore inherits the same problem
+
+__Solution:__
+* Understand the inner working of `HashPartitioner` and `KeyFieldBasedPartitioner`.
+* Relationship between `KeyFieldBasedPartitioner` and `HashPartitioner`: * `KeyFieldBasedPartitioner` applies `HashPartitioner` on configured key field(s).
+* Create the inverse function of `HashPartitioner` and assign partition keys accordingly.
+
+####Understanding HashPartitioner
+
+By default, Hadoop uses a library class HashPartitioner to compute the partition index for keys produced by mappers. It has a method called getPartition, which takes key.hashCode() & Integer.MAX_VALUE and finds the modulus using the number of reduce tasks. For example, if there are 10 reduce tasks, getPartition will return values 0 through 9 for all keys.
+
+```
+// HashPartitioner
+
+partitionIndex = (key.hashCode() &amp; Integer.MAX_VALUE) % numReducers
+```
+
+In the land of native hadoop applications (written in java or jvm languages), keys can be any object type that is hashable (i.e. implements hashable interface). For hadoop streaming, however, keys are always string values. Therefore the hashCode function for strings is used:
+
+<div style="margin:20px 0;background: #f8f8f8; overflow:auto;width:auto;border:0;border-width:.0;padding:.0;"><pre style="margin: 0; line-height: 125%">public <span style="color: #008000">int</span> hashCode() {
+    <span style="color: #008000">int</span> h <span style="color: #666666">=</span> <span style="color: #008000">hash</span>;
+    <span style="color: #008000; font-weight: bold">if</span> (h <span style="color: #666666">==</span> <span style="color: #666666">0</span> <span style="color: #666666">&amp;&amp;</span> value<span style="color: #666666">.</span>length <span style="color: #666666">&gt;</span> <span style="color: #666666">0</span>) {
+        char val[] <span style="color: #666666">=</span> value;
+
+        <span style="color: #008000; font-weight: bold">for</span> (<span style="color: #008000">int</span> i <span style="color: #666666">=</span> <span style="color: #666666">0</span>; i <span style="color: #666666">&lt;</span> value<span style="color: #666666">.</span>length; i<span style="color: #666666">++</span>) {
+            h <span style="color: #666666">=</span> <span style="color: #666666">31</span> <span style="color: #666666">*</span> h <span style="color: #666666">+</span> val[i];
+        }
+        <span style="color: #008000">hash</span> <span style="color: #666666">=</span> h;
+    }
+    <span style="color: #008000; font-weight: bold">return</span> h;
+}
+</pre>
+</div>
+
+When we configure hadoop streaming to use KeyBasedPartitioner, the process is very similar. Hadoop streaming will parse command line options such as -k2,2 into key specs, and extract the part of the composite key (in this example, field 2 of many fields) and read in the partition key as a string. For example, with the following configuration:
+
+~~~~
+"stream.map.output.field.separator" : ".",
+"mapreduce.partition.keycomparator.options": "-k2,2",
+Hadoop will extract a from a composite key 2.a.4 to use as the partition key.
+~~~~
+
+The partition key is then hashed (as a string) by the same hashCode function, its modulus using a number of reduce tasks yields the partition index.
+(See KeyBasedPartitioner source code for the actual implementations.)
+
+####Inverse HashCode Function
+
+In order to preserve partition key ordering, we will construct an "inverse hashCode function", which takes as input the desired partition index and total number of partitions, and returns a partition key. This key, when supplied to the hadoop framework (KeyBasedPartitioner), will hash to the correct partition index.
+
+First, let's implement the core of `HashPartitioner` in python:
+
+```
+#input:
+def makeKeyHash(key, num_reducers):
+    byteof = lambda char: int(format(ord(char), 'b'), 2)
+    current_hash = 0
+    for c in key:
+        current_hash = (current_hash * 31 + byteof(c))
+    return current_hash % num_reducers
+
+# partition indices for keys: A,B,C; with 3 partitions
+[makeKeyHash(x, 3) for x in "ABC"]
+
+#output:
+[2, 0, 1]
+```
+
+
+A simple strategy to implement an inverse hashCode function is to use a lookup table. For example, assuming we have 3 reducers, we can compute the partition index with makeKeyHash for keys "A", "B", and "C". The results are listed the the table below.
+
+| <strong>Partition Key</strong> | <strong>Partition Index</strong> |
+|-------------------|---------------------|
+| A                 | 2                   |
+| B                 | 0                   |
+| C                 | 1                   |
+
+In the mapper stage, if we want to assign a record to partition 0, for example, we can simply look at the partition key that generated the partition index 0, which in this case is "B".
+
+####Total Order Sort with ordered partitions - illustrated
+
+![Total Order Sort, Step 1](images/TOS1.png)
+
+![Total Order Sort, Step 2](images/TOS2.png)
+
+![Total Order Sort, Step 3](images/TOS3.png)
+
  
-###4. Record Storage and Preservation Should Be Considered From the Beginning Stages of the Curation Process
-
-At the beginning of a harvesting and curation project, it is important that the Political Tweets Librarian establish institution-wide policy to govern the entire life cycle of a Tweet (e.g. harvest, capture, curation and disposal) to ensure the security of archived data. In addition, Librarians also need to consider the privacy and security of the Twitter data collected and the protection of Tweet authors’ confidentiality. The Code of Ethics of the American Library Association (2008) only considers the library patron’s “right to privacy and confidentiality” (sect. III) , and does not currently address issues of privacy and security for curated Tweet authors. However, the AAA Statement of Ethics states that it is the researcher’s responsibility to “balance obligations to maintain data integrity with responsibilities to protect research participants … against future harmful impacts” (AAA, 2012e).
-Another issue is the duplication and ease of copying Twitter data by potential researchers. As Twitter data is in digital format, the unauthorized downloading of Twitter data (e.g. by USB stick, e-mail), printing of paper copies, and/or use of cameras or screen-shots to the capture data from computer screens form a genuine concern. Will Librarians allow researchers to bring cameras, cell phones, or USB sticks into a dark archive? Furthermore, Political Tweets Librarians should also concern themselves with whether the database itself is secure from cyber attacks and ensure the trustworthiness of off-site repositories (including Archive-It) at which curated material is stored. With regard to accessing and releasing Twitter data to local authorities without the Political Tweets Librarian’s consent, the important ethical considerations for examination are the political laws and customs of the server host nation (S. Li & N. Worby, personal communication, January 29, 2015). 
-
-The SWIFT case is one example of a backup archive stored on a server in a country other than the company’s host nation. SWIFT, a Belgium-based company specializing in finance, maintained two identical databases to store transactional information - one in Europe and one in the United States. While SWIFT’s European database was under the jurisdiction of Belgium’s Privacy Act of 1992, under the International Emergency Economic Powers Act of 1977, after the 11 September 2001 terrorist attacks on the United States, the company was legally compelled to provide access to the database located in the United States. The information breach was made public by the New York Times in June 2006, when an article revealed SWIFT “had been subject to a number of subpoenas requiring it to disclose messaging information to the U.S. Department of the Treasury” (Commission for the Protection of Privacy, 2016; International Emergency Economic Powers Act of 1977, 2014; Kuner, 2010; Van Overstraeten & Cumbley, 2009). 
-
-##Harvesting and Curation Issues
-
-As the Political Tweets Librarian harvests and curates political Tweets, there are several task-related issues to keep in mind, and these are listed in the guidelines. As online information proliferates at a fast rate, for the Political Tweets Librarian collecting social media, data can become overwhelming, especially with the aforementioned easy loss of social media data. According to Antracoli et al. (2014), nearly 11% of shared social media resources will be lost at some point.  Again, this issue is heightened from a political standpoint, for politically sensitive data (e.g. related to political protests) are even more susceptible to disappearance. Therefore, the Political Tweets Librarian must be vigilant when harvesting and curating data from a political event.
-Another notable issue is that social media curating is currently very limited in terms of search specification. For example, unless something major occurred, such as Rob Ford dropping out of the race and his brother Doug Ford taking over, during the 2014 Toronto mayoral election, University of Toronto librarians searched for Tweets at least every three days,. That led to an increased frequency of crawls, and the University of Toronto librarians accidentally captured a Tweet author’s personal Twitter page (S. Li & N. Worby, personal communication, January 29, 2015). To avoid the issue of accidentally capturing an author’s information or other unwanted and/or private information, Political Tweets Librarians should search using thematic hashtags.
-
-With this in mind, Librarians may not be able to access every Tweet regarding a given political event. A possible solution is for Political Tweets Librarians to work alongside information sources who they can publicly identify and thereby promptly provide appropriate hashtags related to specific political events. These individuals could be leaders or members of the political groups involved in the event, or more likely media representatives. Journalists and news broadcasters, for example, tend to have intimate knowledge of ongoing political events. While sharing their own knowledge of how and when to crawl Twitter feeds, Political Tweets Librarians collaborating with media members will benefit from being updated consistently with news.
-
-There are two sides to every story and an issue associated with media collaboration is potential bias. To obtain a balanced political Tweets collection, Librarians must also crawl the web for all possible data about political events. They must look at all sides of a story, including collecting data from international authors (e.g. external to the political event’s participants). Achieving an appropriately balanced Tweets collection can be very time consuming, especially if there is a limited number of Librarians harvesting, curating, and archiving Tweets from political events. Not only do Political Tweets Librarians need to crawl the Web and Twitter at least every three days for hashtags about political events (Antracoli et al., 2014; S. Li & N. Worby, personal communication, January 29, 2015), but also they must collect data from every angle of the situation.
-
-In order to save time, a proposed solution is for the Political Tweets Librarians to collaborate with other academic institutions, either internal or external. For example, Robarts Library at the University of Toronto relies primarily on two Librarians to crawl the Web for Tweets  relating to political events. To save time and effort and put fresh eyes on the subject, they have suggested that they could potentially reach out to other Tweet archivists from other institutions to help with curating and archiving Tweets from Hong Kong, for example. This situation would allow them to spend more time crawling the Web for other political events, rather than endlessly searching for possible hashtags and perspectives of the same political event (S. Li & N. Worby, personal communication, January 29, 2015). Lastly, it is possible that there may be limited information on how to search and curate specific social media. The guidelines provided will prepare future Political Tweets Librarian to harvest and curate Tweets.
-
-## PARC
-
-The Political ARChive (PARC) (Figure 2.1) is a conceptual library devoted to capturing and archiving political Tweets, as well as other types of politically relevant social media data. PARC’s mandate is to lead efforts in political Tweet archiving, curation, advocacy and research. To meet the demands of a political digital library and fulfill its mandate, PARC’s staff would include Political Tweets Librarians, digital archivists, copyright experts, ethics scholars and technology experts. The institution’s primary goal is to address issues surrounding the archiving of increasingly ephemeral political digital knowledge and the changing role of libraries in society.
-
-__Figure 2.1__
-
-![Architectural concept of giant wall displaying dynamic information](images/parc.png)
-
-As PARC’s concept extends from the Political Tweets Librarian guidelines, the institution embodies the imperative to organize political social media data in a digital archive and thereby create a physical space devoted to this endeavour. Such a dedicated library houses political Tweets with staff ensuring that copyright, privacy, and ethical curation practices are followed and providing expert guidance to educators and academic researchers. Having a physical structure to house political Tweets also provides a platform for immaterial digital knowledge to become “material”. PARC’s physicality is of special importance in an institution dedicated to political Tweets because politics demand expression, politics demand voice, voice gives it force, and force requires mass. PARC gives mass to what would otherwise be voiceless in its ephemerality.
-
-Ephemerality is also encroaching on the institution of the library. With the significant shift to querying the Internet for information and knowledge, libraries are “relinquishing [their] place as the top source of inquiry” (Campbell, 2006, pp. 16) and becoming in a sense ephemeral, losing their physicality through irrelevance. This context questions the role of the “new” intangibles and their place within the “tangible” world of the library. Campbell (2006) states that there is a “need for a new mission” (pp. 20) and suggests that libraries can provide quality learning spaces, with librarians teaching digital information literacy (e.g. Twitter literacy), collecting and digitizing archival materials, and maintaining digital repositories - all of which are skills that require specific spatial organization. The development of PARC demonstrates how librarians can and should make the shaping of space a serious consideration of their practice.
-
-Architecture as a spatial organization has been used to “embody knowledge” (Perez-Gomez, 1987, pp. 1) and, as such, librarians should consider embodying digital knowledge as a crucial part of their profession. Organized spaces can enchant, emplace, and enact (Griffs, 2013, pp. 2-3). When such spaces are made public, they can influence and shape public perception and behaviour (Lockton, 2011, pp. 14). Moreover, the “power of aesthetics” can improve learning (Kjaervang, 2006, pp. 1) and create associations and identities forged by shaping urban public spaces, thereby connecting this aestheticism to the democratic governance of the public sphere (Harvey, 2005, pp. 1).
-
-PARC is an early exploration towards making Twitter political voices heard and the role of libraries and librarians visible in society again. This institution is conceptually structured for public relevance through several interfacing connections. PARC’s vertical structure is configured as a server tower (see Figure 2.2) to facilitate a digital repository for political Tweets (and potentially other digital political information). One core aspect of PARC is that it is connected via a digital network to other similar digital repositories around the globe, which allows researchers to access dark archives anywhere in the world via PARC’s secure computer facilities.
-
-__Figure 2.2__
-
-![Architectural concept of giant wall that is also a server tower](images/parc-server.png)
-
-The server tower also generates heat, which is captured to provide a part, if not all, of the library’s electrical needs. PARC’s vertical structure is also envisioned to have skinned solar panels (see Figure 2.3) to generate more electricity. Excess electricity created by the solar panels can be fed directly into the city power grid, thus establishing connections with the people and spaces around it. The vertical structure will also feature a video wall (see Figure 2.4) that can live-broadcast or re-broadcast significant political events expressed via Twitter (see Figure 2.5), video, social media, or other digital platforms.
-
-__Figure 2.3__
-
-![Architectural concept of giant wall skinned with solar panels](images/parc-solar.png)
-
-__Figure 2.4__
-
-![Architectural concept of giant wall displaying video broadcast](images/parc-video.png)
-
-__Figure 2.5__
-
-![Architectural concept of giant wall displaying live Tweets](images/parc-live.png)
-
-
-PARC’s vertical tower connects with a horizontal platform, which creates a physical space that the public can use to stage political protests, or digitally connect with other communal spaces to form a nexus of local or global political activity. This nexus provides an additional connection between PARC and the public. The inside of PARC’s horizontal platform is the library itself, which provides research space and facilities for the public. The conceptual Hall of Pillars connects to PARC’s digital archives and provides real-time interaction with Tweets, as well as with other political entities from around the world. Users have the option of viewing Twitter data on each pillar’s full-length video display for the immersive audio-visual experience, or through a directed audio cone that constrains sensitive information to the viewer only.
-
-In addition to harvesting, archiving, storing, and providing access to curated political Tweets, other activities PARC and its staff might undertake to support its mandate include:
-
-* Provide a forum for library and information science professionals, technology experts, legal scholars, ethics scholars, social media scholars, digital archivists, and museum and industry professionals by hosting workshops and annual conferences (Osterburg, as cited in Scola, 2015);
-* Lead collaborative efforts with other libraries and external institutions to harvest and curate political Tweets as events occur;
-* Explore options regarding how to deal with continually expanding Tweet catalogues in order to improve archiving methods and Tweet accessibility and use by researchers (Zimmerman, 2015);
-* Continually develop open source Tweet harvesting, archiving, and curation platforms (NSCU, 2014); and
-* Explore the possibility of creating a Tweet metadata schema for use by libraries and other institutions that archive social media to create interoperability between databases (Dwoskin, 2014; Zimmer, 2015).
-
-Beyond these activities, PARC’s mandate could expand to include: Tweets on other thematic topics (e.g. cultural, social, business, education, health); the archiving of different social media platforms (e.g. Facebook); and an examination of how social media platforms can better allow for distinct cultural, social, political, and other unique types of digital representation (Brock, 2012; Williams, Terras & Warwick, 2012).
-
-Overall, PARC is designed as a node for digital political knowledge, and is responsible for archiving, organizing, and disseminating information across local and global networks. As this institutional role gains social relevance, its presence and functions can instigate questions of how other institutions whose traditional primary function is curating physical items (libraries, museums, and art galleries) can find relevance in the age of digital information and potentially contribute to the collection of important digital data. In this respect, PARC adds to the efforts of other institutions in the cultural arena, including Japan’s Kyoto Costume Institute, which currently offers digital image and text information for 300 of its 12,000 items of clothing dating back to the 17th century (The Kyoto Costume Institute, 2016).
-
-
-##Conclusion
-
-Tweets have rapidly become the “preferred communication and information-sharing” tool of the early 21st century (Zimmer, 2015). This development ensures that Tweets will have enduring historical importance, embodied by Twitter’s aforementioned release to the Library of Congress of its entire Tweet collection from March 2006 to April 2010 (as well as all future publicly available Tweets) (Allen, 2013; Twitter, Inc., 2010; Zimmer, 2015). This situation is no less true for political movements, for which Tweets are used to organize protesters (Zimmer, 2015). The historical and cultural significance of political Tweets is reflected in the efforts of many individuals and institutions to capture, archive, and curate this social media data from events across the world. As Williams (2015) notes, “Twitter has become a necessary platform for dissent, discussion … [and] breaking news” giving a “voice to many of the issues that 20 years ago would’ve remained far away from mainstream radar” (para. 2). As a result, harvesting and curating political social media data preserves this valuable information.
-
-Concomitantly, the harvesting and curation of social media data presents numerous challenges to information specialists assigned this task. Proposing the role of the Political Tweets Librarian, this article has outlined a set of guidelines to assist information specialists in the harvesting and curation of political Tweets, and addressed relevant issues that arise when undertaking these initiatives. While issues of copyright are generally circumvented by Twitter’s Terms of Service, they are also subject to national copyright legislation. In this case, Canada’s Fair Dealing exemption to copyright law enables Political Tweets Librarians to capture social media data for contemporary and future educational use. At the same time, there are numerous privacy and ethics issues to consider, and the subset of guidelines suggested in this article are just a starting point for Political Tweets Librarians in respecting these elements. The proposed Political ARChive is designed as a central node for discussion, development, and employment of the tasks involved in collecting politically-sensitive social media data. PARC is envisioned as a permanent home for political Tweets to ensure that the voices of Tweet authors are not lost due to Tweets’ ephemerality and that this data is appropriately stored as a part of history. The Political Tweets Librarian, PARC, and the guidelines are therefore considered important contributions to the emerging dialogue on, and continually evolving efforts in, the information field to capture social media data.
-
-##Works Cited
-
-* AAA Commission on the Engagement of Anthropology with the US Security and    
-	Intelligence Communities (CEAUSSIC). (2009). Final Report on the 
-	Army’s Human Terrain System Proof of Concept Program. Retrieved from
-	[http://s3.amazonaws.com/rdcms-aaa/files/production/public/FileDownloads/pdf
-	cmtes/commissions/CEAUSSIC/upload/CEAUSSIC_HTS_Final_Report.pdf](http://s3.amazonaws.com/rdcms-aaa/files/production/public/FileDownloads/pdf
-	cmtes/commissions/CEAUSSIC/upload/CEAUSSIC_HTS_Final_Report.pdf)
-
-* Allen, E. (2013). Update on the Twitter Archive at the Library of Congress.
- Library of  Congress Blog. Retrieved from [http://blogs.loc.gov/loc/2013/01/update-on-the-twitter-archive-at-the-library-of-congress/](http://blogs.loc.gov/loc/2013/01/update-on-the-twitter-archive-at-the-library-of-congress/)
-
-* American Anthropological Association. (2012a). Do no harm. 	
-	Retrieved from [http://ethics.aaanet.org/ethics-statement-1-do-no-harm/](http://ethics.aaanet.org/ethics-statement-1-do-no-harm/)
-
-* American Anthropological Association. (2012b). Make your results accessible.
- Retrieved from [http://ethics.aaanet.org/ethics-statement-5-make-your-results-accessible/](http://ethics.aaanet.org/ethics-statement-5-make-your-results-accessible/)
-
-* American Anthropological Association. (2012c). Obtain informed consent and necessary  permissions.  Retrieved from [http://ethics.aaanet.org/ethics-statement-3-obtain-informed-consent-and-necessary-permissions/](http://ethics.aaanet.org/ethics-statement-3-obtain-informed-consent-and-necessary-permissions/)
-
-* American Anthropological Association. (2012d). Principles of professional responsibility. Retrieved from  [http://ethics.aaanet.org/ethics-statement-0-preamble/](http://ethics.aaanet.org/ethics-statement-0-preamble/)
-
-* American Anthropological Association. (2012e). Protect and preserve your records. Retrieved from 
-[http://ethics.aaanet.org/ethics-statement-6-protect-and-preserve-your-records/](http://ethics.aaanet.org/ethics-statement-6-protect-and-preserve-your-records/)
-
-* American Anthropological Association. (2012f). Weigh competing ethical obligations due collaborators and affected parties.
-	Retrieved from 
-	[http://ethics.aaanet.org/ethics-statement-4-weigh-competing-ethical-obligations-due-collaborators-and-affected-parties/](http://ethics.aaanet.org/ethics-statement-4-weigh-competing-ethical-obligations-due-collaborators-and-affected-parties/)
-
-* Antracoli, A., Duckworth, S., Silva, J., & Yarmey, K. (2014). Capture all the URLs: First steps in web archiving. Pennsylvania Libraries: Research & Practice, 2(2), 155-170. doi: 10.5195/palrap.2014.67
-
-* Archive-It. (2015). Retrieved from [https://www.archive-it.org/](https://www.archive-it.org/)
-
-* BBC News. (2014, December 2). Hong Kong protests: The key players. 
-	Retrieved from [http://www.bbc.com/news/world-asia-china-29408476](http://www.bbc.com/news/world-asia-china-29408476)
-
-* Bragg, M., & Rollason-Cass, S. (2014). Archiving social networking sites w/Archive-It. Retrieved from [https://webarchive.jira.com/wiki/pages/viewpage.action?pageId=3113092](https://webarchive.jira.com/wiki/pages/viewpage.action?pageId=3113092)
-
-* Brock, A. (2012). From the Blackhand Side: Twitter as a Cultural Conversation. Journal of Broadcasting and Electronic Media, 56(4), 529-549. doi:10.1080/08838151.2012.732147
-
-* Buettner, R. (2012). A Brooklyn protester pleads guilty after his Twitter post sinks his case. The New York Times. Retrieved from [http://www.nytimes.com/2012/12/13/nyregion/malcolm-harris-pleads-guilty-over-2011-march.html](http://www.nytimes.com/2012/12/13/nyregion/malcolm-harris-pleads-guilty-over-2011-march.html)
-
-* Campbell, J. D. (2006). Changing a cultural icon: The academic library as a virtual destination. Educause Review, (January/February), 16-30. Retrieved from [https://www.educause.edu/ero/article/changing-cultural-icon-academic-library-virtual-destination](https://www.educause.edu/ero/article/changing-cultural-icon-academic-library-virtual-destination)
-
-* Carter, R. (n.d.). Semiotics of American public library architecture and its influence on the user experience. Retrieved from [http://pixelquarium.com/portfolio/papers/RobertCarter_SemioticsofLibraryArch.pdf](http://pixelquarium.com/portfolio/papers/RobertCarter_SemioticsofLibraryArch.pdf)
-
-* Code of Ethics of the American Library Association (2008, January 22). Retrieved from
-[http://www.ala.org/advocacy/proethics/codeofethics/codeethics](http://www.ala.org/advocacy/proethics/codeofethics/codeethics)
-
-* Commission for the Protection of Privacy (2016). The Privacy Act. Retrieved from [https://www.privacycommission.be/en/privacy-act](https://www.privacycommission.be/en/privacy-act)
-
-* Copyright Act, Revised Statutes of Canada, 1985, c. C-42. Retrieved February 2, 2015 from [http://laws.justice.gc.ca/en/C-42/index.html](http://laws.justice.gc.ca/en/C-42/index.html)
-
-* Dougherty, R. L. (2011). Documenting revolution in the Middle East. Focus on Global Resources, 31(1), 5-7. Retrieved from [http://www.crl.edu/focus/article/7437](http://www.crl.edu/focus/article/7437)
-
-* Dwoskin, E. (2014, June 6). In a single tweet, as many pieces of metadata as there are characters. Wall Street Journal. Retrieved from
-[http://blogs.wsj.com/digits/2014/06/06/in-a-single-tweet-as-many-pieces-of-metadata-as-there-are-characters/](http://blogs.wsj.com/digits/2014/06/06/in-a-single-tweet-as-many-pieces-of-metadata-as-there-are-characters/)
-
-* Griffs, M. (2011). Space, power and the public library: A multicase examination of the public library as organized space. Proceedings of the Annual Conference of CAIS, 1-4.  Retrieved from [http://www.cais-acsi.ca/proceedings/2011/38_Griffis.pdf](http://www.cais-acsi.ca/proceedings/2011/38_Griffis.pdf)
-
-* Harvey, D. (2005). The political economy of public space. In Low, S., & Smith, N. (eds), The Politics of Public Space, 17-34. New York, NY: Routledge.
-
-* Internet Archive. (2015). Wayback Machine. Retrieved from [http://archive.org/web/](http://archive.org/web/)
-
-* International Emergency Economic Powers Act of 1977, 50 U.S.C. §§ 1701-1708 (2014). Retrieved from [https://www.law.cornell.edu/uscode/text/50/chapter-35](https://www.law.cornell.edu/uscode/text/50/chapter-35)
-
-* Jinfang, N. (2012). An overview of web archiving. D-Lib Magazine: The Magazine of Digital Library research, 18(3). Retrieved from [http://dlib.org/dlib/march12/niu/03niu1.html](http://dlib.org/dlib/march12/niu/03niu1.html)
-
-* Kjaervang, U. (2006). Power of aesthetics to improve student learning. Retrieved from [http://www.designshare.com/index.php/articles/aesthetics-and learning/](http://www.designshare.com/index.php/articles/aesthetics-and learning/)
-
-* Kuner, C. (2010). Data Protection Law and International Jurisdiction on the Internet (Part 2). International Journal of Law and Information Technology, 18(3), 227-247. doi:10.1093/ijlit/eaq004 
-
-* Lockton, D. (2011). Architecture, urbanism, design and behaviour: A brief review. Retrieved from [http://architectures.danlockton.co.uk/2011/09/12/architecture-urbanism-design-and-behaviour-a-brief-review/](http://architectures.danlockton.co.uk/2011/09/12/architecture-urbanism-design-and-behaviour-a-brief-review/)
-
-* Luyk, S., & Sherbaniuk, P. (2015, January). The role of grey literature in academic library collections: Discovering, capturing, preservation and access [PowerPoint slides]. Paper presented at the annual Ontario Library Association Super Conference, Toronto, Ontario.
-
-* North Carolina State University (2014). NSCU libraries developing toolkit to make it easier to collect and preserve social media. Retrieved from [http://news.lib.ncsu.edu/blog/2014/09/09/ncsu-libraries-developing-toolkit-to-make-it-easier-to-collect-and-preserve-social-media/](http://news.lib.ncsu.edu/blog/2014/09/09/ncsu-libraries-developing-toolkit-to-make-it-easier-to-collect-and-preserve-social-media/)
-
-* Perez-Gomez, A. (1987). Architecture as embodied knowledge. Journal of Architectural Education, 40(2), Jubilee Issue, 57-58.
-
-* Reinberg, C. (2009). Are tweets copyright-protected? WIPO Magazine. Retrieved from [http://www.wipo.int/wipo_magazine/en/2009/04/article_0005.html](http://www.wipo.int/wipo_magazine/en/2009/04/article_0005.html)
-
-* SalahEldeen, H. M., & Nelson, M. L. (2012). Losing my revolution: how many resources shared on social media have been lost? In Theory and practice of digital libraries second International Conference, TPDL 2012, Paphos, Cyprus, September 23-27, 2012. Proceedings. Berlin: Springer. Retrieved from [http://link.springer.com/chapter/10.1007%2F978-3-642-33290-6_14](http://link.springer.com/chapter/10.1007%2F978-3-642-33290-6_14)
-
-* Scola, N. (2015). Library of Congress’ Twitter archive is a huge #FAIL. Politico. Retrieved from [http://www.politico.com/story/2015/07/library-of-congress-twitter- archive-119698.htm](http://link.springer.com/chapter/10.1007%2F978-3-642-33290-6_14)
-
-* Sio, T. (2014). [Untitled photograph of Hong Kong protester]. Retrieved from [http://blogs.wsj.com/chinarealtime/2014/10/01/hong-kong-protests-mark-twist-in-history-of-umbrella-symbolism/](http://blogs.wsj.com/chinarealtime/2014/10/01/hong-kong-protests-mark-twist-in-history-of-umbrella-symbolism/)
-
-* Small, H., Kasianovitz, K., Blanford, R., & Celaya, I. (2012). What your Tweets tell us about you: Identity, ownership and privacy of Twitter data. International Journal of Digital Curation, 174-197. Retrieved from [http://www.ijdc.net/index.php/ijdc/article/view/214http://www.ijdc.net/index.php/ijdc/article/view/214](http://www.ijdc.net/index.php/ijdc/article/view/214http://www.ijdc.net/index.php/ijdc/article/view/214)
-
-* Taylor, D. (2014). What is fair dealing and how does it relate to copyright? Retrieved from [http://www.lib.sfu.ca/faqs/copyright-fair-dealing](http://www.lib.sfu.ca/faqs/copyright-fair-dealing)
-
-* The Kyoto Costume Institute (2016). Digital Archives. Retrieved from [http://www.kci.or.jp/archives/index_e.html](http://www.kci.or.jp/archives/index_e.html)
-
-* Twitter, Inc. (2010). Gift Agreement. Retrieved from [http://blogs.loc.gov/loc/files/2010/04/LOC-Twitter.pdf](http://blogs.loc.gov/loc/files/2010/04/LOC-Twitter.pdf)
-
-* Twitter, Inc. (2015a). GET help/languages. Retrieved from [https://dev.twitter.com/rest/reference/get/help/languages](https://dev.twitter.com/rest/reference/get/help/languages)
-
-* Twitter, Inc. (2016b). Terms of Service. Retrieved from [https://twitter.com/tos?lang=en](https://twitter.com/tos?lang=en)
-
-* Twitter, Inc. (2016c). The story of a Tweet. Retrieved from [https://about.twitter.com/what-is-twitter/story-of-a-tweet](https://about.twitter.com/what-is-twitter/story-of-a-tweet)
-
-* Van Overstraeten, T. & Cumbley, R. (2009). After two-year investigation, Belgian commission finds no violation of data protection law. The Privacy Advisor. Retrieved from [https://iapp.org/news/a/2009-04-swift-receives-clean-bill-of-health/](https://iapp.org/news/a/2009-04-swift-receives-clean-bill-of-health/)
-
-* Williams, S. (2015). The Power of Black Twitter. The Daily Beast. Retrieved from [http://www.thedailybeast.com/articles/2015/07/06/the-power-of-black-twitter.html](http://www.thedailybeast.com/articles/2015/07/06/the-power-of-black-twitter.html)
-
-* Williams, S.A., Terras, M.M., & Warwick, C. (2012). What do people study when they study Twitter? Classifying Twitter related academic papers. Journal of Documentation, 69(3), 384-410. doi: 10.1108/JD-03-2012-0027.
-
-* Young, J.O. & Brunk (2009). Introduction. In J.O. Young & C.G. Brunk (Eds.), The Ethics of Cultural Appropriation. West Sussex, U.K.: Wiley-Blackwell. 
-
-* Zetter, K. (2012). Twitter ordered to release OWS protester’s data or be fined for contempt. *Wired Magazine*. Retrieved from [http://www.wired.com/2012/09/twitter-ordered-release/](http://www.wired.com/2012/09/twitter-ordered-release/)
-
-* Zimmer, M. (2015). The Twitter Archive at the Library of Congress: Challenges for information practice and information policy. First Monday, 20(7). doi: [http://dx.doi.org/10.5210/fm.v20i7.5619](http://dx.doi.org/10.5210/fm.v20i7.5619)
-
+###III.D. MRJob Implementations
+
+####III.D.1 MRJob implementation - single reducer - local mode
+
+
+```python
+%%writefile singleReducerSortLocal.py
+
+import sys
+import mrjob
+from mrjob.job import MRJob
+from mrjob.step import MRStep
+
+class singleReducerSortLocal(MRJob):
+        
+    def mapper(self, _, line):
+        line = line.strip()
+        key,value = line.split('\t')
+        yield (sys.maxint - int(key)), value
+
+    def reducer(self, key, value):
+        for v in value:
+            yield sys.maxint - key, v
+        
+    def steps(self):
+        return [MRStep(
+                    mapper=self.mapper,
+                    reducer=self.reducer)
+                ]
+
+if __name__ == '__main__':
+    singleReducerSortLocal.run()
+``` 
+    Overwriting singleReducerSortLocal.py
+
+
+
+```python
+!python singleReducerSortLocal.py generate_numbers.output > MRJob_singleReducer_local_sorted_output.txt
+```
+
+
+```python
+print "="*100
+print "Single Reducer Local Sorted Output - MRJob"
+print "="*100
+!cat MRJob_singleReducer_local_sorted_output.txt
+```
+
+    ====================================================================================================
+    Single Reducer Local Sorted Output - MRJob
+    ====================================================================================================
+    30  "do"
+    28  "dataset"
+    27  "creating"
+    27  "driver"
+    27  "experiements"
+    26  "def"
+    26  "descent"
+    25  "compute"
+    24  "code"
+    24  "done"
+    23  "descent"
+    22  "corresponding"
+    19  "consists"
+    19  "evaluate"
+    17  "drivers"
+    15  "computational"
+    15  "computing"
+    15  "document"
+    14  "center"
+    13  "efficient"
+    10  "clustering"
+    9   "change"
+    9   "during"
+    7   "contour"
+    5   "distributed"
+    4   "develop"
+    3   "different"
+    2   "cluster"
+    1   "cell"
+    0   "current"
+
+####III.D.2. MRJob implementation - single reducer - hadoop mode
+
+
+```python
+%%writefile singleReducerSort.py
+#!~/anaconda2/bin/python
+# -*- coding: utf-8 -*-
+import mrjob
+from mrjob.job import MRJob
+from mrjob.step import MRStep
+
+class SingleReducerSort(MRJob):
+    # By specifying sort values True, mrjob will do a secondary sort on the value, in this case the words.
+    # ties will be broken by sorting words alphabetically in ascending order
+    MRJob.SORT_VALUES = True   
+    
+    def mapper(self, _, line):
+        line = line.strip()
+        key,value = line.split('\t')
+        yield int(key),value
+
+    def reducer(self, key, value):
+        for v in value:
+            yield key, v
+        
+    def steps(self):
+        JOBCONF_STEP = {
+            'mapreduce.job.output.key.comparator.class': 'org.apache.hadoop.mapred.lib.KeyFieldBasedComparator',
+            'stream.map.output.field.separator':'\t',    
+            'mapreduce.partition.keycomparator.options': '-k1,1nr -k2',
+            'mapreduce.job.reduces': '1'
+        }
+        return [MRStep(jobconf=JOBCONF_STEP,
+                    mapper=self.mapper,
+                    reducer=self.reducer)
+                ]
+
+if __name__ == '__main__':
+    SingleReducerSort.run()
+```
+
+    Overwriting singleReducerSort.py
+
+
+
+```python
+!python singleReducerSort.py -r hadoop generate_numbers.output > MRJob_singleReducer_sorted_output.txt
+```
+
+
+```python
+print "="*100
+print "Single Reducer Sorted Output - MRJob"
+print "="*100
+!cat MRJob_singleReducer_sorted_output.txt
+```
+
+    ====================================================================================================
+    Single Reducer Sorted Output - MRJob
+    ====================================================================================================
+    30  "do"
+    28  "dataset"
+    27  "creating"
+    27  "driver"
+    27  "experiements"
+    26  "def"
+    26  "descent"
+    25  "compute"
+    24  "code"
+    24  "done"
+    23  "descent"
+    22  "corresponding"
+    19  "consists"
+    19  "evaluate"
+    17  "drivers"
+    15  "computational"
+    15  "computing"
+    15  "document"
+    14  "center"
+    13  "efficient"
+    10  "clustering"
+    9   "change"
+    9   "during"
+    7   "contour"
+    5   "distributed"
+    4   "develop"
+    3   "different"
+    2   "cluster"
+    1   "cell"
+    0   "current"
+
+
+####III.D.3. MRJob Multiple Reducers - With Un-Ordered Partiton
+
+The equivalent of the Hadoop Streaming Total Order Sort implementation above
+
+
+```python
+%%writefile MRJob_unorderedTotalOrderSort.py
+
+import mrjob
+from mrjob.job import MRJob
+from mrjob.step import MRStep
+from mrjob.protocol import RawValueProtocol
+from mrjob.protocol import RawProtocol
+from operator import itemgetter
+import numpy as np
+
+class MRJob_unorderedTotalOrderSort(MRJob):
+    
+    # Allows values to be treated as keys, so they can be used for sorting:
+    MRJob.SORT_VALUES = True 
+    
+    # The protocols are critical. It will not work without these:
+    INTERNAL_PROTOCOL = RawProtocol
+    OUTPUT_PROTOCOL = RawProtocol
+ 
+    def __init__(self, *args, **kwargs):
+        super(MRJob_unorderedTotalOrderSort, self).__init__(*args, **kwargs)
+        self.NUM_REDUCERS = 3
+    
+    
+    def mapper(self, _, line):
+        line = line.strip()
+        key,value = line.split('\t')
+        if int(key) > 20:
+            yield "A",key+"\t"+value
+        elif int(key) > 10:
+            yield "B",key+"\t"+value
+        else:
+            yield "C",key+"\t"+value
+            
+    def reducer(self,key,value):
+        for v in value:
+            yield key, v
+
+    
+    def steps(self):
+        
+        JOBCONF_STEP1 = {
+            'stream.num.map.output.key.fields':3,
+            'stream.map.output.field.separator':"\t",
+            'mapreduce.partition.keypartitioner.options':'-k1,1',
+            'mapreduce.job.output.key.comparator.class': 'org.apache.hadoop.mapred.lib.KeyFieldBasedComparator',
+            'mapreduce.partition.keycomparator.options':'-k1,1 -k2,2nr -k3,3',
+            'mapred.reduce.tasks': self.NUM_REDUCERS,
+            'partitioner':'org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner'
+        }
+        return [MRStep(jobconf=JOBCONF_STEP1,
+                    mapper=self.mapper,
+                    reducer=self.reducer)
+                ]
+
+if __name__ == '__main__':
+    MRJob_unorderedTotalOrderSort.run()
+```
+
+    Overwriting MRJob_unorderedTotalOrderSort.py
+
+
+
+```python
+!hdfs dfs -rmr /user/koza/sort/un_output 
+!python MRJob_unorderedTotalOrderSort.py  -r hadoop generate_numbers.output \
+    --output-dir=/user/koza/sort/un_output 
+```
+
+
+```python
+!hdfs dfs -ls /user/koza/sort/un_output 
+```
+
+    Found 4 items
+    -rw-r--r--   1 koza supergroup          0 2016-08-20 19:28 /user/koza/sort/un_output/_SUCCESS
+    -rw-r--r--   1 koza supergroup        116 2016-08-20 19:28 /user/koza/sort/un_output/part-00000
+    -rw-r--r--   1 koza supergroup        125 2016-08-20 19:28 /user/koza/sort/un_output/part-00001
+    -rw-r--r--   1 koza supergroup        152 2016-08-20 19:28 /user/koza/sort/un_output/part-00002
+
+####III.D.4. MRJob Multiple Reducers - With Ordered Partitons
+
+The final Total Order Sort with ordered partitions
+
+####What's New
+
+The solution we will delve into is very similar to the one discussed earlier in the hadoop streaming section. The only addition is Step 1B, where we take a desired partition index and craft a custom partition key such that hadoop's KeyFieldBasedPartitioner hashes it back to the correct index.
+ 
+Figure 6. Total order sort with custom partitioning.
+
+```python
+%%writefile MRJob_multipleReducerTotalOrderSort.py
+#!~/anaconda2/bin/python
+# -*- coding: utf-8 -*-
+
+import mrjob
+from mrjob.job import MRJob
+from mrjob.step import MRStep
+from mrjob.protocol import RawValueProtocol
+from mrjob.protocol import RawProtocol
+from operator import itemgetter
+import numpy as np
+
+class MRJob_multipleReducerTotalOrderSort(MRJob):
+    
+    # Allows values to be treated as keys
+    MRJob.SORT_VALUES = True 
+    
+    # The protocols are critical. It will not work without these:
+    INTERNAL_PROTOCOL = RawProtocol
+    OUTPUT_PROTOCOL = RawProtocol
+ 
+    def __init__(self, *args, **kwargs):
+        super(MRJob_multipleReducerTotalOrderSort, self).__init__(*args, **kwargs)
+        self.N = 30
+        self.NUM_REDUCERS = 3
+    
+    def mapper_partitioner_init(self):
+        
+        def makeKeyHash(key, num_reducers):
+            byteof = lambda char: int(format(ord(char), 'b'), 2)
+            current_hash = 0
+            for c in key:
+                current_hash = (current_hash * 31 + byteof(c))
+            return current_hash % num_reducers
+        
+        # printable ascii characters, starting with 'A'
+        keys = [str(unichr(i)) for i in range(65,65+self.NUM_REDUCERS)]
+        partitions = []
+        
+        for key in keys:
+            partitions.append([key, makeKeyHash(key, self.NUM_REDUCERS)])
+
+        parts = sorted(partitions,key=itemgetter(1))
+        self.partition_keys = list(np.array(parts)[:,0])
+        
+        self.partition_file = np.arange(0,self.N,self.N/(self.NUM_REDUCERS))[::-1]
+        
+    def mapper_partition(self, _, line):
+        line = line.strip()
+        key,value = line.split('\t')
+        
+        # Prepend the approriate key by finding the bucket, and using the index to fetch the key.
+        for idx in xrange(self.NUM_REDUCERS):
+            if float(key) > self.partition_file[idx]:
+                yield str(self.partition_keys[idx]),key+"\t"+value
+                break
+        
+        
+            
+    def reducer(self,key,value):
+        for v in value:
+            yield key,v
+            # To omit the partition key, specify 'None'
+            # We are keeping it for illutration purposes
+    
+    def steps(self):
+        
+        JOBCONF_STEP1 = {
+            'stream.num.map.output.key.fields':3,
+            'mapreduce.job.output.key.comparator.class': 'org.apache.hadoop.mapred.lib.KeyFieldBasedComparator',
+            'stream.map.output.field.separator':"\t",
+            'mapreduce.partition.keypartitioner.options':'-k1,1',
+            'mapreduce.partition.keycomparator.options':'-k2,2nr -k3,3',
+            'mapred.reduce.tasks': self.NUM_REDUCERS,
+            'partitioner':'org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner'
+        }
+        return [MRStep(jobconf=JOBCONF_STEP1,
+                    mapper_init=self.mapper_partitioner_init,
+                    mapper=self.mapper_partition,
+                    reducer=self.reducer)
+                ]
+
+
+if __name__ == '__main__':
+    MRJob_multipleReducerTotalOrderSort.run()
+```
+
+Overwriting MRJob_multipleReducerTotalOrderSort.py
+
+
+
+```python
+!hdfs dfs -rm -r /user/koza/total_order_sort
+!python MRJob_multipleReducerTotalOrderSort.py -r hadoop generate_numbers.output \
+    --output-dir='/user/koza/total_order_sort' 
+```
+
+
+```python
+print "="*100
+print "Total Order Sort with multiple reducers - notice that the part files are also in order."
+print "="*100
+print "/part-00000"
+print "-"*100
+!hdfs dfs -cat /user/koza/total_order_sort/part-00000
+print "-"*100
+print "/part-00001"
+print "-"*100
+!hdfs dfs -cat /user/koza/total_order_sort/part-00001
+print "-"*100
+print "/part-00002"
+print "-"*100
+!hdfs dfs -cat /user/koza/total_order_sort/part-00002
+
+```
+
+    ====================================================================================================
+    Total Order Sort with multiple reducers - notice that the part files are also in order.
+    ====================================================================================================
+    /part-00000
+    ----------------------------------------------------------------------------------------------------
+    B   30  do  
+    B   28  dataset 
+    B   27  creating    
+    B   27  driver  
+    B   27  experiements    
+    B   26  def 
+    B   26  descent 
+    B   25  compute 
+    B   24  code    
+    B   24  done    
+    B   23  descent 
+    B   22  corresponding   
+    ----------------------------------------------------------------------------------------------------
+    /part-00001
+    ----------------------------------------------------------------------------------------------------
+    C   19  consists    
+    C   19  evaluate    
+    C   17  drivers 
+    C   15  computational   
+    C   15  computing   
+    C   15  document    
+    C   14  center  
+    C   13  efficient   
+    ----------------------------------------------------------------------------------------------------
+    /part-00002
+    ----------------------------------------------------------------------------------------------------
+    A   10  clustering  
+    A   9   change  
+    A   9   during  
+    A   7   contour 
+    A   5   distributed 
+    A   4   develop 
+    A   3   different   
+    A   2   cluster 
+    A   1   cell    
+
+
+We now have exactly what we were looking for: Total Order Sort, with the added benefit of ordered partitions. Notice that the top results are stored in part-00000, the next set of results is stored in part-00001, etc., because we hashed the keys (A,B,C) to those file names.
+
+##Section IV - Sampling Key Spaces
+
+Keypoints:
+* Random Sampling - Easy implementation when we know the total size of the data.
+* Reservoir Sampling - A method to sample the data with equal probability for all data points when the size of the data is unknown. The algorithm works as follows:
+~~~~
+    n = desired sample size
+    reservoir = []
+    for d in data
+        if reservoir size < n
+            add d to reservoir
+        else:
+            choose random location in reservoir
+            flip coin whether to replace the existing d with new d
+~~~~
+    
+(This paper has a nice explanation of reservoir sampling, see: 2.2 Density-Biased Reservoir Sampling http://science.sut.ac.th/mathematics/pairote/uploadfiles/weightedkm-temp2_EB.pdf.)
+
+Consider the following example in which we assumed a uniform distribution of the data. For simplicity, we made our partition file based on that assumption. In reality this is rarely the case, and we should make our partition file based on the actual distribution of the data to avoid bottlenecks. A bottleneck would occur if the majority of our data resided in a single bucket, as could happen with a typical power law distribution.
+
+
+```python
+# Visualizae Partition File
+%matplotlib inline
+import pylab as pl
+fig, ax = pl.subplots(figsize=(10,6))
+
+ax.hist(sampleData,color="#48afe0",edgecolor='none')
+
+xcoords = [.15,.3,.45]
+for xc in xcoords:
+    pl.axvline(x=xc,color="#197f74", linewidth=1)
+
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+ax.spines['bottom'].set_visible(False)
+ax.spines['left'].set_visible(False)
+
+
+pl.title("4 uniformly spaced buckets")
+pl.show()
+```
+
+![Total Order Sort, Step 3](images/buckets.png)
+
+_Figure 7. Uniform partitions over skewed data._
+
+If we made a uniform partition file the (above example has 4 buckets), we would end up with most of the data in a single reducer, and this would create a bottle neck. To fix this, we must first generate a sample of our data; then, based on this sample, create a partition file that distributes the keys more evenly.
+
+###IV.A. Random Sample implementation
+
+```python
+%%writefile MRJob_RandomSample.py
+#!~/anaconda2/bin/python
+# -*- coding: utf-8 -*-
+
+#########################################################
+#  Emit a random sample of 1/1000th of the data
+#########################################################
+
+
+import numpy as np
+import mrjob
+from mrjob.job import MRJob
+from mrjob.step import MRStep
+
+class MRbuildSample(MRJob):
+    
+    def steps(self):
+        return [MRStep(mapper=self.mapper)]
+    
+    def mapper(self,_,line):
+        s = np.random.uniform(0,1)
+        if s < .001: 
+            yield None, line
+
+    
+if __name__ == '__main__':
+    MRJob_RandomSample.run()
+```
+
+Overwriting MRJob_RandomSample.py
+
+###IV.B. Custom partition file implementation
+
+####Percentile Based Partitioning
+
+Once we have a (small) sampled subset of data, we can compute partition boundaries by examining the distribution of this subset, and find appropriate percentiles based on the number of desired partitions. A basic implementation using numpy is provided below:
+
+
+```python
+def readSampleData():
+    # A sample of the data is stored in a single file in sampleData/part-00000
+    # from the previous step (MRJob_RandomSample.py)
+    sampleData = []  
+
+    with open("sampleData/part-00000","r") as f:
+        lines = f.readlines()
+        for line in lines:
+            line = line.strip()
+            avg,lisst = line.split("\t")
+            sampleData.append(float(avg))
+            
+    return sampleData
+```
+
+
+```python
+from numpy import array, percentile, linspace, random
+
+def partition(data, num_of_partitions=10, return_percentiles=False):
+    # remove percentile 100
+    qs = linspace(0, 100, num=num_of_partitions, endpoint=False)
+    if not return_percentiles:
+        return percentile(data, qs)
+    return percentile(data, qs), qs
+
+sampleData = readSampleData()
+
+# (partitionFile, percentiles)
+partition(sampleData, 4, return_percentiles=True)
+```
+~~~~
+#Output:
+(array([ 0.00986008,  0.04131517,  0.06350346,  0.09810477]),
+ array([  0.,  25.,  50.,  75.]))
+~~~~
+
+####Visualize Partition
+ 
+![Total Order Sort, Step 3](images/buckets-apart.png)
+    Sample Data min 0.00986007565667
+    Sample Data max 0.514811335171
+    [0.009860075656665268, 0.04131516964443623, 0.06350346288221721, 0.0981047679070244]
+
+_Figure 8. Percentile based partitions over skewed data._
+
+##Section V - Spark implementation
+
+For this section, you will need to install Spark. We are using a local installation, version 1.6
+
+
+```
+# Start Spark
+import os
+import sys
+spark_home = os.environ['SPARK_HOME'] = \
+   '/usr/local/share/spark-1.6.0-bin-hadoop2.6'
+
+if not spark_home:
+    raise ValueError('SPARK_HOME enviroment variable is not set')
+sys.path.insert(0,os.path.join(spark_home,'python'))
+sys.path.insert(0,os.path.join(spark_home,'python/lib/py4j-0.8.2.1-src.zip'))
+execfile(os.path.join(spark_home,'python/pyspark/shell.py'))
+app_name = "total-sort"
+    
+master = "local[*]"
+conf = pyspark.SparkConf().setAppName(app_name).setMaster(master)
+# print sc
+# print sqlContext
+
+```
+
+    Welcome to
+          ____              __
+         / __/__  ___ _____/ /__
+        _\ \/ _ \/ _ `/ __/  '_/
+       /__ / .__/\_,_/_/ /_/\_\   version 1.6.0
+          /_/
+    
+    Using Python version 2.7.11 (default, Dec  6 2015 18:57:58)
+    SparkContext available as sc, HiveContext available as sqlContext.
+
+###SPARK - Key features
+
+From the Spark website:
+* Spark is a fast and general engine for large-scale data processing.
+* Spark runs on Hadoop, Mesos, standalone, or in the cloud.
+* Run programs up to 100x faster than Hadoop MapReduce in memory, or 10x faster on disk.
+* Write applications quickly in Java, Scala, Python, R.
+* Spark offers over 80 high-level operators that make it easy to build parallel apps. And you can use it interactively from the Scala, Python and R shells.
+* Apache Spark has an advanced DAG execution engine that supports cyclic data flow and in-memory computing.
+
+![Total Order Sort, Step 3](images/spark.png)
+ 
+_Figure 9. Spark data flow._
+
+At the core of Spark are "Resilient Distributed Datasets (RDDs), a distributed memory abstraction that lets programmers perform in-memory computations on large clusters in a fault-tolerant manner" (https://www2.eecs.berkeley.edu/Pubs/TechRpts/2011/EECS-2011-82.pdf).
+
+An RDD is simply a distributed collection of elements (Key-Value records).
+
+* In Spark all work is expressed as either creating new RDDs, running (lazy) transformations on existing RDDs, or performing actions on RDDs to compute a result.
+* Under the hood, Spark automatically distributes the data contained in RDDs across your cluster and parallelizes the operations you perform on them.
+
+###Total Sort in pyspark (Spark python API)
+
+As before, to achieve Total Order Sort, we must first partition the data such that it ends up in appropriately ordered buckets (partitions, filenames), and then sort within each partition. There are a couple of ways to do this in Spark, but they are not all created equal.
+
+####repartition &amp; sortByKey VS repartitionAndSortWithinPartitions
+
+[https://spark.apache.org/docs/1.6.2/programming-guide.html#working-with-key-value-pairs](https://spark.apache.org/docs/1.6.2/programming-guide.html#working-with-key-value-pairs)
+
+__repartition:__ 
+Reshuffle the data in the RDD randomly to create either more or fewer partitions and balance it across them. This always shuffles all data over the network.
+
+__sortByKey:__ 
+When called on a dataset of (K, V) pairs where K implements Ordered, returns a dataset of (K, V) pairs sorted by keys in ascending or descending order, as specified in the boolean ascending argument.
+
+The sortByKey function reshuffles all the data a second time!
+
+__repartitionAndSortWithinPartitions:__
+ Repartition the RDD according to the given partitioner and, within each resulting partition, sort records by their keys. This is more efficient than calling repartition and then sorting within each partition because it can push the sorting down into the shuffle machinery.
+
+
+```python
+from operator import itemgetter
+import numpy as np
+
+text_file = sc.textFile('generate_numbers.output')
+NUM_REDUCERS = 3
+
+# parse input #
+def readData(line):
+    x = line.split("\t")
+    return [int(x[0]),x[1]],""
+
+# Partition function #        
+def top_down(x):
+    if x[0] > 20:
+        return 0
+    elif x[0] > 10:
+        return 1
+    else:
+        return 2
+    
+
+rdd = text_file.map(readData)
+
+
+'''
+repartitionAndSortWithinPartitions(numPartitions=None, partitionFunc=<function portable_hash at 0x7f2bec385230>, 
+ascending=True, keyfunc=<function <lambda> at 0x7f2bec3839b0>) Repartition the RDD according to the given 
+partitioner and, within each resulting partition, sort records by their keys.
+
+By using this function we avoid unnecessary shuffling. In contrast, the sortByKey function reshuffles all the data 
+and is not efficient.
+'''
+top = rdd.repartitionAndSortWithinPartitions(numPartitions=NUM_REDUCERS,
+                                                    ascending=True, 
+                                                    partitionFunc=top_down,
+                                                    keyfunc=lambda x: (-x[0],x[1]))
+```
+
+By using glom we can see each partition in its own array. We also have a secondary sort on the "word" (in fact this is the latter part of a complex key) in ascending order.
+
+
+```python
+print top.getNumPartitions(), "Partitions"
+for i,d in enumerate(top.glom().collect()):
+    print "="*50
+    print "partition ",i
+    print "="*50
+    for j in d:
+        print j[0][0],"\t",j[0][1]
+```
+
+    3 Partitions
+    ==================================================
+    partition  0
+    ==================================================
+    30  do
+    28  dataset
+    27  creating
+    27  driver
+    27  experiements
+    26  def
+    26  descent
+    25  compute
+    24  code
+    24  done
+    23  descent
+    22  corresponding
+    ==================================================
+    partition  1
+    ==================================================
+    19  consists
+    19  evaluate
+    17  drivers
+    15  computational
+    15  computing
+    15  document
+    14  center
+    13  efficient
+    ==================================================
+    partition  2
+    ==================================================
+    10  clustering
+    9   change
+    9   during
+    7   contour
+    5   distributed
+    4   develop
+    3   different
+    2   cluster
+    1   cell
+    0   current
+
+##Final Remarks
+A note on <code>TotalSortPartitioner</code>: Hadoop has built in TotalSortPartitioner, which uses a partition file _partition.lst to store a pre-built order list of split points.TotalSortPartitioner uses binary search / Trie to look up the ranges a given record falls into.
+
+##References
+1. http://wiki.apache.org/hadoop/
+2. http://hadoop.apache.org/docs/stable1/streaming.html#Hadoop+Streaming
+3. http://mrjob.readthedocs.io/en/latest/index.html
+4. http://www.theunixschool.com/2012/08/linux-sort-command-examples.html
+5. https://hadoop.apache.org/docs/r2.7.2/hadoop-streaming/HadoopStreaming.html
+6. http://hadoop.apache.org/
+7. https://hadoop.apache.org/docs/r2.7.2/hadoop-project-dist/hadoop-common/SingleCluster.html
+8. https://hadoop.apache.org/docs/r1.2.1/streaming.html#Hadoop+Comparator+Class
+9. https://github.com/Yelp/mrjob
+10.https://pythonhosted.org/mrjob/guides/configs-hadoopy-runners.html
+11. http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-steps.html
+12. https://github.com/apache/hadoop/blob/2e1d0ff4e901b8313c8d71869735b94ed8bc40a0/hadoop-mapreduce-project/hadoop-mapreduce-client/hadoop-mapreduce-client-core/src/main/java/org/apache/hadoop/mapreduce/lib/partition/KeyFieldBasedPartitioner.java
+13. http://science.sut.ac.th/mathematics/pairote/uploadfiles/weightedkm-temp2_EB.pdf
+14. http://spark.apache.org/
+15. https://www2.eecs.berkeley.edu/Pubs/TechRpts/2011/EECS-2011-82.pdf
+16.https://spark.apache.org/docs/1.6.2/programming-guide.html#working-with-key-value-pairs
+17. https://github.com/facebookarchive/hadoop-20/blob/master/src/mapred/org/apache/hadoop/mapred/lib/TotalOrderPartitioner.java

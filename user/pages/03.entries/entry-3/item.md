@@ -1,337 +1,193 @@
 ---
-title: 'This... Is... <em>Jeopardy!</em> '
-published: true
+title: 'The Preservation of Information: A Contribution to the Implementation of a Trustworthy Digital Repository at Porto Municipality'
+header_image: 'user/themes/isrtheme/images/amber.jpg'
 summary:
     enabled: '1'
     format: short
 taxonomy:
-    category: blog
     tag:
-        - 'infoviz'
+        - issue2
+    category:
+        - blog
 topojson: true
 author:
-    name: 'Joshua Appleman, Anand Rajagopal, Anubhav Gupta & Juan Shishido'
-    org: 'University of California, Berkeley'
-    oneline: 'An infographic visualization of the Jeopardy! game show'
-header_image: user/themes/isrtheme/images/jeopardy.png
+    name: 'Hugo Azevedo Oliveira'
+    org: 'Universidade do Porto'
 ---
 
+##INTRODUCTION
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-<!-- <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script> -->
-<script src="//cdn.jsdelivr.net/jquery.color-animation/1/mainfile"></script>
-<script src="http://a11y.nicolas-hoffmann.net/modal/js/jquery-accessible-modal-window-aria.js"></script>
+The growth in digital information is increasingly challenging for Information Management (IM).
+Nevertheless, with the new models, processes, tools and techniques that aim to respond to the launched challenges, concerns emerge, such as the ones connected to information preservation and information security, to which professional groups such as archivists, especially in the first case, and IT engineers, in a particular way in the second, are particularly sensitive. 
 
-<div id="endorsement" class="hidden modal">
-<p style="text-align:center; color:#3E0C46;"><em>from Marti Hearst, Professor, UC Berkeley School of Information</em></p>
-<p>I am writing in support of the publication of the enclosed submission, "This .. is ... Jeopardy: An Infographic Visualization of the Jeopardy! Game Show" by Rajagopal et al.
+The developed analysis points to the clear need for an integrated and interdisciplinary management of the whole information lifecycle, considering its complexity and multidimensional nature along with the existence of increasingly faster technological obsolescence cycles (hardware and software) that cause increasingly higher risks and preservation costs. 
 
-This submission provides informative details about the design, investigation for, and creation of the visualizations that are encapsulated in a shorter exposition that was published as a poster contribution in IEEE Infovis 2015.  This work is a contribution to our understanding of an emerging new form of communication that combines presentation and interactive analysis within a coherent whole in a web-based visualization.  
+Therefore, it becomes necessary to guarantee the application not of one strategy but of several preservation strategies in the long term that in itself is not a solution. Because without a holistic and systemic approach to the Organization / Institution, to its processes and actors and to its Information System (IS) and Technological Information System (TIS), it would be not only difficult to operationalize but also impossible to identify and delimit from the outset, being only one aspect between many others.
 
-The authors provide an excellent example of data science in action, and this paper will be a highly instructive case studies to students in information schools.
-</p>
+This "challenge" requires a vast knowledge of the themes connected to Information Preservation and Security and imposes itself far beyond Technology, including as essential elements: the Organization, its actors and processes, as well as the produced, received, accrued and used information.
+The approach taken points out that one way of securing the mentioned attributes demands the definition and implementation of appropriate Policies, Strategies and Preservation Plans that include the whole information lifecycle – conception of the technological platform, production / capture, flow, organization, representation and description, storage, evaluation / selection, preservation, access and use – in the framework of IS but also TIS management in the organization as a whole.
 
-</div>
+Therefore, the work of the professionals must put diversified levels in perspective, namely the culture, the policies, the strategies and the plans that, in the different organizations / institutions, assume and make Information Management (IM) and Information Technologies Management (ITM) flow together. These efforts conjugate and integrate the performance during the management of the information lifecycle and the technological platforms of support, including aspects such as of Information Preservation and Security, either when recorded in traditional / analogical media or in digital media.
 
-<a class="js-modal" data-modal-prefix-class="simple-animated" data-modal-content-id="endorsement" data-modal-title="Endorsement from Marti Hearst" data-modal-close-text="Close" data-modal-close-title="Close this modal window">Endorsed by Marti Hearst, University of California, Berkeley <i class="fa fa-external-link-square" aria-hidden="true"></i></a>
+In this context the results of the collection of the state-of-the-art research carried out will be presented having as a reference information preservation in a perspective of continued access and use in the long term, only possible if it is integrated effectively in the management processes of the organizational information system, from the production / capture phase to its selection and long-term storage.
 
-##Introduction
+This positioning is embodied in the developed Model, a municipal approach which has a particular interest to be adapted by other municipalities. In fact, it could be a guide for the development of the organizational, informational and technological framework that will lead, for example, to the certification of the Digital Archive.
 
-This article describes a new, emerging way to shed light on a complex dataset and to communicate the findings with a broad audience. We begin this process with some exploratory data analysis, then create interactive visualizations and embed them within a narrative using infographics. We illustrate the concepts using data from 30 seasons of the TV game show Jeopardy!. Our findings uncover interesting patterns, both qualitative and quantitative, and explain our use of popular technologies during each phase of the process <a href="#fn1" id="ref1">[1]</a>. In this paper, we describe in detail the process by which we explored the data and built the visualizations that underlie that work.
+The design of a Digital Archive / Repository, reliable and put in a long-term perspective, demands precisely an IM integrated approach that comprises the whole information lifecycle, assuming preservation and security as two linked criteria to be observed along with. The main goal is to provide the production, storage, use and availability of reliable, authentic, trustworthy and intelligible information.
 
-##Data
-The initial dataset, found on Reddit <a href="#fn2" id="ref2">[2]</a>, included qualitative data on over 200,000 Jeopardy! questions. It had data on the round that the question corresponded to, the questions and answers themselves, the dollar value of the question, and the show number and air date.
+A framework of main guiding instruments presented as being crucial is highlighted, identifying in the information security field, ISO/IEC 27001:2005; in the IT services management field, ITIL’s best practices and ISO/IEC 20000:2005; in the creation of the active and permanent information system, MoReq2010 in the information preservation field, ISO 14721:2012 – Space data and information transfer systems – Open Archival Information System – Reference Model,  ISO/TR 18492:2005 – Long-term preservation of electronic document-based information and ISO 16363:2012 – Space dates and information transfer systems –Audit and certification of trustworthy digital repositories.
 
-In our exploratory data analysis phase, we found several interesting results. For example, we found that the most frequent type of answers were related to geography. We also noticed, while looking at the average question value across years, that there was a large increase between 2001 and 2002. In 2001, the average question value was $496. It increased to $940 in 2002. With additional research, we found that the values doubled on November 26, 2001. This finding informed some of the subsequent decisions we made with respect to comparing episodes across time.
+The proposed Information Preservation and Security Model (IPSM) consecrates precisely, “the act of thinking about the Organization, its business processes and actors, its IS and the ITS that supports it” (Sousa, 2013). It promotes interdisciplinary teams that, in the Municipality of Porto, bring together the Municipal Direction of Information Systems (DMSI) and the Municipal Direction of Culture - Archives in order to design, implement and monitor the Municipality of Porto Policies, Strategies and Information and IT Management Plan. At the basis is a theoretical and methodological approach built on the contributions of a new IS paradigm (scientific and post-custodial) and the fundamental partnership Information Management / Technological Information Systems Management.
 
-In processing the data, we also found that the number of episodes varied by season. This was not a function of the show, but a result of data not being available in the earlier years. The source of the dataset posted on Reddit was J! Archive <a href="#fn3" id="ref3">[3]</a>, a "fan-created archive of Jeopardy! games and players."
+##INFORMATION PRESERVATION AS A VARIABLE OF INFORMATION MANAGEMENT 
 
-Because Jeopardy! is not just about the questions and answers, we decided to obtain additional data to complement what we already had. From J! Archive we scraped the individual episode scores. An example of the data is shown below.
+Information Management and particularly Information Preservation in a digital environment, presents itself as a concern to which several organizations and institutions try to answer, as it happens with traditional media.
+In the designated “digital challenge” there are two issues to be addressed (Pinto, 2010):
 
+1. the need to guarantee the intelligibility and the continued access to information, regardless of technological changes;
+2. the inseparable need of the unmistakable identification of the context of production of that information and of subsequent interventions.
 
-![1](images/1.png)
+Information unity demands that the preservation in a digital context is based on a multidimensionality that integrates: the physical dimension, the logical dimension, the conceptual / intellectual dimension and the essential dimension (Pinto, 2009a). The lifecycle of any information unit (simple or compound, “analogic” or digital) is essential for its preservation.
 
-The table in Figure 1 shows the scores for each contestant on the first 10 questions in the Jeopardy! round for a particular episode. For each episode, we collected the scores data for every question in each of the three rounds. Not only did this provide the question-by-question scores as well as the total earnings, but also it gave us a chance to explore the wagering dynamics of the Final Jeopardy! round. This quantitative data was used in four of our visualizations: the heat map, the game line plot, the scatter plot, and the bipartite graph.
+“Let's take, as an example, a higher education institution; a digital object will be created in an academic department, some information on the object will be in another department, the details on the author can be stored at some place in the records management unit, the object will be used by a number of pupils and employees, and a copy of the object can be sent to the library or archive for preservation, the library or archive employees can have access to some contextual information on the digital file or not. This object has a history of a long and complicated life, most of it unknown to the person who has to file it, probably, when it is at the end of its life history. If, nevertheless, the concept of continuity of the lifecycle will be taken into account so that the relevant information has been recorded along the way, and it is recognized that all the divisions, departments or sectors of an organization are responsible for this object in particular, then its longevity and the perspectives of reuse are substantially higher” (Beagrie, et al., 2008).
 
-##Process and Related Work
-###Contestant and Gender Infographics and Line Chart
-We did not want to immediately present the people viewing our initial visualization with something too dense and complex. We have deeper more multidimensional visualizations later on, so we wanted to ease people into it. Narrative was important to us, so we wanted to start lower on Cairo's visualization wheel <a href="#fn4" id="ref4">[4]</a> and then move upwards. 
+This is an approach that, given the challenges of managing information systems that are completely digital or hybrid, assumes information preservation as a variable of information management, maintaining the focus on the info-communicational phenomenon and processes, which are supported by the systemic theory and embodied in the model of the Active and Permanent Information Management System (SI-AP), which is: 
 
-![2](images/2.png)
+“…an alternative to empirical methodologies and that is the methodological base - to approach an information management cycle that, from its planning phase, comprises the production, capture and collection of information, its processing / organization, its flow, its appraisal and disposition, its storage, its use and dissemination, as well as its management / maintenance, assuming information preservation as a variable of information management present in all this cycle (also summoning  the areas of Information Behavior and Information Organization) and susceptible of being considered either in scientific studies, or in the resolution of concrete cases, maintaining the goals to guarantee the authenticity, reliability, integrity and intelligibility of information, as well as the continued access in the long term” (Pinto, 2009b).
 
-The narrative begins by telling people a bit how contestants end up getting on the show. We found pictures of the Jeopardy! podiums on Google Images, traced them in Rhinoceros (a CAD software) and imported the vectors into Illustrator to add color and text. The podiums were a way to start out the narrative in a playful way with simple numbers. The illustrations are familiar, light and decorative. The numbers provided are uni-dimensional. The fonts displayed are the actual fonts used on Jeopardy!.
+##AN ACTIVE AND PERMANENT INFORMATION MANAGEMENT SYSTEM
 
-![3](images/3.png)
+An Active and Permanent Information Management System considers the whole information lifecycle, the information multidimensionality and the “several” interoperabilities. It requires an information management with quality based on the definition of the Information Management Policy that will guide the Information Management System. Its implementation assumes the need for evolving from a most common approach at the level of a Documental Management System, supporting the business”, to a Management System for Records (MSR), as proposed by ISO 30300 and ISO 30301.
+In this context, tools as MoReq2010 (Modular Requirements for Records Systems) are a fundamental guide. It establishes good practices concerning the design of information systems (VIEIRA, et al, 2011) and it determines minimum requirements that an information system must respect, after the technical / IT requirements are defined. 
+The core functional requirements of MoReq2010 are gathered in nine service definitions: 
 
-We then quickly transition into the “so what?” part of the narrative. In the illustration of the hands holding buzzers, we are pointing out that not only do fewer females win than males, but also they win less in proportion to the number of female contestants. The graphic of a hand holding a buzzer was image traced in Adobe Illustrator. 
+1. User and Group Service;
+2. Profile Service;
+3. Classification Service;
+4. Model Metadata Service;
+5. Disposal Scheduling Service;
+6. Disposal Holding Service;
+7. Searching and Reporting Service;
+8. Export Service; and
+9. Record Service.
 
-![4](images/4.png)
+The set of these services describes, precisely, the features of a MoReq2010 ® Compliant Records System (a MCRS). 
 
-The first chart we have on the page shows the percent of female contestants and the percent of female winners from 1984-2014. Looking at Few's chapter on time-series analysis <a href="#fn5" id="ref5">[5]</a>, we see that the height of the chart is important. Making it too short makes the variability difficult to detect. Making it too tall can exaggerate the variation and mislead the readers. Our goal with the height was to balance those extremes to show more females are coming onto the show and winning, but the changes are not drastic. We are also using the Gestalt principle of similarity. The yellow color for female and blue for male matches the human isotypes in the next graphic. And the line type for contestant percentage and win percentage matches across genders. 
+![](images/fig1.png)
 
-Another project from Few that was helpful in making this visualization was the stacked area chart on government spending <a href="#fn6" id="ref6">[6]</a>. In particular the suggestion to use tooltips to give extra information without cluttering the whole graphic was helpful.
+Figure 1 provides an overview of the basic structure of “Services” and it will guide the work to be developed in several phases (lifecycle, hardware, software and services phases, in line with the proposed by MoReq2010). The Preservation Management Service should be comprised of the structure that consists of a set of features that will allow the implementation of the necessary policies for Information Preservation.
 
-![5](images/5.png)
+![](images/fig2.png)
 
-Inspiration for the isotypes of people came from the project Cairo cited by Otto and Marie Meurath about Home and Factory Weaving in England <a href="#fn7" id="ref7">[7]</a>. The goal is to communicate a simple idea with clarity and power. Showing the stark contrast in the number of male and female writers should send a strong message about what could be causing the gender gap in Jeopardy! wins. Raster images of human icons were image traced in Illustrator to convert into editable vectors. The colors were changed and moustaches were added in homage to Alex Trebek.
+Thus, figure 2 follows the previous one, since it illustrates at a high-level the Digital Information Preservation Management Service in the Municipality of Porto, where supported by the OAIS model we can specify the main steps of the process: entry / ingestion (SIP), processing / management (AIP) and information dissemination (DIP) in the digital repository.
+ 
 
-![6](images/6.png)
 
-###Exploratory Data Analysis using Tableau
-The Jeopardy! dataset from J! Archive has about 200,000 questions, answers and information covering different aspects of the game show. Also given that, arguably, the main component of the data - the questions and answers - was text, it was therefore much more challenging to visualize. However, we wanted to investigate if there were any underlying trends within this data. An overlying question or hypothesis that we were trying to answer was: Is there a smart way to study/prepare for Jeopardy!?
+##INFORMATION STRUCTURE SUPPORTING THE INFORMATION PRESERVATION MANAGEMENT SERVICE
 
-Below we outline the main steps of the exploratory analysis that formed the foundational insights of the main visualization:
+The need of the Municipality of Porto to certify the digital repository leads to the need to create an Information Preservation Plan. So being, and as a starting point, one established the need to create the bases for the construction of this Plan as one of the instruments supporting the certification of the digital repository, together with the Information Security Plan .
 
-__Step 1:__ We looked at the distribution of the number of records by air date (see Figure 7).
+For the creation of the Information Preservation Plan in a digital environment and consequently the implementation of the certification at the level of the digital repository, the first proposal was to create the whole specification support structure.
 
-![7](images/7.png)
+Therefore, it was necessary to approach two fields and understand the deficiencies at a documental level in order to be able to work in the context of Information Preservation, and to contribute to the creation of a Preservation Plan in the area of the reliable digital repository.
 
-This helped us clearly see that there was a big jump in the collected data. This data has been mostly created by voluntary work of fans, and has been more diligently done after 1995. To deal with this, we decided to analyze all of our data by grouping them into 3 categories: 1984-1995, 1996-2002 and 2002-2012. The second dip was probably created as an aftermath of the 9/11 attacks, when there was either a dip in the airing of the show or in its recording and archiving by fans. This insight helped us identify more meaningful trends in the data and rule out any bias created by the lack of data.
+Taking into account the collection of the normative instruments, namely ISO 16363 and ISO 18492, models and guides of existing good practices such as the cases of London (Guildhall library manuscripts and london metropolitan archives, 2004) and Sheffield Municipalities (Sheffield archives and local studies group, 2007) a documental support structure was prepared, referred as Specification Support Documents (SSD) that intend to be practical guides, i.e. information bases, which will have to be consulted and followed, so that the Information Security and Preservation Model of the Municipality of Porto can be developed, an essential contribution for the certification process of the digital repository.
 
-__Step 2:__ The next step was to look at the categories over time to try to see if there any categories that are larger in proportion so that they can be considered more prominent. Traditionally, fans have always suspected "Potpourri" to be a very popular category, but our analysis revealed different results. The graph below, based on our analysis, shows "Before and After" to be at the top followed by "Science", "Literature" and "American History" before the crowd favorite "Potpourri".
+So, the documents structure that will support the Information Preservation Plan implementation, which is, in this 1st phase, focused in digital media, stands out: the Preservation Plan; the Preservation Strategy; the Preservation Policy; the Identification and Evaluation of Formats; the Information Systems Identification; the Mission Statement; the Guard Agreement; the Contingency Plan and the Disaster Recovery Plan. 
 
+![](images/fig3.png)
+ 
+As a main conclusion, we can think that, both the preservation and the security of the information face enormous challenges, coexisting risks, because one of the main concerns is to secure the existence of an IM that is efficient and takes into account the current problems, resulting especially from the digital medium, being this a reality of which many organizations have only recently become aware.
 
-![8](images/8.png)
+##INFORMATION PRESERVATION AND SECURITY MODEL
 
-__Step 3:__ To provide more context, we plotted how this varies by season as well. This provides some interesting insights. "Before and After" did not exist as a category until 1996. Yet, after that, it has gone on to become the most popular category. In almost all the cases, there seems to be a peak in 1996-2002, even though this is not the largest category in terms of duration. This seems to have been a relatively less imaginative period in the history of the show when categories were repeated more often.
+The Information Preservation and Security Model (IPSM) consists of a high-level representation that is an inseparable precondition for the development of a Preservation Plan, and, in the medium term, to the achievement of a strategic objective such as the certification of a Digital Repository. It brings together the Information Management System (IM) and the IT Service Management (ITS) in a holistic and integrating vision that will guide the development of several plans that involve the IS and the ITS of the Municipality of Porto.
 
-Another insight is how many topics seem to have an overlap. Many are vague, others overlap, and most seem to relate to Geography. Is there something to that?
+It has the potential either of being replied by other municipalities or, at least, being used as part of a guiding framework that will lead to the creation and certification of an organizational digital archive, as a preservation repository.
 
+Organically, it is possible to see in the illustrated model (Figure 3), the importance and the inter-relation between the Information Security Policies and the Information Preservation Policies, based on a shared Information and IT Management Policy, and the related Plan, under the monitoring of an Information and IT Management Commission. This top-level/strategic commission will supervise the Security and Preservation Commission, composed by staff members from Technological Information Systems Unity and Information Management/Archives Unit. This team shares an holistic and integrated vision of the plans to be developed, as well as the perspective either in physical terms (infrastructures/ material medium), or in logical terms. 
 
-![9](images/9.png)
+![](images/fig4.png)
 
-Another view of the same data:
+So, starting with the Information Preservation and Security Commission (IPSC) and its control, it’s action should be based on a set of essential documents, among which stand out the Information Security Policy and the Information Preservation Policy.
 
-![10](images/10.png)
+As common Policies to both areas (Preservation and Security) to be established by IPSC, we can find: Information Classification Policies; Access Management Policies; Internet Access Policies and Electronic Mail Use Policies. As for the Information Preservation Policy, its main components are: Information Preservation Management System; Physical Preservation Policy; Digital Preservation Policy; Archival Storage Policy; Preservation Operations and Services Management Policy.
 
-__Step 4:__ The questions are harder to analyze since they obviously need a lot of contextual information. And, after all, they form the crux of the show. One option was to try to categorize these questions into higher-level categories using Natural Language Processing (NLP), but that path took us nowhere. We soon discovered that reducing 28,000 categories would take more time than we had.
+Regarding the Information Security Policy, it contains as fundamental elements: Information Security Management System (ISMS); Physical and Environmental Security Policy; Internet Security Policy; Operations Management Policy; Back-up Policy; Password Management Policy and Clean Desk Clean Screen Policy.
 
-The next meaningful step was then to look at the answers. We didn't really know what to expect, but the answers definitely were interesting.
+All these constituent elements, both of Information Preservation and of Information Security, that together will be fundamental to building the Information Preservation Plan and Information Security Plan of the Municipality of Porto.
 
+As an attribute of the IPSC, there will also have to be implemented a Digital Preservation Planning Committee (DPPC) that should act as an advisory group for projects and development of systems inside the Municipality of Porto concerning digital preservation. The DPPC will develop policies for the preservation, meta-information levels and preservation actions included in the Digital Information Preservation Plan of the Municipality of Porto, based on stakeholders’ requirements, the priorities for the institution and the best practices. The Committee will inform the requirements of the system for the implementation of these policies.
 
-![11](images/11.png)
+A need and alert are even more justified if we take the base currently used as guidance for the Public Administration concerning Documental Management as a comparison point. In fact, it is a vision that is confined to a specific extent but that can promote the idea of uniformity, simplicity and linearity that does not correspond to the complexity and to the quick changes that the organizations and institutions face in the current society.
 
-The standout commonality - everything again seems to be related to Geography. Knowing your countries may not be a bad place to start.
+There are different models, methods, technical methodologies and tools at our disposal to build, with efficiency, an Information Preservation Plan, but, we cannot do so without an holistic, systemic and integrated vision, concerning the organizational policies and strategies with a broader scope, as the IM and IT Policies and Strategies. This top-level document is the basis of a process that includes the preparation of a Digital Preservation Plan. In the other hand, this plan is an element of the documental structure that supports organizational IM, being, also, one among other instruments that needed to be created for the certification of the Repository.
 
-__Step 5:__ Now that we had a set of answers that seem to be popular, we wanted to check how these questions and categories map to each other. Even though these form a very minor fraction of the total number of distinct answers (88,000 of them!), this graph shows the categories that had the answer featured at least two times, and, as we can see, there are not so many. If we filter to include categories for which each question has at least four occurrences, this further drops to just two category-answer combinations. There are a large number of specific categories for which each answer comes up once, obviously not all related to Geography. Therefore, even if all the answers seem heavily pointing towards Geography, we cannot pick that out unless we group the categories.
+As shown in Figure 5, our positioning points that IM and IT Policies and Strategies must appear upstream and as a cornerstone in this process, thinking jointly IM and IT areas and aligning them with organizational policies and strategies. 
 
-![12](images/12.png)
+Based on these are establish both the Information Preservation and Information Security policies, and consequent Plans, followed by the creation of several instruments, such as classification plans, subject lists or appraisal and disposition tables.
 
-__Conclusion:__ While Geography seems to be a strong contender, unless we can group categories together we may not be able to identify an overarching favorite.
+![](images/fig5.png)
 
-Another realization was that maybe we should have subdivided the dataset before analyzing these questions. The most sensible division was one based on the rounds in the game. So, our next hypothesis was: Is there a difference between Single Jeopardy!, Double Jeopardy! and Final Jeopardy! in terms of the content?
+##CONCLUSION
+As it is possible to easily infer, as we come across a more and more digital world, we can never neglect the issues that it raises, particularly concerning information preservation and security. IM must guarantee continued access in the long term and is an essential and indispensable resource and instrument of the persistence and memory of institutions, organizations and persons.
 
-Below we outline the main steps of the exploratory analysis that revealed more information about our hypothesis. 
+As Pinto (2004) referred, “after the technological jump it was necessary to undergo the basic “change of the organizational structure of the Public Administration” and the corresponding “change of the organizational culture”, in the context of a society characterized by the capacity of its members (Citizens, Enterprises and State) to instantly obtain and share any kind of information and knowledge, from any place and in the most convenient form”.
 
-__Step 1:__ We started this process by identifying the most popular categories for each round of the show. 
+A Reliable Digital Repository, and the inherent guarantee of the attributes of authenticity, integrity, accuracy, intelligibility and preservation of information in the long term, requires the definition and implementation of the appropriate Policies, Strategies and Plans. The focus should be on the entire information lifecycle, including the design of the technological platform, the production / capture, the flow, the organization, representation and description, the appraisal / disposition, the storage, the preservation, the access and the use of information, in the framework of a holistic and integrated approach of the management of the Information System and the Information Technologies.
 
-This turned out to be a lot harder than we expected because of the technical challenges involved. Initially, to filter by "Round", we tried to use the simple filter option available for each category. Following is a query of that nature: "Filter by Top 10 on Count of Number of Records in Round" to try and select the top ten questions and then control this using a user filter to select the round. However, this did not work. It just retained the same questions that were used to define the query, and, on user modification, it filtered out the same list. 
+It is possible to observe the dimension and importance of the inter-relation between Information Preservation Policies and Information Security Policies. Nevertheless, these must be based on a more general Policy such as that of IM and IT, and on the respective Plan.
 
-A little research identified the right method to perform an operation of this sort. It was to create a "Calculated Field" and use that to create a ranking of elements within a subcategory. A very useful related work to understand this was an article written in the Tableau Knowledge base <a href="#fn8" id="ref8">[8]</a>, which describes "Finding the Top N Within a Category" where the authors use a parallel of identifying Sales within a region. The corollary in this case was identifying the top categories within a round. 
+Therefore, it is confirmed the need to implement a true AP-IS that encompasses the whole information lifecycle, the multidimensionality and the interoperability. In addition to information preservation in digital media (as is the case with digitized documents), the true problem concerns the born digital generation, as there is not a paper version of these objects, which makes all this process imbued with greater complexity.
 
-In our case, we were able to identify the top categories by each round of Jeopardy!.
+So, one can see the relevance of information preservation in digital media. It should be thought of as a set of actions orientated and regulated under the designation of Preservation Management Service, to be developed in the context of IM, integrating a structure of IM Services in a future Information Management System.
 
-![13](images/13.png)
+At the basis we can find Information, as a human and social phenomenon, and an Information Management assumed as a cross-sectional and applied area in Information Science and defined as the study, conception, implementation and development of processes and services related to infocomunicacional flow, allowing the construction of implementation models for maximum efficiency and profitability (Pinto, 2015:547).
 
+ 
+##REFERENCES
 
-__Step 2:__ To add to the categories, we found the top answers in each category. 
+Brandão, M. (2010). Arquitectura de Sistemas de Informação alinhada com a política de gestão de informação das unidades orgânicas na Câmara Municipal do Porto. Tese de mestrado integrado, Universidade do Porto, Faculdade de Engenharia, Porto, Portugal.
 
-Insights from the “answers and questions by category” section were heavily influenced by an article we came across on Slate, which had published an article on Jeopardy! <a href="#fn9" id="ref9">[9]</a>.
+GUILDHALL LIBRARY MANUSCRIPTS AND LONDON METROPOLITAN ARCHIVES (2004). Interim Digital Preservation Policy. City of London – Libraries, Archives and Guildhall Art Gallery Department. Retrieved December 17, 2013, from
+http://www.history.ac.uk/gh/digprespol.pdf
 
-![14](images/14.png)
+ISO 14721:2012. Space data and information transfer systems – Open Archival Information System – Reference Model. Geneva, Switzerland: ISO, 2012.
 
-The analysis showed how a certain theme could be identified in each round. To quote the article, "Using this method of analysis, a portrait of the first round starts to emerge—and it looks like grade school. Double Jeopardy!, meanwhile, is more like college, with a touch of the yacht club while Final Jeopardy! screams patriotism, with a dash of diplomacy and a dearth of science".
+ISO 16363:2012. Space data and information transfer systems – Audit and certification of trustworthy digital repositories. Geneva, Switzerland: ISO, 2012.
 
-__Step 3:__ We also wanted to analyse how categories varied over time. We felt that our earlier analysis showed a clustering of category repetition during a specific time frame, and we wanted to check if this extended into each round as well. Screenshots of this can be seen on the dashboard below.
+ISO/TR 18492:2005. Long-term preservation of electronic document-based information. Geneva, Switzerland: ISO/TR, 2005.
 
-__Step 4:__ We then created a dashboard to show the variation with airdate. This was based on a very similar dashboard that we came across on Tableau, which used heat maps to analyze time-based data.
+ISO/IEC 20000:2005. Information technology -- Service management. Geneva, Switzerland: ISO/IEC, 2005.
 
-![15](images/15.png)
+ISO/IEC 27001:2005. Information technology – Security techniques – Information security management systems – Requirements. Geneva, Switzerland: ISO/IEC, 2005.
 
-###Exploring the wagers data
-This was a two-stage process. We started with some manipulation in Python to aggregate the data in the format we needed. The original data had the progress by each question, and a cumulative score per contestant after each question in the game. After transforming it to get the total by round and the individual wagers, we explored the data in Tableau.
+Oliveira, H. A. (2014). A Preservação da Informação: um contributo para a implementação de um Arquivo Digital Certificável no Município do Porto. Dissertação de Mestrado. Universidade do Porto, Porto, Portugal.
 
-Here, we outline the process we followed when doing an exploratory data analysis of the data about the different wagers:
+Pinto, M. M. (2015). A Gestão da Informação nas Universidades Públicas Portuguesas: Reequacionamento e proposta de modelo. Tese de Doutoramento em Informação e Comunicação em Plataformas Digitais, Universidade do Porto, Faculdade de Letras, Porto. Universidade de Aveiro, Departamento de Comunicação e Artes, Aveiro, Portugal.
 
-__Step 1:__ Determine the relative standing of the contestants in Single Jeopardy! and Double Jeopardy!.
+Pinto, M. M. (2011). Da transferência de suporte ao Sistema de Informação Organizacional: Um posicionamento urgente e estratégico. Seminário - (R)evolução da Informação Pública: preservar, certificar e acessibilizar. Lisboa. Retrieved November 10, 2015, from http://hdl.handle.net/10216/74220.
 
-This was done mainly with the intention of identifying whether there was a clear and dominant winner through the game. We felt that the game was structured such that there were enough points to cause fluctuations in the player standings. We found that the data supported this assumption. We also used this data to develop a D3 visualization and show this flow. 
+Pinto, M. M. (2009a). Preservmap: Um roteiro de preservação na era digital. Porto: Edições Afrontamento. Coleção: Comunicação-Arte-Informação; 8. ISBN: 972-36-1070-1.
 
-__Step 2:__ We wanted to see how a player's standing changed during each game, the wagers they made based on their positions and their final standing. We looked at different lists at this point: the top twenty games for which the players had made highest individual earnings, the games for which there was a minimum difference between the top two places and finally we settled on games for which there was a maximum total earnings. Since everyone did well, these games showed more fluctuation in the relative standing of the players during the game.
+Pinto, M. M. (2009b). Gestão da Informação e preservação digital: uma perspectiva portuguesa de uma mudança de paradigma. CONGRESO ISKO-SPAÑA, 9, Valencia. Nuevas perspectivas para la difusión y organización del conocimiento: actas. Valencia: Universidad Politecnica de Valencia. pp. 323-355. Retrieved December 2, 2015, from http://hdl.handle.net/10216/25380.
 
-__Step 3:__ Creating a meaningful dashboard that showed this data in an easy-to-read manner with sufficient explanation to allow users to understand the content and interact with it. 
+Pinto, M. M. (2004). Gestão integrada de sistemas de informação em autarquias locais: uma abordagem sistémica. Porto: Universidade do Porto. Faculdade de Letras. Retrieved October 25, 2015, from http://hdl.handle.net/10216/7733.
 
-![16](images/16.png)
+SHEFFIELD ARCHIVES AND LOCAL STUDIES GROUP (2007a). Preservation &
+Conservation Policy. Retrieved November 13, 2013, from
+https://www.sheffield.gov.uk/dms/scc/management/corporatecommunications/
+documents/leisure-culture/libraries-copyright/archivespolicies/Preservation-and
+Conservation-Policy--PDF--73-KB-.pdf
 
-###Parallel Coordinate Visualization
-We wanted to explore the top 50 contestants who had the most earnings in the game's history. We also wanted to map these contestants to some of the features such as length of winning streak, maximum earnings in a day, their gender, the region where they came from and their occupation. 
+SHEFFIELD ARCHIVES AND LOCAL STUDIES GROUP (2007b). Digital Preservation Policy. Retrieved November 14, 2013, from https://www.sheffield.gov.uk/dms/scc/management/corporatecommunications/documents/leisure-culture/libraries-copyright/archivespolicies/Digital-Preservation-Policy--PDF--107-KB-.pdf
 
-We built a parallel coordinates visualization in which each contestant is represented by a line, and the different axes were the attributes such as total earnings, streak length in days, average earnings per episode, maximum earnings in a single day, USA region, occupation and gender.
+Silva, A. M., et al. (1999). Arquivística – Teoria e Prática de uma Ciência da Informação. Porto: Edições Afrontamento. ISBN: 9789723604832
 
-![17](images/17.png)
+Silva, A. M., Ribeiro, F. (2002). Das «ciências» documentais à ciência da informação: ensaio epistemológico para um novo modelo curricular. Porto: Edições Afrontamento (Biblioteca das Ciências do Homem. Plural; 4). ISBN: 972-36-0622-4.
 
+Sousa, P. (2013). Segurança e preservação da informação: um modelo para os Municípios. Dissertação de mestrado, Universidade do Porto, Porto, Portugal.
 
-The main skeleton of the parallel coordinates visualization was inspired by similar work here: http://bl.ocks.org/mbostock/1341021 <a href="#fn10" id="ref10">[10]</a>. This visualized the various aspects of a car such as economy, power, weight, etc., which we extended to our case in Jeopardy! using the various characteristics of the contestants as axes.
-
-####Brushing and Linking
-We incorporated brushing and linking into the parallel coordinates visualization. Brushing is a very effective technique for specifying an explicit focus during information visualization. The user actively marks subsets of the dataset as being especially interesting, for example, by using a brush-like interface element. If used in conjunction with multiple linked views, brushing can enable users to understand correlations across multiple dimensions. This allows the user to filter the data based on particular values for multiple features at the same time. For example, in the picture below, we have used brushing to narrow down the seasons (23 -25), average earnings per episode ($18,000 to $30,000) and average final wager percentage (40 - 60%) all at the same time. This gives the user a lot of flexibility to play and narrow down the data.
-
-We referred to the paper "Angular Brushing of Extended Parallel Coordinates" by Helwig Hauser, Florian Ledermann, and Helmut Doleisch <a href="#fn11" id="ref11">[11]</a>, which discusses the extensions of the parallel coordinates visualizations specifically brushing and axes reordering. The article discusses how brushing and axes ordering allow users to explore the data better, and identify connections or patterns easily. We tried to incorporate these features into our visualization so that we could provide more flexibility and functionality to the users.
-
-![18](images/18.png)
-
-####Axes Reordering
-We added a feature in the parallel coordinates visualization that allows the user to reorder the axes by dragging them into a particular gap (between two other axes), after which the axes automatically position themselves.
-
-![19](images/19.png)
-
-####Tooltip
-We added a tooltip to identify each contestant in the line graph. Since there were a lot of interesting outliers, or extremes in the data, we decided to use a tooltip so that users can directly relate to the player when they (users) see something interesting. Another important tweak that we added was to highlight the entire path of the contestant that was selected, so that the user can focus on that particular contestant across all axes. In the figure below, we can see that the user wanted to know more about the top yellow line (yellow represents females) –the female contestant who has the highest earnings. Not only does the tooltip display the name of the contestant, but also the user can focus on the values of that contestant across all axes because of the highlighted line.
-
-![20](images/20.png)
-
-In his book Now You See It, Stephen Few talks about "Details on Demand" <a href="#fn12" id="ref12">[12]</a>. Few describes the need for precise details that cannot be seen just by looking at the data. He proposes a way to access that detail without departing from the rich visual environment called "details on demand", "a feature that allows the details to become visible when we need them and to disappear when we don’t." This reduces clutter and distractions on the screen. We took a cue from Few and tried to implement this for most of the visualizations such as the line charts, parallel coordinates and the calendar heat map.
-
-
-####Gender Divide
-Once we included gender, occupation and USA region, we observed that there was a strong skew in favor of males - there were 42 males and only 8 females in the top 50 contestants. We decided to highlight this issue under the gender divide section, so we removed gender as an axis and used colors (used across all visualizations to represent genders) to distinguish the gender of a contestant.
-
-###Slider
-Working with 30 seasons of Jeopardy! data challenged us to think of effective ways to display the data. In many applications, such as with a scatter plot, showing too many data points can detract from the goal of a visualization. Filtering, as Stephen Few defines, "is the act of reducing the data that we're viewing to a subset of what's currently there" <a href="#fn13" id="ref13">[13]</a>.
-
-![21](images/21.png)
-
-A slider, because of its horizontal layout, which can be indicative of a time-based relationship, was a logical choice for us to filter the Jeopardy! data. This was created using an HTML range object. In addition to including the minimum and maximum values on the left and right sides of the slider, respectively, we added a season label above it. This works using two functions. First, the user gets immediate feedback on the position of the slider with the use of the oninput event; this updates the season label based on the slider position, letting users know which season they would select were they to release the slider. The second function makes use of the onchange event, which actually triggers a change in the data filter. For more information on these functions, see the onchange vs. oninput for Range Sliders article <a href="#fn14" id="ref14">[14]</a>.
-
-###Heat Map
-Drawing inspiration from the exploratory data analysis in Tableau, specifically the heat map on the categories and answers, we chose to use a heat map to provide an overview of the earnings data. The heat map was created using a web API (no longer available), though we slightly modified the JavaScript for our purposes.
-
-We first started by exploring the data by year, which is a natural way to consider time series data. We then realized that the earnings information covered two seasons and that it would show a gap during the summer when the show is off the air. Based on this, we decided to visualize the data at the season level. We also made the decision to separate each calendar month. This was intended to make it easier for users to target a specific date. The labels are also meant to aid in that process.
-
-![22](images/22.png)
-
-There are seven squares in (almost) every column of the heat map, each representing a day of the week. The gray squares are ones without data; this is for either the summer, the weekends, or days with missing data. The two rows of gray squares at the bottom help frame the blue-shaded ones.
-
-Because the heat map covers an entire season, we decided to structure it by month. In the heat map, each square corresponds to a particular date, and the darkness of the shading indicates the earnings level. As Stephen Few describes, "there are times when we need to see precise details that can't be discerned in the visualization" <a href="#fn15" id="ref15">[15]</a>. This is the case with the heat map. It is intended to show a general overview of the earnings in a particular season. To Few's point, we added a tooltip, or "pop-up box", as he calls it, to the heat map to show additional information when a square is moused over. (On mobile devices, an individual square must be clicked on.) The squares show the relative earnings on a particular episode and are based on the following range: [10000, 25000, 40000, 55000]. For example, there is a shade for less than 10,000, between 10,000 and 25,000, etc.
-
-###Linking Line Chart
-We implemented Few's concept of "focus and context together" using the linking line charts. After we built a calendar heat map to display the total and average earnings for each of the episodes for a particular season, we integrated it with a slider that allows the user to switch through the different seasons. We decided to link a line graph to the episode heat map so that, when a particular episode for the heat map is clicked on, a line chart is generated that shows the entire flow of the game on that particular episode. The line chart was developed using highcharts and has a line for each of the three contestants. The colors for the three lines in the line chart carry over from the ones we have used to denote positions across the entire site (gold for first, silver for second and bronze for third).
-
-We integrated a tool tip for the line charts based on Few's "Detail on Demand" <a href="#fn16" id="ref16">[16]</a>. The tool tip shows scores after a particular question when a user mouses over at a point on one of the lines in the highcharts. We plan to add the contestant names in the future so that the user can get a better understanding of who was playing. We will have to merge multiple datasets on a primary key to include the contestant name.
-
-The toughest challenge that we faced in integrating the line chart was to filter the data based on the date corresponding to the square that was clicked on the season heat map. We also defaulted to the first episode of the season when the slider was moved to change to a different season.
-
-![23](images/23.png)
-
-###Scatter Plot
-Another facet of the game we were interested in exploring was the Final Jeopardy! wagers. As shown below, the biggest potential for earnings and position changes occurs in the Final Jeopardy! round. To explore how contestants make wagers, we created a scatter plot of wagers against earnings.
-
-On the x-axis, we plot the earnings going into the Final Jeopardy! round. The circles are colored based on the contestants' position at this point in time. We decided that this was more indicative of the types of wagers contestants make. 
-
-![24](images/24.png)
-
-For example, we can see that, in general, contestants in third place, identified by the bronze color, wager all or close to all of their earnings. An additional feature we added was the ability to discriminate between objects by increasing the size of the circle that is moused over. As Cairo explains, "the brain groups similar objects (the rectangles of same size and tone) and separates them from those that look different" <a href="#fn17" id="ref17">[17]</a>.
-
-While the first place contestants place higher wagers, they place the lowest wagers on a percentage basis. This is why we included a dropdown menu for users to select between an "actual" and "percentage" view. (The circle that was called out in the previous screenshot is called out again below.)
-
-![25](images/25.png)
-
-We also thought significantly about transitions with this data. When transitioning between the actual and percentage views, we decided to keep the circles the same colors, but change their size by making them slightly smaller during the transition and then returning to their regular size. This was done to signal that the circles in each view correspond to the same data point (contestants). In contrast, when changing between seasons, the circles change to black on the transition so that it's clear that the circles refer to other data points.
-
-###Bipartite Graph
-
-![26](images/26.png)
-
-The idea and concept for this visualization was directly related to the exploratory analysis we did earlier. This visualization was effective in showing how the players changed their positions before and after Final Jeopardy!. While not the most common occurrence, it is nevertheless sufficient to talk about.
-
-This visualization was strongly based on a D3 example for Bipartite graphs <a href="#fn18" id="ref18">[18]</a>.
-
-We used this as reference to create the visualization using data cleaned and generated by Python, and fed directly into this backend. This shows the percentage in each category before and after the main action - the final wager. It re-enforces the ideas discussed in the exploration dashboard.
-
-![27](images/27.png)
-
-###Jeopardy! Game Board
-
-After people reached the end of our visualization, we wanted to give them something fun to play with at the end of the game. It is an interactive activity that we thought would be entertaining for groups of people. Most of the facts used on the board were collected from Wikipedia, blogs and other articles <a href="#fn19" id="ref19">[19]</a> <a href="#fn20" id="ref20">[20]</a> .
-
-
-We wrote the questions ourselves, devised a way to categorize them and used Justinmind, an interface prototyping tool, to make the game interactive. We looked up articles on the fonts used in Jeopardy! [21], downloaded them and used them on this board (as well as the title of the webpage) to make it all look authentic.
-
-
-
-##Acknowledgements
-
-We would like to thank Professor Hearst, without whom this work would not have been possible. Her thoroughness in feedback and her encouragement were instrumental during our progress. We gained valuable knowledge from Alberto Cairo's "The Functional Art". We benefitted greatly from the various D3 examples on www.bl.ocks.org. We would also like to thank the team at The iSchool Review for patiently working with us to publish this.
-
-##Interactive Visualization
-[http://people.ischool.berkeley.edu/~japple/jeopardy/](http://people.ischool.berkeley.edu/~japple/jeopardy/ "http://people.ischool.berkeley.edu/~japple/jeopardy/")
-
-
-##Bibliography (Only Related Work)
-
-<sup id="fn1">1. Appleman, Gupta, Rajagopal, Shishido, Hearst, Exploring Data For Fun And Profit: Case Study of Jeopardy! Poster, IEEE Infoviz, October, 2015. <a href="#ref1" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
-<sup id="fn2">2. 200,00+ Jeopardy questions in a JSON post, https://www.reddit.com/r/datasets/comments/1uyd0t/200000_jeopardy_questions_in_a_json_file . <a href="#ref2" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
-<sup id="fn3">3.	J!Archive, The fan created archive of Jeopardy! Players and games, http://j-archive.com/ . <a href="#ref3" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
-<sup id="fn4">4.	Cairo, Alberto. The Functional Art: An introduction to information graphics and visualization. New Riders, 2012. p. 51, Visualization Wheel . <a href="#ref5" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
-<sup id="fn5">5.	Few, Stephen. Now you see it: simple visualization techniques for quantitative analysis. Analytics Press, 2009; visualization Time series analysis (Pg 146) <a href="#ref5" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
-<sup id="fn6">6.	Few, Stephen. Now you see it: simple visualization techniques for quantitative analysis. Analytics Press, 2009; visualization project on government spending (Pg 305) . <a href="#ref6" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
-<sup id="fn7">7.	Cairo, Alberto. The Functional Art: An introduction to information graphics and visualization. New Riders, 2012 p. 72 Project by Otto and Marie Meurath about Home and Factory Weaving in England . <a href="#ref7" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
-<sup id="fn8">8.	Tableau knowledge base on Calculated Fields http://kb.tableau.com/articles/knowledgebase/finding-top-n-within-category . <a href="#ref8" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
-<sup id="fn9">9.	I'll Take Jeopardy! Trivia for $200, Alex,  Jeremy Singer-Vine, http://www.slate.com/articles/arts/culturebox/2011/02/ill_take_jeopardy_trivia_for_200_alex.html . <a href="#ref9" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
-<sup id="fn10">10.	Parallel Coordinates D3 http://bl.ocks.org/mbostock/1341021 . <a href="#ref10" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
-<sup id="fn11">11.	Brushing for ordinal variables http://bl.ocks.org/mbostock/4349509 . <a href="#ref11" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
-<sup id="fn12">12.	Few, Stephen. Now you see it: simple visualization techniques for quantitative analysis. Analytics Press, 2009; Data on Demand, pg 116 . <a href="#ref12" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
-<sup id="fn13">13.	Few, Stephen. Now you see it: simple visualization techniques for quantitative analysis. Analytics Press, 2009; Filtering, pg 68 . <a href="#ref13" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
-<sup id="fn14">14.	onChange vs onInput for Range Sliders, Louis Lazaris, http://www.impressivewebs.com/onchange-vs-oninput-for-range-sliders/ . <a href="#ref14" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
-<sup id="fn15">15.	Few, Stephen. Now you see it: simple visualization techniques for quantitative analysis. Analytics Press, 2009; - Level of precision in detail [Page 87]. <a href="#ref15" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
-<sup id="fn16">16.	Few, Stephen. Now you see it: simple visualization techniques for quantitative analysis. Analytics Press, 2009; Details on Demand, pg 116 . <a href="#ref16" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
-<sup id="fn17">17.	Cairo, Alberto. The Functional Art: An introduction to information graphics and visualization. New Riders, 2012 p. 114 . <a href="#ref17" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
-<sup id="fn18">18.	Bipartite graph http://bl.ocks.org/NPashaP/9796212 . <a href="#ref18" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
-<sup id="fn19">19.	Jeopardy facts, Mashable.com, http://mashable.com/2014/03/30/jeopardy-facts/ . <a href="#ref19" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
-<sup id="fn20">20.	Jeopardy Trivia, Grandparents.com, http://www.grandparents.com/food-and-leisure/did-you-know/jeopardy-trivia
-Font used in Jeopardy, http://fontsinuse.com/uses/5507/jeopardy-game-show . <a href="#ref20" title="Jump back to footnote 1 in the text."> go back ↩</a></sup><br>
-
-
-
-
-<script type="text/javascript">
-
-// from http://stackoverflow.com/questions/17534661/make-anchor-link-go-some-pixels-above-where-its-linked-to
-$(document).ready(function () {
-    $('a').on('click', function (e) {
-        // e.preventDefault();
-
-        var target = this.hash,
-            $target = $(target);
-
-       $('html, body').stop().animate({
-        'scrollTop': $target.offset().top-100
-    }, 900, 'swing', function () {
-    });
-
-       console.log(target);
-
-       $(target).animate({backgroundColor: '#ddd1e7'});
-       $(target).animate({backgroundColor: 'white'}, 4000);
-
-       // $(target).animate({
-       //    fontWeight:400
-       //  }, 8000, function() {
-
-       // });
-
-
-        console.log(window.location);
-
-        return false;
-    });
-
-});
-</script>
-
-
-
-
-
+Vieira, R.; Borbinha, J. (2011). MoReq2010 – Uma Apresentação. 10º Encontro Nacional de Arquivos Municipais, Leiria, 4 e 5 Novembro, 2011: atas. Lisboa: BAD. Retrieved January 7, 2015, from http://bad.pt/publicacoes/index.php/arquivosmunicipais/article/view/19/9
 
 

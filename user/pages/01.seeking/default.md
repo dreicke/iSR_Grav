@@ -1,6 +1,6 @@
 ---
 title: Home
-published: true
+published: false
 ---
 
 <img src="user/images/isrlogo-sq.png" style="display: block; margin-right:auto; margin-left:auto; margin-top:2rem; width:350px;">

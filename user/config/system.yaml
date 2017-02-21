@@ -10,7 +10,7 @@ languages:
   http_accept_language: false
   override_locale: false
 home:
-  alias: /seeking
+  alias: /entries
   hide_in_urls: false
 pages:
   theme: isrtheme
