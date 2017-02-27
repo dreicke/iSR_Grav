@@ -35,11 +35,27 @@ author:
   </script>
 
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+<!-- <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script> -->
+<script src="//cdn.jsdelivr.net/jquery.color-animation/1/mainfile"></script>
+<script src="http://a11y.nicolas-hoffmann.net/modal/js/jquery-accessible-modal-window-aria.js"></script>
+
+<div id="endorsement" class="hidden modal">
+<p style="text-align:center; color:#3E0C46;"><em>from Dr. James G. Shanahan, Lecturer, UC Berkeley School of Information</em></p>
+<p>I am writing in support of the publication of the enclosed submission. Sorting lies at the core of data and data science. It is one of the most studied and documented areas of computer science. Sorting at scale though not a novelty has lacked a solid, clear, and thorough exposition. This submission addresses this need and provides informative details about the design, and development of total order sorting at scale in Map-Reduce frameworks such as Apache Spark, Hadoop and MrJob. As such it is very much a systems paper. The key contribution here is to provide a self-contained exposition of sorting at scale, a topic that few have described but is commonly required in practice. This submission contains an excellent introduction to total order sorting along with several self-contained examples in a Python notebook. For the practitioner, for the student, for the professor this is an amazing resource, introducing the basics while also demonstrating the key ideas through examples and working code. The authors provide an excellent example of data science in action, and this paper will be  highly instructive to students and teachers in information schools.</p>
+
+</div>
+
+<a class="js-modal" data-modal-prefix-class="simple-animated" data-modal-content-id="endorsement" data-modal-title="Endorsement" data-modal-close-text="Close" data-modal-close-title="Close this modal window">Endorsed by Dr. James G. Shanahan, University of California, Berkeley <i class="fa fa-external-link-square" aria-hidden="true"></i></a>
+
+
+
+
 ##Introduction
 
-In this notebook we are going to demonstrate how to achieve Total Order Sort via three MapReduce frameworks: hadoop streaming, MRJob, and Spark. Hadoop streaming and MrJob borrow heavily in terms of syntax and semantics from the Unix sort and cut commands, whereby they treat the output of the mapper as series of records, where each record can be interpreted as a collection of fields/tokens that are tab delimited by default. In this way, fields can be specified for the purposes of partitioning (routing), sometimes referred to as the primary key. The primary key is used for partitioning, and the combination of the primary and secondary keys (also specified by the programmer) is used for sorting.
+In this notebook we are going to demonstrate how to achieve Total Order Sort via three MapReduce frameworks: Hadoop Streaming, MRJob, and Spark. Hadoop Streaming and MrJob borrow heavily in terms of syntax and semantics from the Unix sort and cut commands, whereby they treat the output of the mapper as series of records, where each record can be interpreted as a collection of fields/tokens that are tab delimited by default. In this way, fields can be specified for the purposes of partitioning (routing), sometimes referred to as the primary key. The primary key is used for partitioning, and the combination of the primary and secondary keys (also specified by the programmer) is used for sorting.
 
-We'll start by describing the Linux/Unix sort command (syntax and semantics) and build on that understanding to explain Total Order Sort in hadoop streaming and MRJob. Partitioning is not just matter of specifying the fields to be used for routing the records to the reducers. We also need to consider how best to partition the data that has skewed distributions. To that end, we'll demonstrate how to partition the data via sampling and assigning custom keys.
+We'll start by describing the Linux/Unix sort command (syntax and semantics) and build on that understanding to explain Total Order Sort in Hadoop Streaming and MRJob. Partitioning is not just matter of specifying the fields to be used for routing the records to the reducers. We also need to consider how best to partition the data that has skewed distributions. To that end, we'll demonstrate how to partition the data via sampling and assigning custom keys.
 
 Lastly, we'll provide a Spark version of Total Order Sort.
 
@@ -84,7 +100,7 @@ So, for completeness, a typical MapReduce job consists of three phases (that are
     * reduce(key2, list(value2)) → list(key3, value3)
     * Reducer Final phase (tears down the reduce task and outputs the reduce state to HDFS if required)
 
-To perform a total order sort, one needs to override the default shuffle behavior by providing a custom partitioner, a custom sort specification (e.g., numeric/alphanumeric increasing decreasing, and a combiner (note: a combiner is not required for a total order sort but make the MapReduce job more efficient).
+To perform a total order sort, one needs to override the default shuffle behavior by providing a custom partitioner, a custom sort specification (e.g., numeric/alphanumeric increasing decreasing, and a combiner Note that a combiner is not required for a total order sort but makes the MapReduce job more efficient).
 
 ![Total Order Sort, Step 1](images/anatomyMR.png)
 
@@ -92,36 +108,37 @@ __Figure 1: Anatomy of a Map-Reduce Job from input data to output data via map, 
 
 ##Terminology
 
-Apache Hadoop is a framework for running applications on large clusters built of commodity hardware. The Hadoop framework transparently provides applications both reliability and data motion. Hadoop implements a computational paradigm named Map/Reduce, where the application is divided into many small fragments of work, each of which may be executed or re-executed on any node in the cluster. In addition, it provides a distributed file system (HDFS) that stores data on the compute nodes, providing very high aggregate bandwidth across the cluster. Both MapReduce and the Hadoop Distributed File System are designed so that node failures are automatically handled by the Hadoop framework. ([http://wiki.apache.org/hadoop/](http://wiki.apache.org/hadoop/))
+__Apache Hadoop__ is a framework for running applications on large clusters built of commodity hardware. The Hadoop framework transparently provides applications both reliability and data motion. Hadoop implements a computational paradigm named Map/Reduce, where the application is divided into many small fragments of work, each of which may be executed or re-executed on any node in the cluster. In addition, it provides a distributed file system (HDFS) that stores data on the compute nodes, providing very high aggregate bandwidth across the cluster. Both MapReduce and the Hadoop Distributed File System are designed so that node failures are automatically handled by the Hadoop framework. ([http://wiki.apache.org/Hadoop/](http://wiki.apache.org/Hadoop/))
 
-MRJob is a Python library developed by Yelp to simplify writing Map/Reduce programs. It allows developers to test their code locally without installing Hadoop or run it on a cluster of choice. It also has extensive integration with Amazon Elastic Map Reduce. More information is available at [http://mrjob.readthedocs.io/en/latest/index.html](http://mrjob.readthedocs.io/en/latest/index.html). 
+__MRJob__ is a Python library developed by Yelp to simplify writing Map/Reduce programs. It allows developers to test their code locally without installing Hadoop or run it on a cluster of choice. It also has extensive integration with Amazon Elastic Map Reduce. More information is available at [http://mrjob.readthedocs.io/en/latest/index.html](http://mrjob.readthedocs.io/en/latest/index.html). 
 
-Partial Sort - The reducer output will be lot of (partition) files, each of which contains key-value records that are sorted within each partition file based on the key. This is the default behaviour for MapReduce frameworks such as Hadoop, Hadoop Streaming and MrJob.
+__Partial Sort__ - The reducer output will be lot of (partition) files, each of which contains key-value records that are sorted within each partition file based on the key. This is the default behaviour for MapReduce frameworks such as Hadoop, Hadoop Streaming and MRJob.
 
-Total Sort (Unordered Partitions) - Total sort refers to an ordering of all key-value pairs based upon a specified key. This total ordering will run across all output partition files unlike the partial sort described above. One caveat here is that partition files will need to be re-stacked to generate a total ordering (a small post-processing step that is required after the map-reduce job finishes).
-Total Sort (Ordered Partitions) - Total sort where the partition file names are also assigned in order.
+__Total Sort (Unordered Partitions)__ - Total sort refers to an ordering of all key-value pairs based upon a specified key. This total ordering will run across all output partition files unlike the partial sort described above. One caveat here is that partition files will need to be re-stacked to generate a total ordering (a small post-processing step that is required after the MapReduce job finishes).
 
-Secondary Sort - Secondary sorting refers to controlling the ordering of records based on the key and also using the values (or part of the value). That is, sorting can be done on two or more field values.
+__Total Sort (Ordered Partitions)__ - Total sort where the partition file names are also assigned in order.
+
+__Secondary Sort__ - Secondary sorting refers to controlling the ordering of records based on the key and also using the values (or part of the value). That is, sorting can be done on two or more field values.
 
 ####Hadoop Streaming
 
-Hadoop streaming is a utility that comes with the Hadoop distribution. The utility allows a user to create and run Map-Reduce jobs with any executable or script as the mapper and/or the reducer.
+Hadoop Streaming is a utility that comes with the Hadoop distribution. The utility allows a user to create and run MapReduce jobs with any executable or script as the mapper and/or the reducer.
 
 ~~~~
-$HADOOP_HOME/bin/hadoop  jar $HADOOP_HOME/hadoop-streaming.jar \
+$HADOOP_HOME/bin/Hadoop  jar $HADOOP_HOME/Hadoop-streaming.jar \
     -input myInputDirs \
     -output myOutputDir \
     -mapper /bin/cat \
     -reducer /bin/wc
 ~~~~
 
-In the above example, both the mapper and the reducer are executables that read the input from stdin (line by line) and emit the output to stdout. The utility will create a Map-Reduce job, submit the job to an appropriate cluster, and monitor the progress of the job until it completes. When an executable is specified for mappers, each mapper task will launch the executable as a separate process when the mapper is initialized.
+In the above example, both the mapper and the reducer are executables that read the input from stdin (line by line) and emit the output to stdout. The utility will create a MapReduce job, submit the job to an appropriate cluster, and monitor the progress of the job until it completes. When an executable is specified for mappers, each mapper task will launch the executable as a separate process when the mapper is initialized.
 
 As the mapper task runs, it converts its inputs into lines and feeds the lines to the stdin of the process. In the meantime, the mapper collects the line oriented outputs from the stdout of the process and converts each line into a key/value pair, which is collected as the output of the mapper. By default, the prefix of a line up to the first tab character is the key and the rest of the line (excluding the tab character) is the value. If there is no tab character in the line, then the entire line is considered the key and the value is null. However, this can be customized, as discussed later.
 
 When an executable is specified for reducers, each reducer task launches the executable as a separate process, and then the reducer is initialized. As the reducer task runs, it converts its input key/values pairs into lines and feeds the lines to the stdin of the process. In the meantime, the reducer collects the line-oriented outputs from the stdout of the process, converts each line into a key/value pair, which is collected as the output of the reducer. By default, the prefix of a line up to the first tab character is the key and the rest of the line (excluding the tab character) is the value. However, this can be customized, as discussed later.
 
-This is the basis for the communication protocol between the Map/Reduce framework and the streaming mapper/reducer.
+This is the basis for the communication protocol between the MapReduce framework and the streaming mapper/reducer.
 
 ##Examples of Different Sort Types (in context of Hadoop and HDFS)
 
@@ -315,9 +332,9 @@ Keys are assigned to buckets according to their numeric value. The result is tha
 Here we generate the data which we will use throughout the rest of this notebook. This is a toy dataset with 30 records, and consists of two fields in each record, separated by a tab character. The first field contains random integers between 1 and 30 (a hypothetical word count), and the second field contains English words. The goal is to sort the data by word count from highest to lowest.
 
 
-```python
+```Python
 %%writefile generate_numbers.py
-#!/usr/bin/python
+#!/usr/bin/Python
 words = ["cell","center","change","cluster","clustering","code","computational","compute","computing","consists",\
          "contour","corresponding","creating","current","dataset","def","descent","descent","develop","different",\
          "distributed","do","document","done","driver","drivers","during","efficient","evaluate","experiements"]
@@ -331,8 +348,8 @@ Overwriting generate_numbers.py
 
 
 
-```python
-# give the python file exacutable permissions, write the file, and inspect number of lines
+```Python
+# give the Python file exacutable permissions, write the file, and inspect number of lines
 !chmod +x generate_numbers.py;
 !./generate_numbers.py > generate_numbers.output
 !wc -l generate_numbers.output
@@ -342,7 +359,7 @@ Overwriting generate_numbers.py
 
 
 
-```python
+```Python
 # view the raw dataset
 !cat generate_numbers.output
 ```
@@ -383,7 +400,7 @@ Overwriting generate_numbers.py
 
 ###Importance of Unix Sort
 
-Sort is a simple and very useful command found in unix systems. It rearranges lines of text numerically and/or alphabetically. Hadoop Streaming's KeyBasedComparator is modeled after unix sort, and accepts and same configurations from command line arguments.
+Sort is a simple and very useful command found in Unix systems. It rearranges lines of text numerically and/or alphabetically. Hadoop Streaming's KeyBasedComparator is modeled after Unix sort, and utilizes command line options which are the same as Unix sort command line options.
 
 ###Unix Sort Overview
 
@@ -413,7 +430,7 @@ Other commonly used flags/options are: -n, which sorts the keys numerically, and
 
 ###sort examples
 
-<pre><span class="o">%%</span><span class="k">writefile</span> unix-sort-example.txt
+<pre><span class="o">%%</span><span class="k">writefile</span> Unix-sort-example.txt
 Unix,30
 Solaris,10
 Linux,25
@@ -422,11 +439,11 @@ HPUX,100
 AIX,25
 </pre>
 
-(Source: [http://www.theunixschool.com/2012/08/linux-sort-command-examples.html](http://www.theunixschool.com/2012/08/linux-sort-command-examples.html))
+(Source: [http://www.theUnixschool.com/2012/08/linux-sort-command-examples.html](http://www.theUnixschool.com/2012/08/linux-sort-command-examples.html))
 
 
-```python
-%%writefile unix-sort-example.txt
+```Python
+%%writefile Unix-sort-example.txt
 Unix,30
 Solaris,10
 Linux,25
@@ -435,7 +452,7 @@ HPUX,100
 AIX,25
 ```
 
-Overwriting unix-sort-example.txt
+Overwriting Unix-sort-example.txt
 
 
 <div id="tab-container" class="tab-container">
@@ -448,8 +465,8 @@ Overwriting unix-sort-example.txt
     Sort by field 1 (default alphabetically), deliminator ","    
     <table>
     <tr>
-    <td><pre>cat unix-sort-example.txt</pre></td>
-    <td><pre>sort -t"," -k1,1 unix-sort-example.txt</pre></td>
+    <td><pre>cat Unix-sort-example.txt</pre></td>
+    <td><pre>sort -t"," -k1,1 Unix-sort-example.txt</pre></td>
     </tr>
     <tr>
     <td><pre>
@@ -475,8 +492,8 @@ Overwriting unix-sort-example.txt
     Sort by field 2 numerically reverse, deliminator ","   
     <table>
     <tr>
-    <td><pre>cat unix-sort-example.txt</pre></td>
-    <td><pre>sort -t"," -k2,2nr  unix-sort-example.txt</pre></td>
+    <td><pre>cat Unix-sort-example.txt</pre></td>
+    <td><pre>sort -t"," -k2,2nr  Unix-sort-example.txt</pre></td>
     </tr>
     <tr>
     <td><pre>
@@ -502,8 +519,8 @@ Overwriting unix-sort-example.txt
     Sort by field 1 alphabetically first, then by field 2 numeric reverse   
     <table>
     <tr>
-    <td><pre>cat unix-sort-example.txt</pre></td>
-    <td><pre>sort -t"," -k1,1 -k2,2nr  unix-sort-example.txt</pre></td>
+    <td><pre>cat Unix-sort-example.txt</pre></td>
+    <td><pre>sort -t"," -k1,1 -k2,2nr  Unix-sort-example.txt</pre></td>
     </tr>
     <tr>
     <td><pre>
@@ -532,7 +549,7 @@ Overwriting unix-sort-example.txt
 ###II.A. Hadoop's Default Sorting Behavior
 
 Key points:
-* By default, hadoop performs a partial sort on mapper output keys, i.e. within each partition keys are sorted.
+* By default, Hadoop performs a partial sort on mapper output keys, i.e. within each partition keys are sorted.
 * By default, keys are sorted as strings.
     * When processing a mapper output record, first the partitioner decides which partition the record should be sent to.
     * In shuffle and sort stage, keys within a partition are sorted.
@@ -541,7 +558,7 @@ Key points:
 
 ###II.B. Hadoop Streaming parameters
 
-Hadoop streaming can be further fine-grain controlled through the command line options below. Through these, we can fine-tune the hadoop framework to better understand line-oriented record structure, and achieve the versatility of single-machine unix sort, but in a distributed and efficient manner.
+Hadoop streaming can be further fine-grain controlled through the command line options below. Through these, we can fine-tune the Hadoop framework to better understand line-oriented record structure, and achieve the versatility of single-machine Unix sort, but in a distributed and efficient manner.
 
 ~~~~
 stream.num.map.output.key.fields
@@ -549,14 +566,14 @@ stream.map.output.field.separator
 mapreduce.partition.keypartitioner.options
 KeyFieldBasedComparator
 keycomparator.options
-partitioner org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner
+partitioner org.apache.Hadoop.mapred.lib.KeyFieldBasedPartitioner
 ~~~~
 
-In a sorting task, hadoop streaming provides the same interface as unix sort. Both consume a stream of lines of text, and produce a permutation of input records, based on one or more sort keys extracted from each line of input. Without customizing its sorting and partitioning, hadoop streaming treats implicitly each input line as a record consisting of a single key and value, separated by a "tab" character.
+In a sorting task, Hadoop Streaming provides the same interface as Unix sort. Both consume a stream of lines of text, and produce a permutation of input records, based on one or more sort keys extracted from each line of input. Without customizing its sorting and partitioning, Hadoop Streaming treats implicitly each input line as a record consisting of a single key and value, separated by a "tab" character.
 
-Just like the various options unix sort offers, hadoop streaming can be customized to use multiple fields for sorting, sort records by numeric order or keys and sort in reverse order.
+Just like the various options Unix sort offers, Hadoop Streaming can be customized to use multiple fields for sorting, sort records by numeric order or keys and sort in reverse order.
 
-The following table provides an overview of relationships between hadoop stream sorting and unix sort:
+The following table provides an overview of relationships between Hadoop Streaming sorting and Unix sort:
 
 <table>
 <tr>
@@ -577,22 +594,22 @@ The following table provides an overview of relationships between hadoop stream 
 <tr>
     <td>Key Range</td>
     <td>`-k, --key=POS1[,POS2]`</td>
-    <td>`-D mapreduce.partition.keycomparator.options`   (same syntax as unix sort)</td>
+    <td>`-D mapreduce.partition.keycomparator.options`   (same syntax as Unix sort)</td>
 </tr>
 <tr>
     <td>Numeric Sort</td>
     <td>`-n, --numeric-sort`</td>
-    <td>`-D mapreduce.partition.keycomparator.options`   (same syntax as unix sort)</td>
+    <td>`-D mapreduce.partition.keycomparator.options`   (same syntax as Unix sort)</td>
 </tr>
 <tr>
     <td>Reverse Order</td>
     <td>`-r --reverse`</td>
-    <td>`-D mapreduce.partition.keycomparator.options`   (same syntax as unix sort)</td>
+    <td>`-D mapreduce.partition.keycomparator.options`   (same syntax as Unix sort)</td>
 </tr>
 <tr>
     <td>Partitioner Class</td>
     <td>Not Applicable</td>
-    <td>`-partitioner org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner`</td>
+    <td>`-partitioner org.apache.Hadoop.mapred.lib.KeyFieldBasedPartitioner`</td>
 </tr>
 <tr>
     <td>Comparator Class</td>
@@ -606,16 +623,16 @@ The following table provides an overview of relationships between hadoop stream 
 </tr>
 </table>
 
-Therefore, given a distributed sorting problem, it is always helpful to start with a non-scalable solution that can be provided by unix sort and work out the required hadoop streaming configurations from there.
+Therefore, given a distributed sorting problem, it is always helpful to start with a non-scalable solution that can be provided by Unix sort and work out the required Hadoop Streaming configurations from there.
 
 ####Configure Hadoop Streaming: Prerequisites
 
 ~~~~
--D mapreduce.job.output.key.comparator.class=org.apache.hadoop.mapreduce.lib.partition.KeyFieldBasedComparator \
--partitioner org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner
+-D mapreduce.job.output.key.comparator.class=org.apache.Hadoop.mapreduce.lib.partition.KeyFieldBasedComparator \
+-partitioner org.apache.Hadoop.mapred.lib.KeyFieldBasedPartitioner
 ~~~~
 
-These two options instruct hadoop streaming to use two specific hadoop java library classes: `KeyFieldBasedComparator` and `KeyFieldBasedPartitioner`. They come in standard hadoop distribution, and provide the required machinery.
+These two options instruct Hadoop Streaming to use two specific Hadoop Java library classes: `KeyFieldBasedComparator` and `KeyFieldBasedPartitioner`. They come in standard Hadoop distribution, and provide the required machinery.
 
 ####Configure Hadoop Streaming: Step 1
 
@@ -626,9 +643,9 @@ Specify number of key fields and key field seperator:
  -D mapreduce.map.output.key.field.separator=.
 ~~~~
 
-In unix sort when input lines use a non-tab delimiter, we need to supply the -t _separator_ option. Similarly in hadoop streaming, we need to specify the character to use as key separators. Common options include: comma",", period ".", and space " ".
+In Unix sort when input lines use a non-tab delimiter, we need to supply the -t _separator_ option. Similarly in Hadoop streaming, we need to specify the character to use as key separators. Common options include: comma",", period ".", and space " ".
 
-One additional hint to hadoop is the number of key fields, which is not required for unix sort. This helps hadoop streaming to only parse the relevant parts of input lines, as in the end only keys are sorted (not values) – therefore, hadoop can avoid performing expensive parsing and sorting on value parts of input line records.
+One additional hint to Hadoop is the number of key fields, which is not required for Unix sort. This helps Hadoop streaming to only parse the relevant parts of input lines, as in the end only keys are sorted (not values) – therefore, Hadoop can avoid performing expensive parsing and sorting on value parts of input line records.
 
 ####Configure Hadoop Streaming: Step 2
 
@@ -637,7 +654,7 @@ One additional hint to hadoop is the number of key fields, which is not required
 -D mapreduce.partition.keycomparator.options=-k2,2nr
 ~~~~
 
-This part is very straightforward. Whatever one would do with unix sort (eg. -k1,1 -k3,4nr), just mirror it for hadoop streaming. However it is crucial to remember that hadoop only uses `KeyFieldBasedComparator` to sort records within partitions. Therefore, this step only helps achieve partial sort.
+This part is very straightforward. Whatever one would do with Unix sort (eg. -k1,1 -k3,4nr), just mirror it for Hadoop streaming. However it is crucial to remember that Hadoop only uses `KeyFieldBasedComparator` to sort records within partitions. Therefore, this step only helps achieve partial sort.
 
 ####Configure Hadoop Streaming: Step 3
 
@@ -646,14 +663,14 @@ This part is very straightforward. Whatever one would do with unix sort (eg. -k1
 -D mapreduce.partition.keypartitioner.options=-k1,1
 ~~~~
 
-In this step, we need to specify which key field to use for partitioning. There's no equivalent in unix sort. One critical detail to keep in mind is that, even though hadoop streaming uses unix sort --key option's syntax for mapreduce.partition.keypartitioner.options., no sorting will actually be performed. It only uses expressions such as -k2,2nr for key extraction; the nr flags will be ignored.
+In this step, we need to specify which key field to use for partitioning. There's no equivalent in Unix sort. One critical detail to keep in mind is that, even though Hadoop streaming uses Unix sort --key option's syntax for mapreduce.partition.keypartitioner.options., no sorting will actually be performed. It only uses expressions such as -k2,2nr for key extraction; the nr flags will be ignored.
 
 In later sections (Partitioning in MRJob), we will discuss in detail how to incorporate sorting into the partitioner by custom partition key construction.
 
 ####Summary of Common Practices for Sorting Related Configuration
 
-<div style="background: #ffffff; overflow:auto;width:auto;border:0;border-width:.0;padding:.0;"><pre style="margin: 0; line-height: 125%">  -partitioner org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner
-  -D mapreduce.job.output.key.comparator.class=org.apache.hadoop.mapreduce.lib.partition.KeyFieldBasedComparator \
+<div style="background: #ffffff; overflow:auto;width:auto;border:0;border-width:.0;padding:.0;"><pre style="margin: 0; line-height: 125%">  -partitioner org.apache.Hadoop.mapred.lib.KeyFieldBasedPartitioner
+  -D mapreduce.job.output.key.comparator.class=org.apache.Hadoop.mapreduce.lib.partition.KeyFieldBasedComparator \
   -D stream.num.map.output.key.fields=<span style="color: #0000FF">4</span> \
   -D map.output.key.field.separator=. \
   -D mapreduce.partition.keypartitioner.options=<span style="color: #0000FF">-k1,2</span> \
@@ -667,11 +684,11 @@ At bare minimum, we typically need to specify:
 3. Key field separator (can be omitted if TAB is used as separator)
 4. Number of key fields
 5. Key field separator again for mapper (under a different config option)
-6. Partitioner options (unix sort syntax)
+6. Partitioner options (Unix sort syntax)
 7. Number of reducer jobs
 
-(See hadoop streaming official documentation for more information (hadoop version = 2.7.2.)
-Side-by-side Examples: unix sort vs. hadoop streaming:
+(See Hadoop streaming official documentation for more information (Hadoop version = 2.7.2.)
+Side-by-side Examples: Unix sort vs. Hadoop streaming:
 
 
 <table>
@@ -687,11 +704,11 @@ Side-by-side Examples: unix sort vs. hadoop streaming:
 <td>
 <code>
 -D mapreduce.job.output.key.comparator.class=\
-  org.apache.hadoop.mapreduce.lib.partition.KeyFieldBasedComparator \
+  org.apache.Hadoop.mapreduce.lib.partition.KeyFieldBasedComparator \
 -D stream.num.map.output.key.fields=2 \
 -D stream.map.output.field.separator="," \
 -D mapreduce.partition.keypartitioner.options=-k1,1\
--partitioner org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner\
+-partitioner org.apache.Hadoop.mapred.lib.KeyFieldBasedPartitioner\
 </code>
 </td>
 </tr>
@@ -705,10 +722,10 @@ sort -k1,1 -k2,3nr
 <td>
 <code>
 -D mapreduce.job.output.key.comparator.class=\
-  org.apache.hadoop.mapreduce.lib.partition.KeyFieldBasedComparator \
+  org.apache.Hadoop.mapreduce.lib.partition.KeyFieldBasedComparator \
 -D stream.num.map.output.key.fields=3 \
 -D mapreduce.partition.keypartitioner.options="-k1,1 -k2,3nr"\
--partitioner org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner\
+-partitioner org.apache.Hadoop.mapred.lib.KeyFieldBasedPartitioner\
 -D mapreduce.job.reduces=1
 </code>
 </td>
@@ -719,13 +736,13 @@ sort -k1,1 -k2,3nr
 
 ###II.C. Hadoop Streaming Implementation
 
-You will need to install, configure, and start hadoop. Brief instructions follow, but detailed instructions are beyond the scope of this notebook.
+You will need to install, configure, and start Hadoop. Brief instructions follow, but detailed instructions are beyond the scope of this notebook.
 
 ####Start Hadoop
 
-To run the examples in this notebook you must download and configure hadoop on your local computer. Go to http://hadoop.apache.org/ for the latest downloads. 
+To run the examples in this notebook you must download and configure Hadoop on your local computer. Go to http://Hadoop.apache.org/ for the latest downloads. 
 
-Everything you need to get up and running can be found on this page: [https://hadoop.apache.org/docs/r2.7.2/hadoop-project-dist/hadoop-common/SingleCluster.html](https://hadoop.apache.org/docs/r2.7.2/hadoop-project-dist/hadoop-common/SingleCluster.html). There are also many websites with specialized instructions.
+Everything you need to get up and running can be found on this page: [https://Hadoop.apache.org/docs/r2.7.2/Hadoop-project-dist/Hadoop-common/SingleCluster.html](https://Hadoop.apache.org/docs/r2.7.2/Hadoop-project-dist/Hadoop-common/SingleCluster.html). There are also many websites with specialized instructions.
 
 Once all components have been downloaded and istalled, you can check that everything is running by running the `jps` command in your terminal. You should see output like this:
 ```
@@ -748,7 +765,7 @@ Hadoop version 2.7.2
 
 
 
-```python
+```Python
 # should you need to regenerate the file and put it in hdfs a second time, make sure to delete the existing file first:
 !hdfs dfs -rm -r /user/koza/sort
 ```
@@ -758,7 +775,7 @@ Hadoop version 2.7.2
 
 
 
-```python
+```Python
 # put the file in hdfs:
 !hdfs dfs -mkdir /user/koza/sort
 !hdfs dfs -mkdir /user/koza/sort/output
@@ -766,7 +783,7 @@ Hadoop version 2.7.2
 ```
 
 
-```python
+```Python
 # make sure it's really there:
 !hdfs dfs -ls /user/koza/sort/generate_numbers.output
 ```
@@ -775,7 +792,7 @@ Hadoop version 2.7.2
 
 ####II.C.1. Hadoop Streaming Implementation - single reducer
 
-Keypoints:
+Key points:
 * Single reducer guarantees a single partition
 * Partial sort becomes total sort
 * No need for secondary sorting
@@ -783,7 +800,7 @@ Keypoints:
 
 ####Steps
 
-In the mapper shuffle sort phase, the data is sorted by the primary key, and sent to a single reducer. By specifying /bin/cat/ for the mapper and reducer, we are telling hadoop streaming to use the identity mapper and reducer which simply output the input (Key,Value) pairs.
+In the mapper shuffle sort phase, the data is sorted by the primary key, and sent to a single reducer. By specifying /bin/cat/ for the mapper and reducer, we are telling Hadoop streaming to use the identity mapper and reducer which simply output the input (Key,Value) pairs.
 
 ####Setup
 
@@ -793,16 +810,16 @@ In the mapper shuffle sort phase, the data is sorted by the primary key, and sen
 -D mapreduce.partition.keycomparator.options="-k1,1nr -k2,2" 
 ```
 
-First we'll specify the number of keys, in our case, 2. The count and the word are primary and secondary keys, respectively. Next we'll tell hadoop streaming that our field separator is a tab character. Lastly we'll use the keycompartor options to specify which keys to use for sorting. Here, -n specifies that the sorting is numerical for the primary key, and -r specifies that the result should be reversed, followed by k2 which will sort the words alphabetically to break ties. Refer to the unix sort section above.
+First we'll specify the number of keys, in our case, 2. The count and the word are primary and secondary keys, respectively. Next we'll tell Hadoop streaming that our field separator is a tab character. Lastly we'll use the keycompartor options to specify which keys to use for sorting. Here, -n specifies that the sorting is numerical for the primary key, and -r specifies that the result should be reversed, followed by k2 which will sort the words alphabetically to break ties. Refer to the Unix sort section above.
 
 <span style="color:red"><strong>IMPORTANT:</strong></span> Hadoop streaming is particular about the order in which options are specified.  
 
-(For more information, see the docs here: [https://hadoop.apache.org/docs/r1.2.1/streaming.html#Hadoop+Comparator+Class](https://hadoop.apache.org/docs/r1.2.1/streaming.html#Hadoop+Comparator+Class).)
+(For more information, see the docs here: [https://Hadoop.apache.org/docs/r1.2.1/streaming.html#Hadoop+Comparator+Class](https://Hadoop.apache.org/docs/r1.2.1/streaming.html#Hadoop+Comparator+Class).)
 
-```python
+```Python
 !hdfs dfs -rm -r /user/koza/sort/output
-!hadoop jar /usr/local/Cellar/hadoop/2.7.2/libexec/share/hadoop/tools/lib/hadoop-streaming-2.7.2.jar \
--D mapred.output.key.comparator.class=org.apache.hadoop.mapred.lib.KeyFieldBasedComparator \
+!Hadoop jar /usr/local/Cellar/Hadoop/2.7.2/libexec/share/Hadoop/tools/lib/Hadoop-streaming-2.7.2.jar \
+-D mapred.output.key.comparator.class=org.apache.Hadoop.mapred.lib.KeyFieldBasedComparator \
 -D stream.num.map.output.key.fields=2 \
 -D stream.map.output.field.separator="\t" \
 -D mapreduce.partition.keycomparator.options="-k1,1nr -k2,2" \
@@ -813,7 +830,7 @@ First we'll specify the number of keys, in our case, 2. The count and the word a
 ```
 
 
-```python
+```Python
 # Check to see that we have indeed generated a single output file
 !hdfs dfs -ls /user/koza/sort/output
 ```
@@ -824,7 +841,7 @@ First we'll specify the number of keys, in our case, 2. The count and the word a
 
 
 
-```python
+```Python
 # Print the results
 print "="*100
 print "Single Reducer Sorted Output - Hadoop Streaming"
@@ -889,15 +906,15 @@ Figure 2. Total Order sort with multiple reducers
 
 ###Multiple Reducer Overview
 
-After the Map phase and before the beginning of the Reduce phase there is a handoff process, known as shuffle and sort. Output from the mapper tasks is prepared and moved to the nodes where the reducer tasks will be run. To improve overall efficiency, records from mapper output are sent to the physical node a reducer will be running on while they are being produced - to avoid flooding the network when all mapper tasks are complete.
+After the Map phase and before the beginning of the Reduce phase there is a handoff process, known as shuffle and sort. Output from the mapper tasks is prepared and moved to the nodes where the reducer tasks will be run. To improve overall efficiency, records from mapper output are sent to the physical node that a reducer will be running on as they are being produced - to avoid flooding the network when all mapper tasks are complete.
 
-What this means is that when we have more than one reducer in a mapreduce job, hadoop no longer sorts the keys globally (total sort). Instead mapper outputs are partitioned while they're being produced, and before the reduce phase starts, records are sorted by the key within each partition. In other words, hadoop's architecture only guarantees partial sort.
+What this means is that when we have more than one reducer in a MapReduce job, Hadoop no longer sorts the keys globally (total sort). Instead mapper outputs are partitioned while they're being produced, and before the reduce phase starts, records are sorted by the key within each partition. In other words, Hadoop's architecture only guarantees partial sort.
 
-Therefore, to achieve total sort, a programmer needs to incorporate additional steps and supply the hadoop framework additional aid during the shuffle and sort phase. Particularly, a partition file or partition function is required.
+Therefore, to achieve total sort, a programmer needs to incorporate additional steps and supply the Hadoop framework additional aid during the shuffle and sort phase. Particularly, a partition file or partition function is required.
 
 ####Modification 1: Include a partition file or partition function inside mappers
 
-Recall that we can use an identity mapper in single-reducer step up, which just echos back the (key, value) pair from input data. In a multi-reducer setup, we will need to add an additional "partition key" to instruct hadoop how to partition records, and pass through the original (key, value) pair.
+Recall that we can use an identity mapper in single-reducer step up, which just echos back the (key, value) pair from input data. In a multi-reducer setup, we will need to add an additional "partition key" to instruct Hadoop how to partition records, and pass through the original (key, value) pair.
 The partition key is derived from the input key, with the help of either a partition file (more on this in the sampling section) or a user-specified partition function, which takes a key as input, and produces a partition key. Different input keys can result in same partition key.
 
 ####Modification 2: Drop internal partition key inside reducers
@@ -906,7 +923,9 @@ Now we have two keys (as opposed to just one), and one is used for partitioning,
 
 ####Modification 3: Post-processing step to order partitions
 
-The Mapreduce job output is written to HDFS, with the output from each partition in a separate file (usually named something such as: part-00000). These file names are indexed and ordered. However, hadoop makes no attempt to sort partition keys – the mapping between partition key and partition index is not order-preserving. Therefore, while partition keys key_1, key_2 and key_1 < key_2, it's possible that the output of partition with key_1 could be written to file part-00006 and the output of partition with key_2 written to file part-00003.
+The MapReduce job output is written to HDFS, with the output from each partition in a separate file (usually named something such as: part-00000). These file names are indexed and ordered. However, Hadoop makes no attempt to sort partition keys – the mapping between partition key and partition index is not order-preserving. 
+
+Therefore, while partition keys key_1, key_2 and key_1 < key_2, it's possible that the output of partition with key_1 could be written to file part-00006 and the output of partition with key_2 written to file part-00003.
 Therefore, a post-processing step is required to finish total sort. We will need to take one record from every (non-empty) partition output, sort them, and construct the appropriate ordering among partitions.
 
 ####Introductory Example
@@ -966,18 +985,18 @@ Note that partition key "e" maps to partition 0, even if it is "greater than" ke
 
 Coming back to our original dataset, here we will sort and print the output in two steps. Step one will partition and sort the data, and step two will arrange the partitions in the appropriate order. In the MRJob implementation that follows, we'll build on this and demonstrate how to ensure that the partitions are created in the appropriate order to begin with.
 
-1. Run the hadoop command that prepends an alphabetic key to each row such that they end up in the appropriate partition, shuffle, and sort.
+1. Run the Hadoop command that prepends an alphabetic key to each row such that they end up in the appropriate partition, shuffle, and sort.
 2. Combine the secondary sort output files in the appropriate order
 
 ####Setup
 
-Hadoop streaming configuration for the sort job. Notice the addition of the keypartitioner option, which tells hadoop streaming to partition by the primary key. Remember that the order of the options is important.
+The following options comprise the Hadoop Streaming configuration for the sort job. Notice the addition of the keypartitioner option, which tells Hadoop Streaming to partition by the primary key. Remember that the order of the options is important.
 
 ~~~~
 -D stream.num.map.output.key.fields=3 \
 -D stream.map.output.field.separator="\t" \
 -D mapreduce.partition.keypartitioner.options=-k1,1 \
--D mapreduce.job.output.key.comparator.class=org.apache.hadoop.mapred.lib.KeyFieldBasedComparator \
+-D mapreduce.job.output.key.comparator.class=org.apache.Hadoop.mapred.lib.KeyFieldBasedComparator \
 -D mapreduce.partition.keycomparator.options="-k1,1 -k2,2nr -k3,3" \
 ~~~~
 
@@ -993,9 +1012,9 @@ The following mapper is an identity mapper with a partition function included; i
 The following mapper is an identity mapper with a partition function included, it prepends an alphabetic key as partition key to input records.
 
 
-```python
+```Python
 %%writefile prependPartitionKeyMapper.py
-#!/usr/bin/env python
+#!/usr/bin/env Python
 import sys
 for line in sys.stdin:
     line = line.strip()
@@ -1011,29 +1030,29 @@ for line in sys.stdin:
     Overwriting prependPartitionKeyMapper.py
 
 
-### __Step 1 - run the hadoop command specifying 3 reducers, the partition key, and the sort keys__
+### __Step 1 - run the Hadoop command specifying 3 reducers, the partition key, and the sort keys__
 
 
-```python
+```Python
 !hdfs dfs -rm -r /user/koza/sort/secondary_sort_output
-!hadoop jar /usr/local/Cellar/hadoop/2.7.2/libexec/share/hadoop/tools/lib/hadoop-streaming-2.7.2.jar \
+!Hadoop jar /usr/local/Cellar/Hadoop/2.7.2/libexec/share/Hadoop/tools/lib/Hadoop-streaming-2.7.2.jar \
     -D stream.num.map.output.key.fields=3 \
     -D stream.map.output.field.separator="\t" \
     -D mapreduce.partition.keypartitioner.options=-k1,1 \
-    -D mapreduce.job.output.key.comparator.class=org.apache.hadoop.mapred.lib.KeyFieldBasedComparator \
+    -D mapreduce.job.output.key.comparator.class=org.apache.Hadoop.mapred.lib.KeyFieldBasedComparator \
     -D mapreduce.partition.keycomparator.options="-k1,1 -k2,2nr -k3,3" \
     -mapper prependPartitionKeyMapper.py \
     -reducer /bin/cat \
     -file prependPartitionKeyMapper.py -input /user/koza/sort/generate_numbers.output \
     -output /user/koza/sort/secondary_sort_output \
     -numReduceTasks 3 \
-    -partitioner org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner 
+    -partitioner org.apache.Hadoop.mapred.lib.KeyFieldBasedPartitioner 
 ```
 
 <h3> Check the output </h3>
 
 
-```python
+```Python
 !hdfs dfs -ls /user/koza/sort/secondary_sort_output
 print "="*100
 print "/part-00000"
@@ -1099,9 +1118,9 @@ print "="*100
 The following code block peaks at the first line of each partition file to determine order of partitions, and prints the contents of each partition in order of largest to smallest.  Notice that while the files are arranged in total order, the partition file names are not ordered. In the MRJob implementation, we'll tackle this issue.
 
 
-```python
+```Python
 # The subprocess module allows you to spawn new (system) processes, connect to their input/output/error pipes, 
-# and obtain their return codes. Ref: https://docs.python.org/2/library/subprocess.html
+# and obtain their return codes. Ref: https://docs.Python.org/2/library/subprocess.html
 import subprocess 
 import re
 
@@ -1109,10 +1128,10 @@ import re
 
 '''
 subprocess.Popen()
-Opens a new subprocess and executes the unix command in the args array, passing the output to STDOUT.
+Opens a new subprocess and executes the Unix command in the args array, passing the output to STDOUT.
 This is the equivalent of typing: 
 hdfs dfs -ls /user/koza/sort/secondary_sort_output/part-*
-in the unix shell prompt
+in the Unix shell prompt
 Even though we cannot see this output it would look like this:
 -rw-r--r--   1 koza supergroup        141 2016-08-20 19:25 /user/koza/sort/secondary_sort_output/part-00000
 -rw-r--r--   1 koza supergroup        164 2016-08-20 19:25 /user/koza/sort/secondary_sort_output/part-00001
@@ -1253,32 +1272,32 @@ for k in sorted(d.items(), key=lambda x: x[0], reverse=True):
 
 ##Section III - MRJob
 
-For this section you will need the MRJob python library. For installation instructions, go to: https://github.com/Yelp/mrjob
+For this section you will need the MRJob Python library. For installation instructions, go to: [https://github.com/Yelp/mrjob](https://github.com/Yelp/mrjob).
 
 We'll first discuss a couple of key aspects of MRJob such as modes, protocols, and partitioning, before diving into the implementation. We'll also provide an illustrated example of partitioning.
 
 ###III.A. MRJob Modes
 
-MRJob has three modes that correspond to different hadoop environments.
+MRJob has three modes that correspond to different Hadoop environments.
 
 ####Local mode
-Local mode simulates hadoop streaming, but does not require an actual hadoop installation. This is great for testing out small jobs. However, local mode does not suport `'-k2,2nr'` type of sorting, i.e. sorting by numeric value, as it is not capable of hadoop .jar library files (such as `KeyBasedComparator`). A workaround is to make sure numbers are converted to strings with a fixed length, and sorted by reverse order of their values. For positive integers, this can be done by: ``` sys.maxint - value ``` We include Local Mode implementation for completeness (see below).
+Local mode simulates Hadoop Streaming, but does not require an actual Hadoop installation. This is great for testing out small jobs. However, local mode does not suport `'-k2,2nr'` type of sorting, i.e. sorting by numeric value, as it is not capable of Hadoop .jar library files (such as `KeyBasedComparator`). A workaround is to make sure numbers are converted to strings with a fixed length, and sorted by reverse order of their values. For positive integers, this can be done by: ``` sys.maxint - value ``` We include Local Mode implementation for completeness (see below).
 
 ####Hadoop mode
-MRJob is capable of dispatching runners in a environment where hadoop is installed. User-authored MRJob python files are treated as shell scripts, and submitted to hadoop streaming as mapreduce jobs. MRJob allows users to specify configurations supported by hadoop streaming via the jobconf dictionary, either as part of MRStep or MRJob itself (which will be applied to all steps). The python dictionary is serialized into command line arguments, and passed to the hadoop streaming jar file. (See https://pythonhosted.org/mrjob/guides/configs-hadoopy-runners.html for further documentation of hadoop mode).
+MRJob is capable of dispatching runners in a environment where Hadoop is installed. User-authored MRJob Python files are treated as shell scripts, and submitted to Hadoop streaming as MapReduce jobs. MRJob allows users to specify configurations supported by Hadoop streaming via the jobconf dictionary, either as part of MRStep or MRJob itself (which will be applied to all steps). The Python dictionary is serialized into command line arguments, and passed to the Hadoop streaming jar file. (See [https://pythonhosted.org/mrjob/guides/configs-Hadoopy-runners.html](https://pythonhosted.org/mrjob/guides/configs-Hadoopy-runners.html) for further documentation of Hadoop mode).
 
 ####EMR/Dataproc mode
-In addition, MRJob supports running mapreduce jobs on a vendor-provided hadoop runtime environment such as AWS Elastic MapReduce or Google Dataproc. The configuration and setup is very similar to hadoop mode (-r hadoop) with the following key differences:
+In addition, MRJob supports running MapReduce jobs on a vendor-provided Hadoop runtime environment such as AWS Elastic MapReduce or Google Dataproc. The configuration and setup is very similar to Hadoop mode (-r Hadoop) with the following key differences:
 * Vendor-specific credentials (such as AWS key and secret).
-* Vendor-specific bootstrap process (for instance, configure python version, and install third party libraries upon initialization).
+* Vendor-specific bootstrap process (for instance, configure Python version, and install third party libraries upon initialization).
 * Use platform's native "step" management process (eg. AWS Steps).
 * Use vendor-provided data storage and transportation (eg. use S3 for input/output on EMR).
 
-The api surface for -r emr and -r hadoop are almost identical, but the performance profiles can be drastically different.
+The api surface for -r emr and -r Hadoop are almost identical, but the performance profiles can be drastically different.
 
 ###III.B. MRJob Protocols
 
-At a high level, a `Protocol` is a gateway between the hadoop streaming world, and the MRJob/Python world. It translates raw bytes (text) into (key, value) pairs as some python data structure, and vice versa. An MRJob protocol has the following interface: it is a class with a pair of functions `read` (which converts raw bytes to (key, value) pairs) and `write` which converts (key, value) pairs back to bytes/text:    
+At a high level, a `Protocol` is a gateway between the Hadoop Streaming world, and the MRJob/Python world. It translates raw bytes (text) into (key, value) pairs as some Python data structure, and vice versa. An MRJob protocol has the following interface: it is a class with a pair of functions `read` (which converts raw bytes to (key, value) pairs) and `write` which converts (key, value) pairs back to bytes/text:    
 
 <!-- HTML generated using hilite.me --><div style="margin:20px 0; background: #f8f8f8; overflow:auto;width:auto;border:0;border-width:.0;padding:.0;"><pre style="margin: 0; line-height: 125%"><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Protocol</span>(<span style="color: #008000">object</span>):
     <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">read</span>(<span style="color: #008000">self</span>, line):
@@ -1287,12 +1306,12 @@ At a high level, a `Protocol` is a gateway between the hadoop streaming world, a
         <span style="color: #008000; font-weight: bold">pass</span>
 </pre></div>
    
-In addition, MRJob further abastracts away the differences between Python 2 and Python 3 (primarily in areas such as unicode handling), and provides a unified interface across most hadoop versions and python versions.
+In addition, MRJob further abastracts away the differences between Python 2 and Python 3 (primarily in areas such as Unicode handling), and provides a unified interface across most Hadoop versions and Python versions.
 
 
 When data enters MRJob components (mapper, reducer, combiner), the Protocol's (specified in MRJob class) read method is invoked, and supplies the (key, value) pair to the component. When data exits MRJob components, its Protocol's write method is invoked, converting (key, value) pair output from the component to raw bytes / text.
 
-Consider a most generic MRJob job, consisting of one maper step and one reduce step:
+Consider a most generic MRJob job, consisting of one mapper step and one reduce step:
 
 <!-- HTML generated using hilite.me -->
 <div style="margin:20px 0; background: #f8f8f8; overflow:auto;width:auto;border:0;border-width:.0;padding:.0;"><pre style="margin: 0; line-height: 125%"><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">GenericMRJob</span>(MRJob):
@@ -1305,7 +1324,7 @@ Consider a most generic MRJob job, consisting of one maper step and one reduce s
         <span style="color: #008000; font-weight: bold">yield</span> key, value
 </pre></div>
 
-There are four contact points between Python scripts and hadoop streaming, which require three Protocols to be specified, as illustrated below.
+There are four contact points between Python scripts and Hadoop streaming, which require three Protocols to be specified, as illustrated below.
 
 ![Total Order Sort, Step 1](images/04protocols.png)
 
@@ -1318,7 +1337,7 @@ MRJob provides a number of built-in protocols, all of which can all be used for 
 The table below lists four commonly used Protocols and their signature. Some key observations are:
 
 * RawProtocol and RawValueProtocol do not attempt to serialize and deserialize text data.
-* JSONProtocol and JSONValueProtocol use the JSON encoder and decoder to convert between text (stdin/stdout) and python data structures (python runtime).
+* JSONProtocol and JSONValueProtocol use the JSON encoder and decoder to convert between text (stdin/stdout) and Python data structures (Python runtime).
 * Value Protocols always treat key as None and do not auto insert a tab character in their write method.
 
 
@@ -1337,8 +1356,8 @@ The table below lists four commonly used Protocols and their signature. Some key
       </tr>
       <tr>
         <td colspan="2" class="color-start" width="25%"><strong>Source:</strong>  stdin</td>
-        <td colspan="2" class="color-middle" width="25%"><strong>Target:</strong> python</td>
-        <td colspan="2" class="color-middle" width="25%"><strong>Source:</strong> python</td>
+        <td colspan="2" class="color-middle" width="25%"><strong>Target:</strong> Python</td>
+        <td colspan="2" class="color-middle" width="25%"><strong>Source:</strong> Python</td>
         <td colspan="2" class="color-end" width="25%"><strong>Target:</strong> stdout</td>
       </tr>
       <tr>
@@ -1379,8 +1398,8 @@ The table below lists four commonly used Protocols and their signature. Some key
 
       <tr>
         <td colspan="2" class="color-start" width="25%"><strong>Source:</strong> stdin</td>
-        <td colspan="2" class="color-middle" width="25%"><strong>Target:</strong> python</td>
-        <td colspan="2" class="color-middle" width="25%"><strong>Source:</strong> python</td>
+        <td colspan="2" class="color-middle" width="25%"><strong>Target:</strong> Python</td>
+        <td colspan="2" class="color-middle" width="25%"><strong>Source:</strong> Python</td>
         <td colspan="2" class="color-end" width="25%"><strong>Target:</strong> stdout</td>
       </tr>
       <tr>
@@ -1418,8 +1437,8 @@ The table below lists four commonly used Protocols and their signature. Some key
           </tr>
           <tr>
             <td colspan="2" class="color-start" width="25%"><strong>Source:</strong> stdin</td>
-            <td colspan="2" class="color-middle" width="25%"><strong>Target:</strong> python</td>
-            <td colspan="2" class="color-middle" width="25%"><strong>Source:</strong> python</td>
+            <td colspan="2" class="color-middle" width="25%"><strong>Target:</strong> Python</td>
+            <td colspan="2" class="color-middle" width="25%"><strong>Source:</strong> Python</td>
             <td colspan="2" class="color-end" width="25%"><strong>Target:</strong> stdout</td>
           </tr>
           <tr>
@@ -1455,8 +1474,8 @@ The table below lists four commonly used Protocols and their signature. Some key
           </tr>
           <tr>
             <td colspan="2" class="color-start" width="25%"><strong>Source:</strong> stdin</td>
-            <td colspan="2" class="color-middle" width="25%"><strong>Target:</strong> python</td>
-            <td colspan="2" class="color-middle" width="25%"><strong>Source:</strong> python</td>
+            <td colspan="2" class="color-middle" width="25%"><strong>Target:</strong> Python</td>
+            <td colspan="2" class="color-middle" width="25%"><strong>Source:</strong> Python</td>
             <td colspan="2" class="color-end" width="25%"><strong>Target:</strong> stdout</td>
           </tr>
           <tr>
@@ -1495,7 +1514,7 @@ The table below lists four commonly used Protocols and their signature. Some key
 </div>
 
 
-The following example further illustrates the behaviors of these protocols: a single line or text input (single line text file containing: 1001 {"value":10}) is fed to four different single step mapreduce jobs. Each uses one of the four Protocols discussed above as INPUT_PROTOCOL, INTERNAL_PROTOCOL and OUTPUT_PROTOCOL.
+The following example further illustrates the behaviors of these protocols: a single line or text input (single line text file containing: 1001 {"value":10}) is fed to four different single step MapReduce jobs. Each uses one of the four Protocols discussed above as INPUT_PROTOCOL, INTERNAL_PROTOCOL and OUTPUT_PROTOCOL.
 
 ![Total Order Sort, Step 1](images/05recordlife.png)
  
@@ -1621,13 +1640,13 @@ if __name__ == '__main__':
 
 ####III.B.2 Importance of RawProtocols in Context of Total Sorting
 
-While working with MRJob, it is critical to understand that MRJob is an abstraction layer above hadoop streaming, and does not extend or modify hadoop streaming's normal behaviors. Hadoop streaming works through unix piping, and uses stdout and stderr as communication channels. In unix environments, the protocol of data transfer is text streams – mappers, reducers and hadoop libraries exchange data through text.
+While working with MRJob, it is critical to understand that MRJob is an abstraction layer above Hadoop Streaming, and does not extend or modify Hadoop Streaming's normal behaviors. Hadoop streaming works through Unix piping, and uses stdout and stderr as communication channels. In Unix environments, the protocol of data transfer is text streams – mappers, reducers and Hadoop libraries exchange data through text.
 
-Therefore, data structures common in programming languages (eg. dictionary in python) have to be serialized to text for hadoop streaming to understand and consume. The implication of this on total sorting is this: since hadoop only sees text, custom data structures (as keys) will be sorted as strings in their serialized forms.
+Therefore, data structures common in programming languages (e.g. dictionary in Python) have to be serialized to text for Hadoop Streaming to understand and consume. The implication of this on total sorting is this: since Hadoop only sees text, custom data structures (as keys) will be sorted as strings in their serialized forms.
 
-MRJob abstracts away the data serialization and deserialization process by the concept of protocols. For instance, JSONProtocol is capable of serializing complex data structures, and is used by default as INTERNAL_PROTOCOL. This frees the user from messy string manipulation and processing, but it does come with a cost.
+MRJob abstracts away the data serialization and deserialization processes by the concept of protocols. For instance, JSONProtocol is capable of serializing complex data structures, and is used by default as INTERNAL_PROTOCOL. This frees the user from messy string manipulation and processing, but it does come with a cost.
 
-One example is python tuples:
+One example is Python tuples:
 
 ```
 # mapper
@@ -1635,7 +1654,7 @@ yield 1, ("value", "as", "tuple", True)
 
 ```
 
-Inside the reducer however, when values are deserialized into python objects, the (key, value) pair above will become:
+Inside the reducer however, when values are deserialized into Python objects, the (key, value) pair above will become:
 
 ```
 1, ["value", "as", "tuple", True]
@@ -1650,15 +1669,15 @@ Another example related to sorting: suppose mappers emit custom data structures 
 yield [12, 1, 2016]
 ```
 
-Assuming we want to use hadoop streaming's KeyFieldBasedComparator, when hadoop streaming sees the JSON string [2016, 12, 1], it is very difficult to instruct hadoop to understand the key consists of three fields (month, day, year), and sort them accordingly (eg. we want sort by year, month, day).
+Assuming we want to use Hadoop streaming's KeyFieldBasedComparator, when Hadoop streaming sees the JSON string [2016, 12, 1], it is very difficult to instruct Hadoop to understand the key consists of three fields (month, day, year), and sort them accordingly (e.g. we want sort by year, month, day).
 
-Notice if we yield a date as [2016, 12, 01] instead, the string comparison coincidentally produces the same sort order as the underlying data (dates). However, to achieve this requires intimate knowledge of JSON (or other transportation formats); therefore, we recommend using RawProtocol or RawValueProtocol when advanced sorting is desired, which offers maximum flexibility to control key sorting and key hashing performed by hadoop streaming.
+Notice if we yield a date as [2016, 12, 01] instead, the string comparison coincidentally produces the same sort order as the underlying data (dates). However, to achieve this requires intimate knowledge of JSON (or other transportation formats); therefore, we recommend using RawProtocol or RawValueProtocol when advanced sorting is desired, which offers maximum flexibility to control key sorting and key hashing performed by Hadoop Streaming.
 
 ###III.C. Partitioning in MRJob
 
-__Keypoints:__
+__Key points:__
 * Challenge: which partition contains the largest/smallest values seems arbitrary.
-* Hadoop streaming `KeyFieldBasedPartitioner` does not sort partition keys, even though it seemingly accepts unix `sort` compatible configurations.
+* Hadoop streaming `KeyFieldBasedPartitioner` does not sort partition keys, even though it seemingly accepts Unix `sort` compatible configurations.
 * MRJob uses Hadoop Streaming under the hood, therefore inherits the same problem
 
 __Solution:__
@@ -1676,7 +1695,7 @@ By default, Hadoop uses a library class HashPartitioner to compute the partition
 partitionIndex = (key.hashCode() &amp; Integer.MAX_VALUE) % numReducers
 ```
 
-In the land of native hadoop applications (written in java or jvm languages), keys can be any object type that is hashable (i.e. implements hashable interface). For hadoop streaming, however, keys are always string values. Therefore the hashCode function for strings is used:
+In the land of native Hadoop applications (written in Java or JVM languages), keys can be any object type that is hashable (i.e. implements hashable interface). For Hadoop Streaming, however, keys are always string values. Therefore the hashCode function for strings is used:
 
 <div style="margin:20px 0;background: #f8f8f8; overflow:auto;width:auto;border:0;border-width:.0;padding:.0;"><pre style="margin: 0; line-height: 125%">public <span style="color: #008000">int</span> hashCode() {
     <span style="color: #008000">int</span> h <span style="color: #666666">=</span> <span style="color: #008000">hash</span>;
@@ -1693,7 +1712,7 @@ In the land of native hadoop applications (written in java or jvm languages), ke
 </pre>
 </div>
 
-When we configure hadoop streaming to use KeyBasedPartitioner, the process is very similar. Hadoop streaming will parse command line options such as -k2,2 into key specs, and extract the part of the composite key (in this example, field 2 of many fields) and read in the partition key as a string. For example, with the following configuration:
+When we configure Hadoop Streaming to use KeyBasedPartitioner, the process is very similar. Hadoop Streaming will parse command line options such as -k2,2 into key specs, and extract the part of the composite key (in this example, field 2 of many fields) and read in the partition key as a string. For example, with the following configuration:
 
 ~~~~
 "stream.map.output.field.separator" : ".",
@@ -1702,13 +1721,14 @@ Hadoop will extract a from a composite key 2.a.4 to use as the partition key.
 ~~~~
 
 The partition key is then hashed (as a string) by the same hashCode function, its modulus using a number of reduce tasks yields the partition index.
+
 (See KeyBasedPartitioner source code for the actual implementations.)
 
 ####Inverse HashCode Function
 
-In order to preserve partition key ordering, we will construct an "inverse hashCode function", which takes as input the desired partition index and total number of partitions, and returns a partition key. This key, when supplied to the hadoop framework (KeyBasedPartitioner), will hash to the correct partition index.
+In order to preserve partition key ordering, we will construct an "inverse hashCode function", which takes as input the desired partition index and total number of partitions, and returns a partition key. This key, when supplied to the Hadoop framework (KeyBasedPartitioner), will hash to the correct partition index.
 
-First, let's implement the core of `HashPartitioner` in python:
+First, let's implement the core of `HashPartitioner` in Python:
 
 ```
 #input:
@@ -1751,7 +1771,7 @@ In the mapper stage, if we want to assign a record to partition 0, for example, 
 ####III.D.1 MRJob implementation - single reducer - local mode
 
 
-```python
+```Python
 %%writefile singleReducerSortLocal.py
 
 import sys
@@ -1783,12 +1803,12 @@ if __name__ == '__main__':
 
 
 
-```python
-!python singleReducerSortLocal.py generate_numbers.output > MRJob_singleReducer_local_sorted_output.txt
+```Python
+!Python singleReducerSortLocal.py generate_numbers.output > MRJob_singleReducer_local_sorted_output.txt
 ```
 
 
-```python
+```Python
 print "="*100
 print "Single Reducer Local Sorted Output - MRJob"
 print "="*100
@@ -1829,12 +1849,12 @@ print "="*100
     1   "cell"
     0   "current"
 
-####III.D.2. MRJob implementation - single reducer - hadoop mode
+####III.D.2. MRJob implementation - single reducer - Hadoop mode
 
 
-```python
+```Python
 %%writefile singleReducerSort.py
-#!~/anaconda2/bin/python
+#!~/anaconda2/bin/Python
 # -*- coding: utf-8 -*-
 import mrjob
 from mrjob.job import MRJob
@@ -1856,7 +1876,7 @@ class SingleReducerSort(MRJob):
         
     def steps(self):
         JOBCONF_STEP = {
-            'mapreduce.job.output.key.comparator.class': 'org.apache.hadoop.mapred.lib.KeyFieldBasedComparator',
+            'mapreduce.job.output.key.comparator.class': 'org.apache.Hadoop.mapred.lib.KeyFieldBasedComparator',
             'stream.map.output.field.separator':'\t',    
             'mapreduce.partition.keycomparator.options': '-k1,1nr -k2',
             'mapreduce.job.reduces': '1'
@@ -1874,12 +1894,12 @@ if __name__ == '__main__':
 
 
 
-```python
-!python singleReducerSort.py -r hadoop generate_numbers.output > MRJob_singleReducer_sorted_output.txt
+```Python
+!Python singleReducerSort.py -r Hadoop generate_numbers.output > MRJob_singleReducer_sorted_output.txt
 ```
 
 
-```python
+```Python
 print "="*100
 print "Single Reducer Sorted Output - MRJob"
 print "="*100
@@ -1926,7 +1946,7 @@ print "="*100
 The equivalent of the Hadoop Streaming Total Order Sort implementation above
 
 
-```python
+```Python
 %%writefile MRJob_unorderedTotalOrderSort.py
 
 import mrjob
@@ -1972,10 +1992,10 @@ class MRJob_unorderedTotalOrderSort(MRJob):
             'stream.num.map.output.key.fields':3,
             'stream.map.output.field.separator':"\t",
             'mapreduce.partition.keypartitioner.options':'-k1,1',
-            'mapreduce.job.output.key.comparator.class': 'org.apache.hadoop.mapred.lib.KeyFieldBasedComparator',
+            'mapreduce.job.output.key.comparator.class': 'org.apache.Hadoop.mapred.lib.KeyFieldBasedComparator',
             'mapreduce.partition.keycomparator.options':'-k1,1 -k2,2nr -k3,3',
             'mapred.reduce.tasks': self.NUM_REDUCERS,
-            'partitioner':'org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner'
+            'partitioner':'org.apache.Hadoop.mapred.lib.KeyFieldBasedPartitioner'
         }
         return [MRStep(jobconf=JOBCONF_STEP1,
                     mapper=self.mapper,
@@ -1990,14 +2010,14 @@ if __name__ == '__main__':
 
 
 
-```python
+```Python
 !hdfs dfs -rmr /user/koza/sort/un_output 
-!python MRJob_unorderedTotalOrderSort.py  -r hadoop generate_numbers.output \
+!Python MRJob_unorderedTotalOrderSort.py  -r Hadoop generate_numbers.output \
     --output-dir=/user/koza/sort/un_output 
 ```
 
 
-```python
+```Python
 !hdfs dfs -ls /user/koza/sort/un_output 
 ```
 
@@ -2013,13 +2033,13 @@ The final Total Order Sort with ordered partitions
 
 ####What's New
 
-The solution we will delve into is very similar to the one discussed earlier in the hadoop streaming section. The only addition is Step 1B, where we take a desired partition index and craft a custom partition key such that hadoop's KeyFieldBasedPartitioner hashes it back to the correct index.
+The solution we will delve into is very similar to the one discussed earlier in the Hadoop Streaming section. The only addition is Step 1B, where we take a desired partition index and craft a custom partition key such that Hadoop's KeyFieldBasedPartitioner hashes it back to the correct index.
  
 Figure 6. Total order sort with custom partitioning.
 
-```python
+```Python
 %%writefile MRJob_multipleReducerTotalOrderSort.py
-#!~/anaconda2/bin/python
+#!~/anaconda2/bin/Python
 # -*- coding: utf-8 -*-
 
 import mrjob
@@ -2087,12 +2107,12 @@ class MRJob_multipleReducerTotalOrderSort(MRJob):
         
         JOBCONF_STEP1 = {
             'stream.num.map.output.key.fields':3,
-            'mapreduce.job.output.key.comparator.class': 'org.apache.hadoop.mapred.lib.KeyFieldBasedComparator',
+            'mapreduce.job.output.key.comparator.class': 'org.apache.Hadoop.mapred.lib.KeyFieldBasedComparator',
             'stream.map.output.field.separator':"\t",
             'mapreduce.partition.keypartitioner.options':'-k1,1',
             'mapreduce.partition.keycomparator.options':'-k2,2nr -k3,3',
             'mapred.reduce.tasks': self.NUM_REDUCERS,
-            'partitioner':'org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner'
+            'partitioner':'org.apache.Hadoop.mapred.lib.KeyFieldBasedPartitioner'
         }
         return [MRStep(jobconf=JOBCONF_STEP1,
                     mapper_init=self.mapper_partitioner_init,
@@ -2109,14 +2129,14 @@ Overwriting MRJob_multipleReducerTotalOrderSort.py
 
 
 
-```python
+```Python
 !hdfs dfs -rm -r /user/koza/total_order_sort
-!python MRJob_multipleReducerTotalOrderSort.py -r hadoop generate_numbers.output \
+!Python MRJob_multipleReducerTotalOrderSort.py -r Hadoop generate_numbers.output \
     --output-dir='/user/koza/total_order_sort' 
 ```
 
 
-```python
+```Python
 print "="*100
 print "Total Order Sort with multiple reducers - notice that the part files are also in order."
 print "="*100
@@ -2194,12 +2214,14 @@ Keypoints:
             flip coin whether to replace the existing d with new d
 ~~~~
     
-(This paper has a nice explanation of reservoir sampling, see: 2.2 Density-Biased Reservoir Sampling http://science.sut.ac.th/mathematics/pairote/uploadfiles/weightedkm-temp2_EB.pdf.)
+(This paper has a nice explanation of reservoir sampling, see: 2.2 Density-Biased Reservoir Sampling [http://science.sut.ac.th/mathematics/pairote/uploadfiles/weightedkm-temp2_EB.pdf](http://science.sut.ac.th/mathematics/pairote/uploadfiles/weightedkm-temp2_EB.pdf).)
 
 Consider the following example in which we assumed a uniform distribution of the data. For simplicity, we made our partition file based on that assumption. In reality this is rarely the case, and we should make our partition file based on the actual distribution of the data to avoid bottlenecks. A bottleneck would occur if the majority of our data resided in a single bucket, as could happen with a typical power law distribution.
 
+Consider the following example:
 
-```python
+
+```Python
 # Visualizae Partition File
 %matplotlib inline
 import pylab as pl
@@ -2229,9 +2251,9 @@ If we made a uniform partition file the (above example has 4 buckets), we would 
 
 ###IV.A. Random Sample implementation
 
-```python
+```Python
 %%writefile MRJob_RandomSample.py
-#!~/anaconda2/bin/python
+#!~/anaconda2/bin/Python
 # -*- coding: utf-8 -*-
 
 #########################################################
@@ -2265,10 +2287,10 @@ Overwriting MRJob_RandomSample.py
 
 ####Percentile Based Partitioning
 
-Once we have a (small) sampled subset of data, we can compute partition boundaries by examining the distribution of this subset, and find appropriate percentiles based on the number of desired partitions. A basic implementation using numpy is provided below:
+Once we have a (small) sampled subset of data, we can compute partition boundaries by examining the distribution of this subset, and find appropriate percentiles based on the number of desired partitions. A basic implementation using NumPy is provided below:
 
 
-```python
+```Python
 def readSampleData():
     # A sample of the data is stored in a single file in sampleData/part-00000
     # from the previous step (MRJob_RandomSample.py)
@@ -2285,7 +2307,7 @@ def readSampleData():
 ```
 
 
-```python
+```Python
 from numpy import array, percentile, linspace, random
 
 def partition(data, num_of_partitions=10, return_percentiles=False):
@@ -2325,13 +2347,13 @@ For this section, you will need to install Spark. We are using a local installat
 import os
 import sys
 spark_home = os.environ['SPARK_HOME'] = \
-   '/usr/local/share/spark-1.6.0-bin-hadoop2.6'
+   '/usr/local/share/spark-1.6.0-bin-Hadoop2.6'
 
 if not spark_home:
     raise ValueError('SPARK_HOME enviroment variable is not set')
-sys.path.insert(0,os.path.join(spark_home,'python'))
-sys.path.insert(0,os.path.join(spark_home,'python/lib/py4j-0.8.2.1-src.zip'))
-execfile(os.path.join(spark_home,'python/pyspark/shell.py'))
+sys.path.insert(0,os.path.join(spark_home,'Python'))
+sys.path.insert(0,os.path.join(spark_home,'Python/lib/py4j-0.8.2.1-src.zip'))
+execfile(os.path.join(spark_home,'Python/pyspark/shell.py'))
 app_name = "total-sort"
     
 master = "local[*]"
@@ -2359,7 +2381,7 @@ From the Spark website:
 * Run programs up to 100x faster than Hadoop MapReduce in memory, or 10x faster on disk.
 * Write applications quickly in Java, Scala, Python, R.
 * Spark offers over 80 high-level operators that make it easy to build parallel apps. And you can use it interactively from the Scala, Python and R shells.
-* Apache Spark has an advanced DAG execution engine that supports cyclic data flow and in-memory computing.
+* Apache Spark has an advanced Directed Acyclic Graph (DAG) execution engine that supports cyclic data flow and in-memory computing.
 
 ![Total Order Sort, Step 3](images/spark.png)
  
@@ -2372,7 +2394,7 @@ An RDD is simply a distributed collection of elements (Key-Value records).
 * In Spark all work is expressed as either creating new RDDs, running (lazy) transformations on existing RDDs, or performing actions on RDDs to compute a result.
 * Under the hood, Spark automatically distributes the data contained in RDDs across your cluster and parallelizes the operations you perform on them.
 
-###Total Sort in pyspark (Spark python API)
+###Total Sort in pyspark (Spark Python API)
 
 As before, to achieve Total Order Sort, we must first partition the data such that it ends up in appropriately ordered buckets (partitions, filenames), and then sort within each partition. There are a couple of ways to do this in Spark, but they are not all created equal.
 
@@ -2392,7 +2414,7 @@ __repartitionAndSortWithinPartitions:__
  Repartition the RDD according to the given partitioner and, within each resulting partition, sort records by their keys. This is more efficient than calling repartition and then sorting within each partition because it can push the sorting down into the shuffle machinery.
 
 
-```python
+```Python
 from operator import itemgetter
 import numpy as np
 
@@ -2434,7 +2456,7 @@ top = rdd.repartitionAndSortWithinPartitions(numPartitions=NUM_REDUCERS,
 By using glom we can see each partition in its own array. We also have a secondary sort on the "word" (in fact this is the latter part of a complex key) in ascending order.
 
 
-```python
+```Python
 print top.getNumPartitions(), "Partitions"
 for i,d in enumerate(top.glom().collect()):
     print "="*50
@@ -2489,20 +2511,20 @@ for i,d in enumerate(top.glom().collect()):
 A note on <code>TotalSortPartitioner</code>: Hadoop has built in TotalSortPartitioner, which uses a partition file _partition.lst to store a pre-built order list of split points.TotalSortPartitioner uses binary search / Trie to look up the ranges a given record falls into.
 
 ##References
-1. http://wiki.apache.org/hadoop/
-2. http://hadoop.apache.org/docs/stable1/streaming.html#Hadoop+Streaming
-3. http://mrjob.readthedocs.io/en/latest/index.html
-4. http://www.theunixschool.com/2012/08/linux-sort-command-examples.html
-5. https://hadoop.apache.org/docs/r2.7.2/hadoop-streaming/HadoopStreaming.html
-6. http://hadoop.apache.org/
-7. https://hadoop.apache.org/docs/r2.7.2/hadoop-project-dist/hadoop-common/SingleCluster.html
-8. https://hadoop.apache.org/docs/r1.2.1/streaming.html#Hadoop+Comparator+Class
-9. https://github.com/Yelp/mrjob
-10.https://pythonhosted.org/mrjob/guides/configs-hadoopy-runners.html
-11. http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-steps.html
-12. https://github.com/apache/hadoop/blob/2e1d0ff4e901b8313c8d71869735b94ed8bc40a0/hadoop-mapreduce-project/hadoop-mapreduce-client/hadoop-mapreduce-client-core/src/main/java/org/apache/hadoop/mapreduce/lib/partition/KeyFieldBasedPartitioner.java
-13. http://science.sut.ac.th/mathematics/pairote/uploadfiles/weightedkm-temp2_EB.pdf
-14. http://spark.apache.org/
-15. https://www2.eecs.berkeley.edu/Pubs/TechRpts/2011/EECS-2011-82.pdf
-16.https://spark.apache.org/docs/1.6.2/programming-guide.html#working-with-key-value-pairs
-17. https://github.com/facebookarchive/hadoop-20/blob/master/src/mapred/org/apache/hadoop/mapred/lib/TotalOrderPartitioner.java
+1. [http://wiki.apache.org/Hadoop/](http://wiki.apache.org/Hadoop/)
+2. [http://Hadoop.apache.org/docs/stable1/streaming.html#Hadoop+Streaming](http://Hadoop.apache.org/docs/stable1/streaming.html#Hadoop+Streaming)
+3. [http://mrjob.readthedocs.io/en/latest/index.html](http://mrjob.readthedocs.io/en/latest/index.html)
+4. [http://www.theUnixschool.com/2012/08/linux-sort-command-examples.html](http://www.theUnixschool.com/2012/08/linux-sort-command-examples.html)
+5. [https://Hadoop.apache.org/docs/r2.7.2/Hadoop-streaming/HadoopStreaming.html](https://Hadoop.apache.org/docs/r2.7.2/Hadoop-streaming/HadoopStreaming.html)
+6. [http://Hadoop.apache.org/](http://Hadoop.apache.org/)
+7. [https://Hadoop.apache.org/docs/r2.7.2/Hadoop-project-dist/Hadoop-common/SingleCluster.html](https://Hadoop.apache.org/docs/r2.7.2/Hadoop-project-dist/Hadoop-common/SingleCluster.html)
+8. [https://Hadoop.apache.org/docs/r1.2.1/streaming.html#Hadoop+Comparator+Class](https://Hadoop.apache.org/docs/r1.2.1/streaming.html#Hadoop+Comparator+Class)
+9. [https://github.com/Yelp/mrjob](https://github.com/Yelp/mrjob)
+10. [https://Pythonhosted.org/mrjob/guides/configs-Hadoopy-runners.html](https://Pythonhosted.org/mrjob/guides/configs-Hadoopy-runners.html)
+11. [http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-steps.html](http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-steps.html)
+12. [https://github.com/apache/Hadoop/blob/2e1d0ff4e901b8313c8d71869735b94ed8bc40a0/Hadoop-mapreduce-project/Hadoop-mapreduce-client/Hadoop-mapreduce-client-core/src/main/java/org/apache/Hadoop/mapreduce/lib/partition/KeyFieldBasedPartitioner.java](https://github.com/apache/Hadoop/blob/2e1d0ff4e901b8313c8d71869735b94ed8bc40a0/Hadoop-mapreduce-project/Hadoop-mapreduce-client/Hadoop-mapreduce-client-core/src/main/java/org/apache/Hadoop/mapreduce/lib/partition/KeyFieldBasedPartitioner.java)
+13. [http://science.sut.ac.th/mathematics/pairote/uploadfiles/weightedkm-temp2_EB.pdf](http://science.sut.ac.th/mathematics/pairote/uploadfiles/weightedkm-temp2_EB.pdf)
+14. [http://spark.apache.org/](http://spark.apache.org/)
+15. [https://www2.eecs.berkeley.edu/Pubs/TechRpts/2011/EECS-2011-82.pdf](https://www2.eecs.berkeley.edu/Pubs/TechRpts/2011/EECS-2011-82.pdf)
+16. [https://spark.apache.org/docs/1.6.2/programming-guide.html#working-with-key-value-pairs](https://spark.apache.org/docs/1.6.2/programming-guide.html#working-with-key-value-pairs)
+17. [https://github.com/facebookarchive/Hadoop-20/blob/master/src/mapred/org/apache/Hadoop/mapred/lib/TotalOrderPartitioner.java](https://github.com/facebookarchive/Hadoop-20/blob/master/src/mapred/org/apache/Hadoop/mapred/lib/TotalOrderPartitioner.java)

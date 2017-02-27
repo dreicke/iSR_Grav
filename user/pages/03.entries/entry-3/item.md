@@ -15,6 +15,35 @@ author:
     org: 'Universidade do Porto'
 ---
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+<!-- <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script> -->
+<script src="//cdn.jsdelivr.net/jquery.color-animation/1/mainfile"></script>
+<script src="http://a11y.nicolas-hoffmann.net/modal/js/jquery-accessible-modal-window-aria.js"></script>
+
+<div id="endorsement" class="hidden modal">
+<p style="text-align:center; color:#3E0C46;"><em>from António Lucas Soares, Director of the Master Program in Information Science at University of Porto</em></p>
+<p>The paper “The Preservation of Information: a contribution to the implementation of a
+Trustworthy Digital Repository at Porto Municipality” authored by Hugo Azevedo
+Oliveira, former student of the Master in Information Science from the University of
+Porto iSchool, Portugal, accepted for publication in the iSchool Review, is a neat
+example of a masters dissertation that shows evidence of having achieved two
+fundamental goals for this type of work: the student’s learning outcomes through a
+highly specialised work in information science, and the impact on the community
+resulting from of the knowledge transfer undertaken by the student and his supervisor.
+In fact, at the University of Porto iSchool we privilege the students internship in the
+community, from commercial companies to the local administration services, that has
+been the case. The results of this dissertation work have been quite relevant for the
+organisation’s development of its digital preservation strategy.
+I am sure that this paper will help to show to a broader audience the positive impact of
+the iSchools education on society.</p>
+
+</div>
+
+<a class="js-modal" data-modal-prefix-class="simple-animated" data-modal-content-id="endorsement" data-modal-title="Endorsement" data-modal-close-text="Close" data-modal-close-title="Close this modal window">Endorsed by António Lucas Soares, University of Porto <i class="fa fa-external-link-square" aria-hidden="true"></i></a>
+
+
+
+
 ##INTRODUCTION
 
 The growth in digital information is increasingly challenging for Information Management (IM).

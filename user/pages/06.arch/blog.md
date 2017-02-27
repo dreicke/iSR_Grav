@@ -1,5 +1,5 @@
 ---
-title: 'Archive'
+title: 'Previous Issue'
 published: true
 content:
     items: '@self.children'
