@@ -42,7 +42,7 @@ author:
 
 <div id="endorsement" class="hidden modal">
 <p style="text-align:center; color:#3E0C46;"><em>from Dr. James G. Shanahan, Lecturer, UC Berkeley School of Information</em></p>
-<p>I am writing in support of the publication of the enclosed submission. Sorting lies at the core of data and data science. It is one of the most studied and documented areas of computer science. Sorting at scale though not a novelty has lacked a solid, clear, and thorough exposition. This submission addresses this need and provides informative details about the design, and development of total order sorting at scale in Map-Reduce frameworks such as Apache Spark, Hadoop and MrJob. As such it is very much a systems paper. The key contribution here is to provide a self-contained exposition of sorting at scale, a topic that few have described but is commonly required in practice. This submission contains an excellent introduction to total order sorting along with several self-contained examples in a Python notebook. For the practitioner, for the student, for the professor this is an amazing resource, introducing the basics while also demonstrating the key ideas through examples and working code. The authors provide an excellent example of data science in action, and this paper will be  highly instructive to students and teachers in information schools.</p>
+<p>I am writing in support of the publication of the enclosed submission. Sorting lies at the core of data and data science. It is one of the most studied and documented areas of computer science. Sorting at scale though not a novelty has lacked a solid, clear, and thorough exposition. This submission addresses this need and provides informative details about the design, and development of total order sorting at scale in Map-Reduce frameworks such as Apache Spark, Hadoop and MRJob. As such it is very much a systems paper. The key contribution here is to provide a self-contained exposition of sorting at scale, a topic that few have described but is commonly required in practice. This submission contains an excellent introduction to total order sorting along with several self-contained examples in a Python notebook. For the practitioner, for the student, for the professor this is an amazing resource, introducing the basics while also demonstrating the key ideas through examples and working code. The authors provide an excellent example of data science in action, and this paper will be  highly instructive to students and teachers in information schools.</p>
 
 </div>
 
@@ -53,7 +53,7 @@ author:
 
 ##Introduction
 
-In this notebook we are going to demonstrate how to achieve Total Order Sort via three MapReduce frameworks: Hadoop Streaming, MRJob, and Spark. Hadoop Streaming and MrJob borrow heavily in terms of syntax and semantics from the Unix sort and cut commands, whereby they treat the output of the mapper as series of records, where each record can be interpreted as a collection of fields/tokens that are tab delimited by default. In this way, fields can be specified for the purposes of partitioning (routing), sometimes referred to as the primary key. The primary key is used for partitioning, and the combination of the primary and secondary keys (also specified by the programmer) is used for sorting.
+In this notebook we are going to demonstrate how to achieve Total Order Sort via three MapReduce frameworks: Hadoop Streaming, MRJob, and Spark. Hadoop Streaming and MRJob borrow heavily in terms of syntax and semantics from the Unix sort and cut commands, whereby they treat the output of the mapper as series of records, where each record can be interpreted as a collection of fields/tokens that are tab delimited by default. In this way, fields can be specified for the purposes of partitioning (routing), sometimes referred to as the primary key. The primary key is used for partitioning, and the combination of the primary and secondary keys (also specified by the programmer) is used for sorting.
 
 We'll start by describing the Linux/Unix sort command (syntax and semantics) and build on that understanding to explain Total Order Sort in Hadoop Streaming and MRJob. Partitioning is not just matter of specifying the fields to be used for routing the records to the reducers. We also need to consider how best to partition the data that has skewed distributions. To that end, we'll demonstrate how to partition the data via sampling and assigning custom keys.
 
@@ -110,9 +110,9 @@ __Figure 1: Anatomy of a Map-Reduce Job from input data to output data via map, 
 
 __Apache Hadoop__ is a framework for running applications on large clusters built of commodity hardware. The Hadoop framework transparently provides applications both reliability and data motion. Hadoop implements a computational paradigm named Map/Reduce, where the application is divided into many small fragments of work, each of which may be executed or re-executed on any node in the cluster. In addition, it provides a distributed file system (HDFS) that stores data on the compute nodes, providing very high aggregate bandwidth across the cluster. Both MapReduce and the Hadoop Distributed File System are designed so that node failures are automatically handled by the Hadoop framework. ([http://wiki.apache.org/Hadoop/](http://wiki.apache.org/Hadoop/))
 
-__MRJob__ is a Python library developed by Yelp to simplify writing Map/Reduce programs. It allows developers to test their code locally without installing Hadoop or run it on a cluster of choice. It also has extensive integration with Amazon Elastic Map Reduce. More information is available at [http://mrjob.readthedocs.io/en/latest/index.html](http://mrjob.readthedocs.io/en/latest/index.html). 
+__MRJob__ is a Python library developed by Yelp to simplify writing Map/Reduce programs. It allows developers to test their code locally without installing Hadoop or run it on a cluster of choice. It also has extensive integration with Amazon Elastic Map Reduce. More information is available at [http://MRJob.readthedocs.io/en/latest/index.html](http://MRJob.readthedocs.io/en/latest/index.html). 
 
-__Partial Sort__ - The reducer output will be lot of (partition) files, each of which contains key-value records that are sorted within each partition file based on the key. This is the default behaviour for MapReduce frameworks such as Hadoop, Hadoop Streaming and MRJob.
+__Partial Sort__ - The reducer output will be lot of (partition) files, each of which contains key-value records that are sorted within each partition file based on the key. This is the default behavior for MapReduce frameworks such as Hadoop, Hadoop Streaming and MRJob. 
 
 __Total Sort (Unordered Partitions)__ - Total sort refers to an ordering of all key-value pairs based upon a specified key. This total ordering will run across all output partition files unlike the partial sort described above. One caveat here is that partition files will need to be re-stacked to generate a total ordering (a small post-processing step that is required after the MapReduce job finishes).
 
@@ -1272,7 +1272,7 @@ for k in sorted(d.items(), key=lambda x: x[0], reverse=True):
 
 ##Section III - MRJob
 
-For this section you will need the MRJob Python library. For installation instructions, go to: [https://github.com/Yelp/mrjob](https://github.com/Yelp/mrjob).
+For this section you will need the MRJob Python library. For installation instructions, go to: [https://github.com/Yelp/MRJob](https://github.com/Yelp/MRJob).
 
 We'll first discuss a couple of key aspects of MRJob such as modes, protocols, and partitioning, before diving into the implementation. We'll also provide an illustrated example of partitioning.
 
@@ -1284,7 +1284,7 @@ MRJob has three modes that correspond to different Hadoop environments.
 Local mode simulates Hadoop Streaming, but does not require an actual Hadoop installation. This is great for testing out small jobs. However, local mode does not suport `'-k2,2nr'` type of sorting, i.e. sorting by numeric value, as it is not capable of Hadoop .jar library files (such as `KeyBasedComparator`). A workaround is to make sure numbers are converted to strings with a fixed length, and sorted by reverse order of their values. For positive integers, this can be done by: ``` sys.maxint - value ``` We include Local Mode implementation for completeness (see below).
 
 ####Hadoop mode
-MRJob is capable of dispatching runners in a environment where Hadoop is installed. User-authored MRJob Python files are treated as shell scripts, and submitted to Hadoop streaming as MapReduce jobs. MRJob allows users to specify configurations supported by Hadoop streaming via the jobconf dictionary, either as part of MRStep or MRJob itself (which will be applied to all steps). The Python dictionary is serialized into command line arguments, and passed to the Hadoop streaming jar file. (See [https://pythonhosted.org/mrjob/guides/configs-Hadoopy-runners.html](https://pythonhosted.org/mrjob/guides/configs-Hadoopy-runners.html) for further documentation of Hadoop mode).
+MRJob is capable of dispatching runners in a environment where Hadoop is installed. User-authored MRJob Python files are treated as shell scripts, and submitted to Hadoop streaming as MapReduce jobs. MRJob allows users to specify configurations supported by Hadoop streaming via the jobconf dictionary, either as part of MRStep or MRJob itself (which will be applied to all steps). The Python dictionary is serialized into command line arguments, and passed to the Hadoop streaming jar file. (See [https://pythonhosted.org/MRJob/guides/configs-Hadoopy-runners.html](https://pythonhosted.org/MRJob/guides/configs-Hadoopy-runners.html) for further documentation of Hadoop mode).
 
 ####EMR/Dataproc mode
 In addition, MRJob supports running MapReduce jobs on a vendor-provided Hadoop runtime environment such as AWS Elastic MapReduce or Google Dataproc. The configuration and setup is very similar to Hadoop mode (-r Hadoop) with the following key differences:
@@ -1534,8 +1534,8 @@ Corresponding protocols code examples:
     <pre>
 # raw_protocol.py
 
-from mrjob.job import MRJob
-from mrjob.protocol import RawProtocol
+from MRJob.job import MRJob
+from MRJob.protocol import RawProtocol
 
 class RawProtocolExample(MRJob):
 
@@ -1562,8 +1562,8 @@ if __name__ == '__main__':
         <pre>
 # raw_value_protocol.py
 
-from mrjob.job import MRJob
-from mrjob.protocol import RawValueProtocol
+from MRJob.job import MRJob
+from MRJob.protocol import RawValueProtocol
 
 class RawValueProtocolExample(MRJob):
 
@@ -1590,8 +1590,8 @@ if __name__ == '__main__':
         <pre>
 # json_protocol.py
 
-from mrjob.job import MRJob
-from mrjob.protocol import JSONProtocol
+from MRJob.job import MRJob
+from MRJob.protocol import JSONProtocol
 
 class JSONProtocolExample(MRJob):
 
@@ -1618,8 +1618,8 @@ if __name__ == '__main__':
         <pre>
 # json_value_protocol.py
 
-from mrjob.job import MRJob
-from mrjob.protocol import JSONValueProtocol
+from MRJob.job import MRJob
+from MRJob.protocol import JSONValueProtocol
 
 class JSONValueProtocolExample(MRJob):
 
@@ -1775,9 +1775,9 @@ In the mapper stage, if we want to assign a record to partition 0, for example, 
 %%writefile singleReducerSortLocal.py
 
 import sys
-import mrjob
-from mrjob.job import MRJob
-from mrjob.step import MRStep
+import MRJob
+from MRJob.job import MRJob
+from MRJob.step import MRStep
 
 class singleReducerSortLocal(MRJob):
         
@@ -1856,12 +1856,12 @@ print "="*100
 %%writefile singleReducerSort.py
 #!~/anaconda2/bin/Python
 # -*- coding: utf-8 -*-
-import mrjob
-from mrjob.job import MRJob
-from mrjob.step import MRStep
+import MRJob
+from MRJob.job import MRJob
+from MRJob.step import MRStep
 
 class SingleReducerSort(MRJob):
-    # By specifying sort values True, mrjob will do a secondary sort on the value, in this case the words.
+    # By specifying sort values True, MRJob will do a secondary sort on the value, in this case the words.
     # ties will be broken by sorting words alphabetically in ascending order
     MRJob.SORT_VALUES = True   
     
@@ -1949,11 +1949,11 @@ The equivalent of the Hadoop Streaming Total Order Sort implementation above
 ```Python
 %%writefile MRJob_unorderedTotalOrderSort.py
 
-import mrjob
-from mrjob.job import MRJob
-from mrjob.step import MRStep
-from mrjob.protocol import RawValueProtocol
-from mrjob.protocol import RawProtocol
+import MRJob
+from MRJob.job import MRJob
+from MRJob.step import MRStep
+from MRJob.protocol import RawValueProtocol
+from MRJob.protocol import RawProtocol
 from operator import itemgetter
 import numpy as np
 
@@ -2042,11 +2042,11 @@ Figure 6. Total order sort with custom partitioning.
 #!~/anaconda2/bin/Python
 # -*- coding: utf-8 -*-
 
-import mrjob
-from mrjob.job import MRJob
-from mrjob.step import MRStep
-from mrjob.protocol import RawValueProtocol
-from mrjob.protocol import RawProtocol
+import MRJob
+from MRJob.job import MRJob
+from MRJob.step import MRStep
+from MRJob.protocol import RawValueProtocol
+from MRJob.protocol import RawProtocol
 from operator import itemgetter
 import numpy as np
 
@@ -2262,9 +2262,9 @@ If we made a uniform partition file the (above example has 4 buckets), we would 
 
 
 import numpy as np
-import mrjob
-from mrjob.job import MRJob
-from mrjob.step import MRStep
+import MRJob
+from MRJob.job import MRJob
+from MRJob.step import MRStep
 
 class MRbuildSample(MRJob):
     
@@ -2513,14 +2513,14 @@ A note on <code>TotalSortPartitioner</code>: Hadoop has built in TotalSortPartit
 ##References
 1. [http://wiki.apache.org/Hadoop/](http://wiki.apache.org/Hadoop/)
 2. [http://Hadoop.apache.org/docs/stable1/streaming.html#Hadoop+Streaming](http://Hadoop.apache.org/docs/stable1/streaming.html#Hadoop+Streaming)
-3. [http://mrjob.readthedocs.io/en/latest/index.html](http://mrjob.readthedocs.io/en/latest/index.html)
+3. [http://MRJob.readthedocs.io/en/latest/index.html](http://MRJob.readthedocs.io/en/latest/index.html)
 4. [http://www.theUnixschool.com/2012/08/linux-sort-command-examples.html](http://www.theUnixschool.com/2012/08/linux-sort-command-examples.html)
 5. [https://Hadoop.apache.org/docs/r2.7.2/Hadoop-streaming/HadoopStreaming.html](https://Hadoop.apache.org/docs/r2.7.2/Hadoop-streaming/HadoopStreaming.html)
 6. [http://Hadoop.apache.org/](http://Hadoop.apache.org/)
 7. [https://Hadoop.apache.org/docs/r2.7.2/Hadoop-project-dist/Hadoop-common/SingleCluster.html](https://Hadoop.apache.org/docs/r2.7.2/Hadoop-project-dist/Hadoop-common/SingleCluster.html)
 8. [https://Hadoop.apache.org/docs/r1.2.1/streaming.html#Hadoop+Comparator+Class](https://Hadoop.apache.org/docs/r1.2.1/streaming.html#Hadoop+Comparator+Class)
-9. [https://github.com/Yelp/mrjob](https://github.com/Yelp/mrjob)
-10. [https://Pythonhosted.org/mrjob/guides/configs-Hadoopy-runners.html](https://Pythonhosted.org/mrjob/guides/configs-Hadoopy-runners.html)
+9. [https://github.com/Yelp/MRJob](https://github.com/Yelp/MRJob)
+10. [https://Pythonhosted.org/MRJob/guides/configs-Hadoopy-runners.html](https://Pythonhosted.org/MRJob/guides/configs-Hadoopy-runners.html)
 11. [http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-steps.html](http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-steps.html)
 12. [https://github.com/apache/Hadoop/blob/2e1d0ff4e901b8313c8d71869735b94ed8bc40a0/Hadoop-mapreduce-project/Hadoop-mapreduce-client/Hadoop-mapreduce-client-core/src/main/java/org/apache/Hadoop/mapreduce/lib/partition/KeyFieldBasedPartitioner.java](https://github.com/apache/Hadoop/blob/2e1d0ff4e901b8313c8d71869735b94ed8bc40a0/Hadoop-mapreduce-project/Hadoop-mapreduce-client/Hadoop-mapreduce-client-core/src/main/java/org/apache/Hadoop/mapreduce/lib/partition/KeyFieldBasedPartitioner.java)
 13. [http://science.sut.ac.th/mathematics/pairote/uploadfiles/weightedkm-temp2_EB.pdf](http://science.sut.ac.th/mathematics/pairote/uploadfiles/weightedkm-temp2_EB.pdf)

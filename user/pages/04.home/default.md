@@ -1,6 +1,6 @@
 ---
-title: Welcome
-published: false
+title: Welcome Letter
+published: true
 body_classes: letter
 ---
 
@@ -20,16 +20,12 @@ body_classes: letter
 </div>
 
 <aside>
-	<h1>IN THE FIRST ISSUE</h1>
+	<h1>IN THE CURRENT ISSUE</h1>
 	<ul>
-		<li>Computer-Generated Sonnets 
-		<li>Political Tweets Librarianship
-		<li>A Web-Enabled Sweater 
-		<li>Exploring Jeopardy! Data 
-		<li>Global Paperlessness
-		<li>Hybrid Publishing
-		<li>A Tool for Meta-Exploration
-	</uL>
+		<li>A Comprehensive Guide to Total Sort in MapReduce
+		<li>The Making of a Trustworthy Digital Repository  
+		<li>Topic Modeling to Facilitate Legal Investigations
+	</ul>
 	<a class="cta" href="entries">Read the Issue &nbsp;<i class="fa fa-chevron-right"></i></a>
 </aside>
 
