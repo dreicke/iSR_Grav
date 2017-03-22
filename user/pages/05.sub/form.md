@@ -46,4 +46,4 @@ form:
 ---
 
 <h1 id="frontpage">Stay in Touch!</h1>
-<p class="introtext"> We'll send you an email when the first issue is ready :)</p>
+<p class="introtext"> We'll send you an email when the next issue is ready :)</p>
