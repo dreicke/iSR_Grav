@@ -54,13 +54,15 @@ I am writing in support of the publication of the below linked submission. Sorti
 
 ##Introduction
 
-In this notebook we are going to demonstrate how to achieve Total Order Sort via three MapReduce frameworks: Hadoop Streaming, MRJob, and Spark. Hadoop Streaming and MRJob borrow heavily in terms of syntax and semantics from the Unix sort and cut commands, whereby they treat the output of the mapper as series of records, where each record can be interpreted as a collection of fields/tokens that are tab delimited by default. In this way, fields can be specified for the purposes of partitioning (routing), sometimes referred to as the primary key. The primary key is used for partitioning, and the combination of the primary and secondary keys (also specified by the programmer) is used for sorting.
+In this paper we are going to demonstrate how to achieve Total Order Sort via three MapReduce frameworks: Hadoop Streaming, MRJob, and Spark. Hadoop Streaming and MRJob borrow heavily in terms of syntax and semantics from the Unix sort and cut commands, whereby they treat the output of the mapper as series of records, where each record can be interpreted as a collection of fields/tokens that are tab delimited by default. In this way, fields can be specified for the purposes of partitioning (routing), sometimes referred to as the primary key. The primary key is used for partitioning, and the combination of the primary and secondary keys (also specified by the programmer) is used for sorting.
 
 We'll start by describing the Linux/Unix sort command (syntax and semantics) and build on that understanding to explain Total Order Sort in Hadoop Streaming and MRJob. Partitioning is not just matter of specifying the fields to be used for routing the records to the reducers. We also need to consider how best to partition the data that has skewed distributions. To that end, we'll demonstrate how to partition the data via sampling and assigning custom keys.
 
 Lastly, we'll provide a Spark version of Total Order Sort.
 
 At each step we are going to build on the previous steps, so it's important to view this notebook in order. For example, we'll cover key points for sorting with a single reducer in the Hadoop Streaming implementation, and these concepts will apply to the subsequent MRJob implementation.
+
+*Note:* If you'd like to run our code, visit our <a href="http://nbviewer.jupyter.org/urls/dl.dropbox.com/s/y6tbrw2jxpzni8l/_total-sort-guide-spark2.01-JAN27-2017.ipynb">Jupyter notebook</a> for a more interactive version of this paper.
 
 ##Anatomy of a MapReduce Job
 
@@ -458,9 +460,9 @@ Overwriting Unix-sort-example.txt
 
 <div id="tab-container" class="tab-container">
   <ul class='etabs'>
-    <li class='tab'><a href="#tabs1-html">HTML Markup</a></li>
-    <li class='tab'><a href="#tabs1-js">Required JS</a></li>
-    <li class='tab'><a href="#tabs1-css">Example CSS</a></li>
+    <li class='tab'><a href="#tabs1-html">sort -t"," -k1,1</a></li>
+    <li class='tab'><a href="#tabs1-js">sort -t"," -k2,2nr</a></li>
+    <li class='tab'><a href="#tabs1-css">sort -t"," -k1,1 -k2,2nr</a></li>
   </ul>
   <div id="tabs1-html">
     Sort by field 1 (default alphabetically), deliminator ","    

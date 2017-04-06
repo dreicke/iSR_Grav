@@ -22,7 +22,7 @@ author:
 
 <p>Chapter 11 of the textbook features case studies that explain how these design decisions that collectively define an organizing system are interconnected, and how resource descriptions and organizing principles determine the number and nature of the interactions with resources or sets of resources. Explaining this “traceability” of the decisions in the organizing system that is analyzed or designed is the essential requirement that should be satisfied by each sophisticated case study.</p>
 
-<p>Featured here are two interesting case studies that illustrate the generality of the organizing system idea.
+<p>Featured here are a few interesting case studies that illustrate the generality of the organizing system idea.
 </p>
 </div>
 

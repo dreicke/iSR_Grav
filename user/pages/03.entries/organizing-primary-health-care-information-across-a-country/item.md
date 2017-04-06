@@ -25,13 +25,13 @@ author:
 
 <p>Chapter 11 of the textbook features case studies that explain how these design decisions that collectively define an organizing system are interconnected, and how resource descriptions and organizing principles determine the number and nature of the interactions with resources or sets of resources. Explaining this “traceability” of the decisions in the organizing system that is analyzed or designed is the essential requirement that should be satisfied by each sophisticated case study.</p>
 
-<p>Featured here are two interesting case studies that illustrate the generality of the organizing system idea.
+<p>Featured here are a few interesting case studies that illustrate the generality of the organizing system idea.
 </p>
 </div>
 
 The primary health care network in Pakistan consists of more than 13,000 health facilities  including Basic Health Units and dispensaries, both of which provide primary care services to the masses. The network represents one of the largest service delivery systems in the country.
 
-The information produced and processed by the network is formally organized by a District Health Information System (DHIS). The DHIS is organizing three types of resource descriptions (see Figure 1). First is the individual health and disease data (resource description) of every patient (primary resource) that comes in contact with the system. Second is the service delivery and administrative information of each health facility (a resource description of each facility). Third are the statistical summaries and reports that are generated through collation and analysis of the first two. These summaries, however, are not descriptions of individual patients but instead are represent resource descriptions of whole segments of population (resource).
+The information produced and processed by the network is formally organized by a District Health Information System (DHIS). The DHIS is organizing three types of resource descriptions (see Figure 1). First is the individual health and disease data (resource description) of every patient (primary resource) that comes in contact with the system. Second is the service delivery and administrative information of each health facility (a resource description of each facility). Third are the statistical summaries and reports that are generated through collation and analysis of the first two. These summaries, however, are not descriptions of individual patients but instead represent resource descriptions of whole segments of population (resource).
 
 
 __Figure 1__
