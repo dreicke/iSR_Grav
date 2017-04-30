@@ -54,7 +54,7 @@ pre{
 
 #welcome-letter{
 	display: inline-block;
-	width: 66%;
+	width: 100%;
 	padding-right: 30px;
 }
 
@@ -129,6 +129,23 @@ a.cta{
 
 a.cta:hover{
 	background-color: #BE66CC;
+}
+
+#founders{
+	width: 100%;
+	display: block;
+}
+
+.founder{
+	width: 100%;
+	border-radius: 5px;
+}
+
+.founder-box{
+	width: 15%;
+	margin-right: 4%;
+	text-align: center;
+	display: inline-block;
 }
 
 /* ----------------------------------------------------------------index page */
@@ -775,7 +792,10 @@ p.answer{
 
 div#social-btns{
 	padding-bottom: 10px;
+	display: none;
 }
+
+
 	
 
 
