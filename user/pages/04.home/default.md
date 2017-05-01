@@ -22,21 +22,22 @@ body_classes: letter
 <div id="founders">
 	<h2>The Team</h2>
 	<div class="founder-box">
-		<img class="founder" src="/iSR_Grav/user/pages/04.home/images/shom.jpg">
-		<div class="founder-blurb"><a href="https://www.linkedin.com/in/shomiksarkar/">Shomik Sarkar</a></div>
-	</div>
-	<div class="founder-box">
 		<img class="founder" src="/iSR_Grav/user/pages/04.home/images/phil.jpg">
-		<div class="founder-blurb"><a href="https://www.linkedin.com/in/philipwbraddock/">Philip Braddock</a></div>
+		<div class="founder-blurb"><a href="https://www.linkedin.com/in/philipwbraddock/">Philip W. Braddock</a></div>
+	</div>
+		<div class="founder-box">
+		<img class="founder" src="/iSR_Grav/user/pages/04.home/images/david.jpg">
+		<div class="founder-blurb"><a href="https://www.linkedin.com/in/eicke/">David R. Eicke</a></div>
 	</div>
 	<div class="founder-box">
 		<img class="founder" src="/iSR_Grav/user/pages/04.home/images/alec.jpg">
 		<div class="founder-blurb"><a href="https://www.linkedin.com/in/alechubel/">Alec Hubel</a></div>
 	</div>
 	<div class="founder-box">
-		<img class="founder" src="/iSR_Grav/user/pages/04.home/images/david.jpg">
-		<div class="founder-blurb"><a href="https://www.linkedin.com/in/eicke/">David R. Eicke</a></div>
+		<img class="founder" src="/iSR_Grav/user/pages/04.home/images/shom.jpg">
+		<div class="founder-blurb"><a href="https://www.linkedin.com/in/shomiksarkar/">Shomik Sarkar</a></div>
 	</div>
+
 </div>
 
 
